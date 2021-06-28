@@ -22,7 +22,7 @@
 				<g:link target="_top" condition="${not empty subscriptions}"
 					module="gateconsole.screen" screen="Access"/>
 				<hr/>
-				<g:link target="_top"/>
+				<g:exit icon="exit" name="Sair" target="_top"/>
 			</g-tabbar>
 		</nav>
 

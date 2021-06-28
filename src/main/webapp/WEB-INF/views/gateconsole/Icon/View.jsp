@@ -1,27 +1,28 @@
 <%@ taglib uri="http://www.gate.com.br/gate" prefix="g"%>
 
 <g:template filename="/WEB-INF/views/FULL.jsp">
-	<ul class="DeskMenu">
+	<g-icon-pane>
 		<g:icons name="icon">
 			<g:if condition="${icon.name ne '??????'}">
-				<li style="width: 4%; min-width: 64px; margin: 0.5%">
-					<a href="#" data-copy-onclick="${icon.code}" data-icon="&#x${icon.code}" tabindex="1">
-						${icon.code}
-						<br/>${icon.name}
-					</a>
-				</li>
+				<a style="flex-basis: 4%; min-width: 80px; margin: 0.5%"
+				   href="#" data-copy-onclick="${icon.code}" tabindex="1">
+					<g:icon type="${icon.code}"/>
+
+					${icon.code}<br/>${icon.name}
+				</a>
 			</g:if>
 		</g:icons>
-	</ul>
-	<ul class="DeskMenu">
+	</g-icon-pane>
+	<g-icon-pane>
 		<g:icons name="icon">
 			<g:if condition="${icon.name eq '??????'}">
-				<li style="width: 4%; min-width: 64px; margin: 0.5%">
-					<a href="#" data-copy-onclick="${icon.code}" data-icon="&#x${icon.code}" tabindex="1">
-						${icon.code}
-					</a>
-				</li>
+				<a style="flex-basis: 4%; min-width: 80px; margin: 0.5%"
+				   href="#" data-copy-onclick="${icon.code}" tabindex="1">
+					<g:icon type="${icon.code}"/>
+
+					${icon.code}
+				</a>
 			</g:if>
 		</g:icons>
-	</ul>
+	</g-icon-pane>
 </g:template>

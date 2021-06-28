@@ -8,6 +8,7 @@ import gate.entity.Func;
 import gate.entity.Role;
 import gate.entity.User;
 import gate.error.AppException;
+import gate.io.URL;
 import gate.util.Page;
 import gateconsole.contol.FuncControl;
 import gateconsole.contol.RoleControl;
@@ -32,6 +33,12 @@ public class FuncScreen extends Screen
 		return "/WEB-INF/views/gateconsole/Func/View.jsp";
 	}
 
+	public String callIndex()
+	{
+		page = control.search(getForm());
+		return "/WEB-INF/index.html";
+	}
+
 	@Icon("select")
 	@Name("Detalhe")
 	public String callSelect()
@@ -49,44 +56,53 @@ public class FuncScreen extends Screen
 
 	@Name("Nova")
 	@Icon("insert")
-	public String callInsert()
+	public Object callInsert()
 	{
-		if (isPOST()
-			&& getMessages().isEmpty())
+		if (isPOST() && getMessages().isEmpty())
+		{
 			try
-		{
-			control.insert(getForm());
-			return callSelect();
-		} catch (AppException e)
-		{
-			setMessages(e.getMessages());
+			{
+				control.insert(getForm());
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setAction("Select")
+					.setParameter("form.id", getForm().getId());
+			} catch (AppException ex)
+			{
+				setMessages(ex.getMessages());
+			}
 		}
+
 		return "/WEB-INF/views/gateconsole/Func/ViewInsert.jsp";
 	}
 
 	@Icon("update")
 	@Name("Alterar")
-	public String callUpdate()
+	public Object callUpdate()
 	{
 		if (isGET())
 		{
 			try
 			{
 				form = control.select(getForm().getId());
-			} catch (AppException e)
+			} catch (AppException ex)
 			{
-				setMessages(e.getMessages());
-				return call();
+				return "/WEB-INF/views/gateconsole/Func/ViewResult.jsp";
 			}
 		} else if (getMessages().isEmpty())
 		{
 			try
 			{
 				control.update(getForm());
-				return callSelect();
-			} catch (AppException e)
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setAction("Select")
+					.setParameter("form.id", getForm().getId());
+			} catch (AppException ex)
 			{
-				setMessages(e.getMessages());
+				setMessages(ex.getMessages());
 			}
 		}
 		return "/WEB-INF/views/gateconsole/Func/ViewUpdate.jsp";
@@ -94,17 +110,21 @@ public class FuncScreen extends Screen
 
 	@Icon("delete")
 	@Name("Remover")
-	public String callDelete()
+	public Object callDelete()
 	{
 		try
 		{
 			control.delete(getForm());
-			getMessages().add("O usuário foi removido com sucesso.");
-		} catch (AppException e)
+			return "/WEB-INF/views/gateconsole/Func/ViewResult.jsp";
+		} catch (AppException ex)
 		{
-			setMessages(e.getMessages());
+			return new URL("Gate")
+				.setModule(getModule())
+				.setScreen(getScreen())
+				.setAction("Select")
+				.setMessages(ex.getMessages())
+				.setParameter("form.id", getForm().getId());
 		}
-		return "/WEB-INF/views/gateconsole/Func/ViewResult.jsp";
 	}
 
 	public Func getForm()
@@ -143,34 +163,45 @@ public class FuncScreen extends Screen
 
 		@Icon("insert")
 		@Name("Adcionar")
-		public String callInsert()
+		public Object callInsert()
 		{
 
 			try
 			{
 				control.insert(user, func);
-				user = null;
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setParameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				setMessages(ex.getMessages());
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setMessages(ex.getMessages())
+					.setParameter("func.id", getFunc().getId());
 			}
-			return call();
 		}
 
 		@Icon("delete")
 		@Name("Remover")
-		public String callDelete()
+		public Object callDelete()
 		{
-
 			try
 			{
 				control.delete(user, func);
-				user = null;
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setParameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				setMessages(ex.getMessages());
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setMessages(ex.getMessages())
+					.setParameter("func.id", getFunc().getId());
 			}
-			return call();
 		}
 
 		@Override
@@ -223,34 +254,46 @@ public class FuncScreen extends Screen
 
 		@Icon("insert")
 		@Name("Adcionar")
-		public String callInsert()
+		public URL callInsert()
 		{
 
 			try
 			{
 				control.insert(role, func);
-				role = null;
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setParameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				setMessages(ex.getMessages());
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setMessages(ex.getMessages())
+					.setParameter("func.id", getFunc().getId());
 			}
-			return call();
 		}
 
 		@Icon("delete")
 		@Name("Remover")
-		public String callDelete()
+		public URL callDelete()
 		{
 
 			try
 			{
 				control.delete(role, func);
-				role = null;
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setParameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				setMessages(ex.getMessages());
+				return new URL("Gate")
+					.setModule(getModule())
+					.setScreen(getScreen())
+					.setMessages(ex.getMessages())
+					.setParameter("func.id", getFunc().getId());
 			}
-			return call();
 		}
 
 		public Role getRole()

@@ -11,29 +11,19 @@
 						<label>Versão ${version}</label>
 					</div>
 
-					<div class='LinkControl'>
-						<ul>
-							<li>
-								<a href='Gate'>
-									Fazer Logon<g:icon type="2000"/>
-								</a>
-							</li>
-							<li>
-								<a href='SetupPassword'>
-									Trocar Senha<g:icon type="passwd"/>
-								</a>
-							</li>
-							<li data-selected="true">
-								<a href='ResetPassword'>
-									Recuperar Senha<g:icon type="2023"/>
-								</a>
-							</li>
-							<li>
-								<a href='CreateAccount'>
-									Criar Conta<g:icon type="gate.entity.User"/>
-								</a>
-							</li>
-						</ul>
+					<g-tab-control type="dummy">
+						<a href='Gate' style="flex-basis: 25%">
+							Fazer Logon<g:icon type="2000"/>
+						</a>
+						<a href='SetupPassword' style="flex-basis: 25%">
+							Trocar Senha<g:icon type="passwd"/>
+						</a>
+						<a href='ResetPassword' style="flex-basis: 25%" data-selected="true">
+							Recuperar Senha<g:icon type="2023"/>
+						</a>
+						<a href='CreateAccount' style="flex-basis: 25%">
+							Criar Conta<g:icon type="gate.entity.User"/>
+						</a>
 						<div>
 
 							<fieldset>
@@ -59,7 +49,7 @@
 								</fieldset>
 							</fieldset>
 						</div>
-					</div>
+					</g-tab-control>
 					<g-coolbar>
 						<button class="Commit" tabindex='2'>
 							Concluir<g:icon type="commit"/>

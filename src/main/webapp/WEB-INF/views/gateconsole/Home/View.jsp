@@ -10,7 +10,8 @@
 			<label>
 				Pesquisar:
 				<span>
-					<g:text property='form' tabindex='1' placeholder="Pesquisar usuários (nome, email ou login) ou perfis (nome, email ou sigla)"/>
+					<g:text
+						property='form'  tabindex='1' placeholder="Pesquisar usuários (nome, email ou login) ou perfis (nome, email ou sigla)"/>
 				</span>
 			</label>
 		</fieldset>

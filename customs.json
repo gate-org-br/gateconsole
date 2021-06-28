@@ -1,0 +1,22 @@
+{
+	"elements": {
+		"g-coolbar": {}
+	},
+	"attributes": {
+		"g:print": {
+			"context": "div"
+		},
+		"g:module": {
+			"context": "a"
+		},
+		"g:type": {
+			"context": "input"
+		},
+		"g:action": {
+			"context": "a"
+		},
+		"th:each": {
+			"context": "tr"
+		}
+	}
+}

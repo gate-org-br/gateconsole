@@ -16,13 +16,13 @@
 		</fieldset>
 
 		<g-coolbar>
-			<g:link class="Commit" method="post" module="#" screen="#" action="#" tabindex='2'>
+			<g:link class="Commit" method="post" tabindex='2'>
 				Concluir<g:icon type="commit"/>
 			</g:link>
 			<hr/>
-			<a class='Cancel Hide' tabindex='2'>
-				Desistir<g:icon type='cancel'/>
-			</a>
+			<g:hide class="Cancel" tabindex='2'>
+				Cancelar<g:icon type="cancel"/>
+			</g:hide>
 		</g-coolbar>
 	</form>
 </g:template>

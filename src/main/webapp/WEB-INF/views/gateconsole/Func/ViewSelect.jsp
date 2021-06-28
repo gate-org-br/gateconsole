@@ -14,22 +14,18 @@
 	</fieldset>
 
 	<g-coolbar>
-		<g:link module='#' screen='#' action='Update' arguments="form.id=${screen.form.id}">
-			Alterar<g:icon type="update"/>
-		</g:link>
-		<g:link module='#' screen='#' action="Delete" arguments="form.id=${screen.form.id}"
-			style='color: #660000' data-confirm="Tem certeza de que deseja remover este registro?">
-			Remover<g:icon type="delete"/>
-		</g:link>
+		<g:link action='Update' _form.id="${screen.form.id}" tabindex="2"/>
+		<g:link data-confirm="Tem certeza de que deseja remover este registro?"
+			action="Delete" _form.id="${screen.form.id}" tabindex="2"/>
 		<hr/>
-		<a href="#" target="_hide">
+		<g:hide tabindex="2">
 			Retornar<g:icon type="return"/>
-		</a>
+		</g:hide>
 	</g-coolbar>
 
 	<g-tab-control>
-		<g:link module="#" screen="Auth" arguments="form.func.id=${screen.form.id}"/>
-		<g:link module="#" screen="FuncScreen$User" arguments="func.id=${screen.form.id}"/>
-		<g:link module="#" screen="FuncScreen$Role" arguments="func.id=${screen.form.id}"/>
+		<g:link screen="Auth" _form.func.id="${screen.form.id}"/>
+		<g:link screen="FuncScreen$User" _func.id="${screen.form.id}"/>
+		<g:link screen="FuncScreen$Role" _func.id="${screen.form.id}"/>
 	</g-tab-control>
 </g:template>
