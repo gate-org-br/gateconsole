@@ -43,7 +43,7 @@ public class UserDao extends Dao
 	{
 		return getLink()
 			.search(User.class)
-			.properties("=active", "id", "role.id", "role.name",
+			.properties("=active", "id", "role.id", "role.name", "code",
 				"email", "userID", "+name", "phone", "cellPhone", "CPF", "sex", "birthdate", "registration")
 			.parameters(Boolean.TRUE);
 	}
@@ -52,7 +52,8 @@ public class UserDao extends Dao
 	{
 		return getLink()
 			.search(User.class)
-			.properties("=id", "=active", "=role.id", "%role.name", "=email", "=userID", "+%name", "=phone", "=cellPhone", "=CPF", "=sex", "=birthdate", ">=registration")
+			.properties("=id", "=active", "=role.id", "%role.name", "=email", "=userID", "+%name", "=phone", "code",
+				"=cellPhone", "=CPF", "=sex", "=birthdate", ">=registration")
 			.matching(filter);
 	}
 
@@ -82,6 +83,7 @@ public class UserDao extends Dao
 				.set("email", value.getEmail())
 				.set("details", value.getDetails())
 				.set("registration", LocalDateTime.now())
+				.set("code", value.getCode())
 				.set("photo", value.getPhoto()))
 			.fetchGeneratedKeys(ID.class)
 			.forEach(value::setId);
@@ -99,6 +101,7 @@ public class UserDao extends Dao
 			.set("phone", value.getPhone())
 			.set("cellPhone", value.getCellPhone())
 			.set("CPF", value.getCPF())
+			.set("code", value.getCode())
 			.set("birthdate", value.getBirthdate())
 			.set("sex", value.getSex())
 			.when(value.getPhoto() != null).set("photo", value.getPhoto())

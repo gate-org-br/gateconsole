@@ -63,7 +63,7 @@ public class UserControl extends Control
 
 	public void insert(User value) throws AppException
 	{
-		Constraints.validate(value, "active", "userID", "name", "email", "details", "phone", "cellPhone", "CPF");
+		Constraints.validate(value, "active", "userID", "name", "email", "details", "phone", "cellPhone", "CPF", "code");
 
 		if (value.getPhoto() != null && value.getPhoto().getSize() > MAX_PHOTO_SIZE)
 			throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
@@ -87,7 +87,7 @@ public class UserControl extends Control
 				value.setRole(role);
 				value.setActive(true);
 
-				Constraints.validate(value, "userID", "name", "email", "details", "phone", "cellPhone", "CPF");
+				Constraints.validate(value, "userID", "name", "email", "details", "phone", "cellPhone", "CPF", "code");
 
 				if (value.getPhoto() != null && value.getPhoto().getSize() > MAX_PHOTO_SIZE)
 					throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);

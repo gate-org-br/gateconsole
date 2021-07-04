@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.gate.com.br/gate" prefix="g"%>
 
 <g:template filename="/WEB-INF/views/MAIN.jsp">
-	<g:login module="gateconsole.screen">
+	<g:login module="gateconsole.modules.admin">
 		<div class="Login">
 			<div>
 				<div>
@@ -61,9 +61,9 @@
 		<g:if condition="${not empty messages}">
 			<script type='text/javascript'>
 				<g:iterator source="${messages}" target="message">
-				alert('${message}');
-				</g:iterator>
-			</script>
-		</g:if>
+						    alert('${message}');
+				</g:iterator						>
+			</script						>
+		</g:if						>
 	</g:login>
 </g:template>

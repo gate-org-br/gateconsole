@@ -1,6 +1,7 @@
 SELECT
     Uzer.id AS id,
     Uzer.active AS active,
+    Uzer.code as code,
     Role.id AS 'role.id',
     Role.name AS 'role.name',
     Uzer.name AS name,

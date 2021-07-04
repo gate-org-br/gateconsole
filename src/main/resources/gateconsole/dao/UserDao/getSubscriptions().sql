@@ -1,5 +1,5 @@
-SELECT  
-    id, userID, name, email, phone, cellPhone, details
+SELECT
+    id, userID, name, email, phone, cellPhone, details, code
 FROM
     Uzer
 WHERE
