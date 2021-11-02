@@ -6,7 +6,7 @@
 
 	<groupId>io.github.gate-org-br</groupId>
 	<artifactId>gateconsole</artifactId>
-	<version>9.4.1</version>
+	<version>9.6.0</version>
 	<packaging>war</packaging>
 
 	<name>gateconsole</name>
@@ -53,7 +53,7 @@
 		<dependency>
 			<groupId>io.github.gate-org-br</groupId>
 			<artifactId>gate</artifactId>
-			<version>9.4.1</version>
+			<version>9.6.0</version>
 		</dependency>
 	</dependencies>
 
@@ -69,7 +69,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>11</source>
 					<target>11</target>
@@ -82,7 +82,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
+				<version>3.3.2</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<archive>
@@ -95,7 +95,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.6</version>
+				<version>3.2.0</version>
 				<executions>
 					<execution>
 						<phase>validate</phase>
