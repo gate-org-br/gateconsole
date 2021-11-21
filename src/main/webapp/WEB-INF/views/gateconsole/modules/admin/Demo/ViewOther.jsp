@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.gate.com.br/gate" prefix="G"%>
 
-<G:template filename="/WEB-INF/views/gateconsole/Demo/Main.jsp">
+<G:template filename="/WEB-INF/views/gateconsole/modules/admin/Demo/Main.jsp">
 	<div>
 		<div>
 			<g-coolbar>

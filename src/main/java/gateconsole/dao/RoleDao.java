@@ -31,7 +31,7 @@ public class RoleDao extends Dao
 	{
 		List<Role> roles = getLink()
 			.search(Role.class)
-			.properties("id", "active", "master", "role.id", "roleID", "+name", "email", "description", "manager.id",
+			.properties("id", "active", "master", "role.id", "rolename", "+name", "email", "description", "manager.id",
 				"manager.name")
 			.parameters();
 		Hierarchy.setup(roles);
@@ -42,7 +42,7 @@ public class RoleDao extends Dao
 	{
 		return getLink()
 			.select(Role.class)
-			.properties("=id", "active", "master", "role.id", "roleID", "role.name",
+			.properties("=id", "active", "master", "role.id", "rolename", "role.name",
 				"email", "name", "description", "manager.id", "manager.name")
 			.parameters(id).orElseThrow(NotFoundException::new);
 	}
@@ -54,7 +54,7 @@ public class RoleDao extends Dao
 			.set("active", value.getActive())
 			.set("master", value.getMaster())
 			.set("Role$id", value.getRole().getId())
-			.set("roleID", value.getRoleID())
+			.set("rolename", value.getRolename())
 			.set("name", value.getName())
 			.set("email", value.getEmail())
 			.set("description", value.getDescription())
@@ -66,7 +66,7 @@ public class RoleDao extends Dao
 	{
 		return getLink()
 			.update(Role.class)
-			.properties("=id", "active", "master", "role.id", "roleID", "name", "email", "description", "manager.id").execute(value) > 0;
+			.properties("=id", "active", "master", "role.id", "rolename", "name", "email", "description", "manager.id").execute(value) > 0;
 	}
 
 	public boolean delete(Role... values) throws AppException
@@ -79,7 +79,7 @@ public class RoleDao extends Dao
 		return getLink()
 			.search(Role.class)
 			.properties("=role.id", "id", "active", "master",
-				"roleID", "role.name", "email", "name",
+				"rolename", "role.name", "email", "name",
 				"description", "manager.id", "manager.name")
 			.parameters(role.getId());
 	}

@@ -2,17 +2,18 @@ package gateconsole.modules.admin;
 
 import gate.annotation.Icon;
 import gate.annotation.Name;
-import gate.base.Screen;
 import gate.entity.Org;
 import gate.error.AppException;
 import gate.error.NotFoundException;
 import gate.io.URL;
 import gateconsole.contol.OrgControl;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 @Icon("2006")
+@RequestScoped
 @Name("Organização")
-public class OrgScreen extends Screen
+public class OrgScreen extends gate.base.Screen
 {
 
 	private Org form;

@@ -3,7 +3,6 @@ package gateconsole.modules.admin;
 import gate.annotation.Description;
 import gate.annotation.Icon;
 import gate.annotation.Name;
-import gate.base.Screen;
 import gate.constraint.Required;
 import gate.messaging.Message;
 import gate.messaging.MessageException;
@@ -11,11 +10,13 @@ import gate.messaging.Messenger;
 import gate.type.mime.MimeMail;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 @Icon("2034")
+@RequestScoped
 @Name("Mensagens")
-public class MailScreen extends Screen
+public class MailScreen extends gate.base.Screen
 {
 
 	private List<Message> page

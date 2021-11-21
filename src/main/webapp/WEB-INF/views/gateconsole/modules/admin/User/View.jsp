@@ -17,7 +17,7 @@
 			<label data-size='4'>
 				Login:
 				<span>
-					<g:text property='form.userID' tabindex='1' required=''/>
+					<g:text property='form.username' tabindex='1' required=''/>
 				</span>
 			</label>
 			<label data-size='8'>
@@ -100,7 +100,7 @@
 					<g:tr>
 						<g:th style="width: 60px" ordenate="active" value="Ativo"/>
 						<g:th ordenate="name" value="Nome"/>
-						<g:th ordenate="userID" value="Login"/>
+						<g:th ordenate="username" value="Login"/>
 						<g:th ordenate="role.name" value="Perfil"/>
 						<g:th style="width: 120px" ordenate="registration" value="Cadastro"/>
 					</g:tr>
@@ -116,7 +116,7 @@
 					<g:tr target='_stack' action='Select' _form.id='${target.id}' data-on-hide="reload">
 						<g:td title="Ativo" value="${target.active}"/>
 						<g:td title="Nome" value="${target.name}"/>
-						<g:td title="Login" value="${target.userID}"/>
+						<g:td title="Login" value="${target.username}"/>
 						<g:td title="Perfil" value="${target.role.name}"/>
 						<g:td title="Cadastro" value="${target.registration}"/>
 					</g:tr>

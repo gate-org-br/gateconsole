@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.gate.com.br/gate" prefix="G"%>
 
-<G:template filename="/WEB-INF/views/gateconsole/Demo/Main.jsp">
-	<div>	
+<G:template filename="/WEB-INF/views/gateconsole/modules/admin/Demo/Main.jsp">
+	<div>
 		<div>
 			<pre class="language-markup"><code><!--
 									<fieldset>

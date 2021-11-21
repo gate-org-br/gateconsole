@@ -1,12 +1,12 @@
-SELECT 
-    1 AS tipo, id, userID AS entityID, name
+SELECT
+    1 AS tipo, id, username AS entityID, name
 FROM
     Uzer
 WHERE
-    userID = ? OR email = ? OR name LIKE ?
-UNION SELECT 
-    2 AS tipo, id, roleID AS entityID, name
+    username = ? OR email = ? OR name LIKE ?
+UNION SELECT
+    2 AS tipo, id, rolename AS entityID, name
 FROM
     Role
 WHERE
-    roleID = ? OR email = ? OR name LIKE ?
+    rolename = ? OR email = ? OR name LIKE ?

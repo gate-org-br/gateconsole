@@ -22,7 +22,7 @@
 			<label data-size='2'>
 				Login:
 				<span>
-					<g:text property='form.userID' tabindex='1'/>
+					<g:text property='form.username' tabindex='1'/>
 				</span>
 			</label>
 			<label data-size='2'>
@@ -98,7 +98,7 @@
 			<label>
 				Detalhes:
 				<span style='flex-basis: 80px'>
-					<g:textarea property='form.details' tabindex='1'/>
+					<g:textarea property='form.description' tabindex='1'/>
 				</span>
 			</label>
 			<label>

@@ -1,6 +1,6 @@
 select
     Role.id,
-    Role.roleID as roleID,
+    Role.rolename as rolename,
     Role.name as name
 from
     Role

@@ -8,10 +8,12 @@ import gate.error.AppException;
 import gateconsole.contol.SearchControl;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 
 @Icon("2008")
 @Name("Home")
-public class HomeScreen extends Screen
+@RequestScoped
+public class HomeScreen extends gate.base.Screen
 {
 
 	@Required
@@ -19,7 +21,6 @@ public class HomeScreen extends Screen
 	private String form;
 	private List<Object> page;
 
-	@Override
 	public Object call()
 	{
 		if (isPOST())

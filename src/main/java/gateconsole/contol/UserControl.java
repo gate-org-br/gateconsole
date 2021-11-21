@@ -23,7 +23,7 @@ public class UserControl extends Control
 
 	public List<User> getSubscriptions()
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			return dao.getSubscriptions();
 		}
@@ -31,7 +31,7 @@ public class UserControl extends Control
 
 	public List<User> search()
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			return dao.search().stream().peek(e -> e.setRole(getUser().getRole().getRoot().select(e.getRole().getId())))
 				.collect(Collectors.toList());
@@ -40,7 +40,7 @@ public class UserControl extends Control
 
 	public List<User> search(User filter)
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			return dao.search(filter).stream()
 				.peek(e -> e.setRole(getUser().getRole().getRoot()
@@ -52,7 +52,7 @@ public class UserControl extends Control
 
 	public User select(ID id) throws AppException
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			User user = dao.select(id);
 			if (user.getRole().getId() != null)
@@ -63,14 +63,14 @@ public class UserControl extends Control
 
 	public void insert(User value) throws AppException
 	{
-		Constraints.validate(value, "active", "userID", "name", "email", "details", "phone", "cellPhone", "CPF", "code");
+		Constraints.validate(value, "active", "username", "name", "email", "description", "phone", "cellPhone", "CPF", "code");
 
 		if (value.getPhoto() != null && value.getPhoto().getSize() > MAX_PHOTO_SIZE)
 			throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
-			if (value.getPasswd() == null)
-				value.setPasswd(value.getUserID()).toString();
+			if (value.getPassword() == null)
+				value.setPassword(value.getUsername()).toString();
 			dao.insert(value);
 		}
 	}
@@ -79,7 +79,7 @@ public class UserControl extends Control
 	{
 		Progress.startup(values.size(), "Inserindo usuários");
 
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			dao.getLink().beginTran();
 			for (User value : values)
@@ -87,13 +87,13 @@ public class UserControl extends Control
 				value.setRole(role);
 				value.setActive(true);
 
-				Constraints.validate(value, "userID", "name", "email", "details", "phone", "cellPhone", "CPF", "code");
+				Constraints.validate(value, "username", "name", "email", "description", "phone", "cellPhone", "CPF", "code");
 
 				if (value.getPhoto() != null && value.getPhoto().getSize() > MAX_PHOTO_SIZE)
 					throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
 
-				if (value.getPasswd() == null)
-					value.setPasswd(value.getUserID());
+				if (value.getPassword() == null)
+					value.setPassword(value.getUsername());
 
 				try
 				{
@@ -101,9 +101,9 @@ public class UserControl extends Control
 				} catch (ConstraintViolationException ex)
 				{
 					if (value.getEmail() == null)
-						throw new AppException(ex, "%s: %s", ex.getMessage(), value.getUserID());
+						throw new AppException(ex, "%s: %s", ex.getMessage(), value.getUsername());
 					else
-						throw new AppException(ex, "%s: %s (%s)", ex.getMessage(), value.getUserID(), value.getEmail());
+						throw new AppException(ex, "%s: %s (%s)", ex.getMessage(), value.getUsername(), value.getEmail());
 				}
 
 				Progress.update(value.getName() + " inserido com sucesso");
@@ -115,7 +115,7 @@ public class UserControl extends Control
 
 	public MimeData getPhoto(ID id)
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			return dao.getPhoto(id);
 		}
@@ -124,12 +124,12 @@ public class UserControl extends Control
 	public void update(User model) throws AppException
 	{
 		Constraints.validate(model, "active", "role.id",
-			"userID", "name", "email", "details", "phone",
+			"username", "name", "email", "description", "phone",
 			"cellPhone", "photo", "CPF");
 
 		if (model.getPhoto() != null && model.getPhoto().getSize() > 65535)
 			throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			dao.update(model);
 		}
@@ -137,7 +137,7 @@ public class UserControl extends Control
 
 	public void accept(User model, Role role) throws AppException
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			dao.accept(model, role);
 		}
@@ -145,16 +145,16 @@ public class UserControl extends Control
 
 	public void delete(User user) throws AppException
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			if (!dao.delete(user))
 				throw new AppException("Tentativa de remover um USUÁRIO inexistente.");
 		}
 	}
 
-	public void passwd(User user) throws AppException
+	public void password(User user) throws AppException
 	{
-		try (UserDao dao = new UserDao())
+		try ( UserDao dao = new UserDao())
 		{
 			if (!dao.setPasswd(user))
 				throw new AppException("Tentativa de resetar a senha de um USUÁRIO inexistente.");
@@ -166,7 +166,7 @@ public class UserControl extends Control
 
 		public List<User> search(Func func)
 		{
-			try (UserDao.FuncDao dao = new UserDao.FuncDao())
+			try ( UserDao.FuncDao dao = new UserDao.FuncDao())
 			{
 				return dao.search(func);
 			}
@@ -174,7 +174,7 @@ public class UserControl extends Control
 
 		public void insert(User user, Func func) throws AppException
 		{
-			try (UserDao.FuncDao dao = new UserDao.FuncDao())
+			try ( UserDao.FuncDao dao = new UserDao.FuncDao())
 			{
 				dao.insert(user, func);
 			}
@@ -183,7 +183,7 @@ public class UserControl extends Control
 
 		public void delete(User user, Func func) throws AppException
 		{
-			try (UserDao.FuncDao dao = new UserDao.FuncDao())
+			try ( UserDao.FuncDao dao = new UserDao.FuncDao())
 			{
 				dao.delete(user, func);
 			}

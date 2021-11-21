@@ -41,7 +41,7 @@
 			<label data-size="2">
 				Sigla:
 				<span>
-					<g:text property='form.roleID' tabindex='1'/>
+					<g:text property='form.rolename' tabindex='1'/>
 				</span>
 			</label>
 			<label data-size="4">

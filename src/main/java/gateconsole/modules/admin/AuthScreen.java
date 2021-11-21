@@ -1,29 +1,24 @@
 package gateconsole.modules.admin;
 
-import gate.annotation.Current;
-import gate.annotation.Description;
+import gate.annotation.CopyIcon;
 import gate.annotation.Icon;
 import gate.annotation.Name;
-import gate.base.Screen;
-import gate.entity.App;
 import gate.entity.Auth;
 import gate.error.AppException;
 import gateconsole.contol.AuthControl;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-@Icon("2002")
+@RequestScoped
 @Name("Acessos")
-public class AuthScreen extends Screen
+@CopyIcon(Auth.class)
+public class AuthScreen extends gate.base.Screen
 {
 
 	private Auth form;
 	private Collection<Auth> page;
-
-	@Inject
-	@Current
-	private Collection<App> apps;
 
 	@Inject
 	private AuthControl control;
@@ -34,14 +29,6 @@ public class AuthScreen extends Screen
 	{
 		setPage(control.search(getForm()));
 		return "/WEB-INF/views/gateconsole/modules/admin/Auth/View.jsp";
-	}
-
-	@Icon("search")
-	@Name("Pesquisar")
-	@Description("Pesquisar acessos")
-	public String callSearch()
-	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Auth/ViewSearch.jsp";
 	}
 
 	@Icon("1002")
@@ -94,10 +81,5 @@ public class AuthScreen extends Screen
 	public void setPage(Collection<Auth> page)
 	{
 		this.page = page;
-	}
-
-	public Collection<App> getApps()
-	{
-		return apps;
 	}
 }

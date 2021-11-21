@@ -3,7 +3,6 @@ package gateconsole.modules.admin;
 import gate.annotation.Color;
 import gate.annotation.Icon;
 import gate.annotation.Name;
-import gate.base.Screen;
 import gate.entity.Role;
 import gate.entity.User;
 import gate.error.AppException;
@@ -12,12 +11,14 @@ import gate.type.mime.MimeMail;
 import gateconsole.contol.RoleControl;
 import gateconsole.contol.UserControl;
 import java.util.Collection;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 @Icon("1007")
+@RequestScoped
 @Color("#660000")
 @Name("Pendências")
-public class AccessScreen extends Screen
+public class AccessScreen extends gate.base.Screen
 {
 
 	private User form;

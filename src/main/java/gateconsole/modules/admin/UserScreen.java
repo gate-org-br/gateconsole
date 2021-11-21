@@ -26,11 +26,13 @@ import gateconsole.contol.FuncControl;
 import gateconsole.contol.UserControl;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+@RequestScoped
 @Name("Usuários")
 @CopyIcon(User.class)
-public class UserScreen extends Screen
+public class UserScreen extends gate.base.Screen
 {
 
 	private User form;
@@ -44,7 +46,7 @@ public class UserScreen extends Screen
 
 	private Iterable<User> page;
 	private final Backup BACKUP = new Backup("Usuários", User.class,
-		"name", "userID", "email", "phone", "cellPhone", "details");
+		"name", "username", "email", "phone", "cellPhone", "description");
 
 	@Inject
 	private UserControl control;
@@ -117,7 +119,7 @@ public class UserScreen extends Screen
 	@Name("Resetar senha")
 	public Object callPasswd() throws AppException
 	{
-		control.passwd(getForm());
+		control.password(getForm());
 		return new URL("Gate")
 			.setModule(getModule())
 			.setScreen(getScreen())
@@ -170,7 +172,7 @@ public class UserScreen extends Screen
 
 		formulario.setCaption("Filtro");
 		formulario.add("Ativo:", getForm().getActive());
-		formulario.add("Login:", getForm().getUserID());
+		formulario.add("Login:", getForm().getUsername());
 		formulario.add("E-Mail:", getForm().getEmail()).colspan(2);
 		formulario.add("Nome", getForm().getName()).colspan(2);
 		formulario.add("Perfil", getForm().getRole().getName()).colspan(2);
@@ -178,7 +180,7 @@ public class UserScreen extends Screen
 		report.addLineBreak();
 
 		Grid<User> grid = report.addGrid(User.class, ordenate(control.search(getForm())));
-		grid.add().head("Login").body(User::getUserID).style().width(10);
+		grid.add().head("Login").body(User::getUsername).style().width(10);
 		grid.add().head("Perfil").body(e -> e.getRole().getName()).style().width(45);
 		grid.add().head("Name").body(User::getName).style().width(45);
 
@@ -232,6 +234,7 @@ public class UserScreen extends Screen
 		return control.getPhoto(getForm().getId());
 	}
 
+	@RequestScoped
 	@Name("Funções")
 	@CopyIcon(Func.class)
 	public static class FuncScreen extends Screen

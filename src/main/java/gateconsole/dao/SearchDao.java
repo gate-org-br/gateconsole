@@ -45,14 +45,14 @@ public class SearchDao extends Dao
 						case 1:
 							User user = new User();
 							user.setId(cursor.getValue(ID.class, "id"));
-							user.setUserID(cursor.getValue(String.class, "entityID"));
+							user.setUsername(cursor.getValue(String.class, "entityID"));
 							user.setName(cursor.getValue(String.class, "name"));
 							objects.add(user);
 							break;
 						case 2:
 							Role role = new Role();
 							role.setId(cursor.getValue(ID.class, "id"));
-							role.setRoleID(cursor.getValue(String.class, "entityID"));
+							role.setRolename(cursor.getValue(String.class, "entityID"));
 							role.setName(cursor.getValue(String.class, "name"));
 							objects.add(role);
 							break;

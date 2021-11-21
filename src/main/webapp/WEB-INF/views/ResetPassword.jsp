@@ -43,7 +43,7 @@
 									<label>
 										<span>
 											<g:icon type="gate.entity.User"/>
-											<input type='TEXT' required='required' name='user.userID' maxlength='64' tabindex='1' title='Entre com o seu login.'/>
+											<input type='TEXT' required='required' name='user.username' maxlength='64' tabindex='1' title='Entre com o seu login.'/>
 										</span>
 									</label>
 								</fieldset>

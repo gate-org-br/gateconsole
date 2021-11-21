@@ -4,9 +4,9 @@
 	<form method='POST' action='Gate?MODULE=${MODULE}&SCREEN=${SCREEN}&ACTION=Insert'>
 		<fieldset>
 			<label data-size='2'>
-				Tipo:
+				Acesso:
 				<span>
-					<g:select property="form.mode" tabindex='1'/>
+					<g:select property="form.access" tabindex='1'/>
 				</span>
 			</label>
 			<label data-size='2'>
@@ -14,13 +14,13 @@
 				<span>
 					<g:choose>
 						<g:when condition="${not empty screen.form.role.id}">
-							<g:select property="form.type" tabindex='1'/>
+							<g:select property="form.scope" tabindex='1'/>
 						</g:when>
 						<g:when condition="${not empty screen.form.func.id}">
-							<g:select property="form.type" tabindex='1'/>
+							<g:select property="form.scope" tabindex='1'/>
 						</g:when>
 						<g:otherwise>
-							<g:hidden property="form.type" value='1'/>
+							<g:hidden property="form.scope" value='1'/>
 							<g:icon type="gate.entity.Auth$Type:PRIVATE"/>Privado
 						</g:otherwise>
 					</g:choose>
@@ -30,27 +30,27 @@
 				Module:
 				<span>
 					<g:text id='module' property="form.module" tabindex='1'/>
-					<g:shortcut module="#" screen="#" action="Search" data-get='module, screen, action' title='Pesquisar acessos'/>
+					<g:shortcut screen="App" action="Search" data-get='module, screen, action' title='Pesquisar acessos'/>
 				</span>
 			</label>
 			<label data-size='4'>
 				Screen:
 				<span>
 					<g:text id='screen' property="form.screen" tabindex='1'/>
-					<g:shortcut module="#" screen="#" action="Search" data-get='module, screen, action' title='Pesquisar acessos'/>
+					<g:shortcut screen="App" action="Search" data-get='module, screen, action' title='Pesquisar acessos'/>
 				</span>
 			</label>
 			<label data-size='4'>
 				Action:
 				<span>
 					<g:text id='action' property="form.action" tabindex='1'/>
-					<g:shortcut module="#" screen="#" action="Search" data-get='module, screen, action' title='Pesquisar acessos'/>
+					<g:shortcut screen="App" action="Search" data-get='module, screen, action' title='Pesquisar acessos'/>
 				</span>
 			</label>
 		</fieldset>
 
 		<g-coolbar>
-			<g:link method="post" module="#" screen="#" action="Insert" tabindex="2"/>
+			<g:link method="post" action="Insert" tabindex="2"/>
 		</g-coolbar>
 
 		<g:hidden property="form.user.id" required=''/>
@@ -98,11 +98,11 @@
 				<tbody>
 					<g:iterator source="${screen.page}" target="item" index="indx">
 						<tr>
-							<td title="Tipo">
-								<g:icon type="${item.mode}"/>&nbsp;<g:print value="${item.mode}"/>
+							<td title="Acesso">
+								<g:icon type="${item.access}"/>&nbsp;<g:print value="${item.access}"/>
 							</td>
 							<td title="Escopo">
-								<g:icon type="${item.type}"/>&nbsp;<g:print value="${item.type}"/>
+								<g:icon type="${item.scope}"/>&nbsp;<g:print value="${item.scope}"/>
 							</td>
 							<td title="Module">
 								<g:print value="${item.module}" empty="*"/>

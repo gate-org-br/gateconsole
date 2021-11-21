@@ -32,7 +32,7 @@ public class UserControl extends Control
 	{
 		Constraints.validate(value,
 			"active",
-			"userID",
+			"username",
 			"passwd",
 			"name",
 			"email",
@@ -57,7 +57,7 @@ public class UserControl extends Control
 		Constraints.validate(value,
 			"id",
 			"active",
-			"userID",
+			"username",
 			"passwd",
 			"name",
 			"email",

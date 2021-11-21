@@ -40,7 +40,7 @@
 					<g:iterator source="${subscriptions}" index="indx" target="item">
 						<tr data-target="_dialog" data-action='Gate?MODULE=gateconsole.modules.admin&SCREEN=Access&ACTION=Select&form.id=${item.id}'
 						    title='Requisi&ccedil;&atilde;o de Cadastro'>
-							<td style='text-align: center'>${item.userID}</td>
+							<td style='text-align: center'>${item.username}</td>
 							<td style='text-align: left'>${item.name}</td>
 							<td style='text-align: center'>${item.phone}</td>
 							<td style='text-align: center'>${item.cellPhone}</td>

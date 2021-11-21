@@ -39,7 +39,7 @@
 						<g:iterator source="${screen.page}" target="target">
 							<tr data-target='_parent' data-action='Gate?MODULE=${MODULE}&SCREEN=${SCREEN}&ACTION=Select&form.id=${target.id}'>
 								<td><g:print value="${target.name}"/></td>
-								<td><g:print value="${target.userID}"/></td>
+								<td><g:print value="${target.username}"/></td>
 								<td data-value="${g:number(target.registration)}"><g:print value="${target.registration}"/></td>
 								<td><g:print value="${target.active}"/></td>
 							</tr>

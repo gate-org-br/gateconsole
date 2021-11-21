@@ -30,14 +30,14 @@
 									Login:
 									<span>
 										<g:icon type="gate.entity.User"/>
-										<input type='TEXT' required='required' name='user.userID' maxlength='64' tabindex='1' title='Entre com o seu login.'/>
+										<input type='TEXT' required='required' name='user.username' maxlength='64' tabindex='1' title='Entre com o seu login.'/>
 									</span>
 								</label>
 								<label data-size="8">
 									Senha atual:
 									<span>
 										<g:icon type="passwd"/>
-										<input type='PASSWORD' required='required' name='user.passwd' maxlength='64' tabindex='1' title='Entre com a sua senha atual.'/>
+										<input type='PASSWORD' required='required' name='user.password' maxlength='64' tabindex='1' title='Entre com a sua senha atual.'/>
 									</span>
 								</label>
 								<label  data-size="8">

@@ -16,7 +16,7 @@
 			<label style='width: 12.5%'>
 				Login:
 				<span>
-					<g:label property='form.userID'/>
+					<g:label property='form.username'/>
 				</span>
 			</label>
 			<label style='width: 25%'>
@@ -49,7 +49,7 @@
 			<label style='width: 100%'>
 				Detalhes:
 				<span style='height: 60px'>
-					<g:label property='form.details'/>
+					<g:label property='form.description'/>
 				</span>
 			</label>
 

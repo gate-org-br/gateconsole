@@ -44,7 +44,7 @@ public class UserDao extends Dao
 		return getLink()
 			.search(User.class)
 			.properties("=active", "id", "role.id", "role.name", "code",
-				"email", "userID", "+name", "phone", "cellPhone", "CPF", "sex", "birthdate", "registration")
+				"email", "username", "+name", "phone", "cellPhone", "CPF", "sex", "birthdate", "registration")
 			.parameters(Boolean.TRUE);
 	}
 
@@ -52,7 +52,7 @@ public class UserDao extends Dao
 	{
 		return getLink()
 			.search(User.class)
-			.properties("=id", "=active", "=role.id", "%role.name", "=email", "=userID", "+%name", "=phone", "code",
+			.properties("=id", "=active", "=role.id", "%role.name", "=email", "=username", "+%name", "=phone", "code",
 				"=cellPhone", "=CPF", "=sex", "=birthdate", ">=registration")
 			.matching(filter);
 	}
@@ -73,15 +73,15 @@ public class UserDao extends Dao
 				.set("active", value.getActive())
 				.set("Role$id", value.getRole().getId())
 				.set("name", value.getName())
-				.set("userID", value.getUserID())
-				.set("passwd", MD5.digest(value.getPasswd()))
+				.set("username", value.getUsername())
+				.set("password", MD5.digest(value.getPassword()))
 				.set("sex", value.getSex())
 				.set("CPF", value.getCPF())
 				.set("birthdate", value.getBirthdate())
 				.set("phone", value.getPhone())
 				.set("cellPhone", value.getCellPhone())
 				.set("email", value.getEmail())
-				.set("details", value.getDetails())
+				.set("description", value.getDescription())
 				.set("registration", LocalDateTime.now())
 				.set("code", value.getCode())
 				.set("photo", value.getPhoto()))
@@ -95,9 +95,9 @@ public class UserDao extends Dao
 			.set("active", value.getActive())
 			.set("Role$id", value.getRole().getId())
 			.set("name", value.getName())
-			.set("userID", value.getUserID())
+			.set("username", value.getUsername())
 			.set("email", value.getEmail())
-			.set("details", value.getDetails())
+			.set("description", value.getDescription())
 			.set("phone", value.getPhone())
 			.set("cellPhone", value.getCellPhone())
 			.set("CPF", value.getCPF())
@@ -136,7 +136,7 @@ public class UserDao extends Dao
 	public boolean setPasswd(User entity) throws ConstraintViolationException
 	{
 		return getLink()
-			.prepare("update Uzer set passwd = MD5(userID) where id = ?")
+			.prepare("update Uzer set password = MD5(username) where id = ?")
 			.parameters(entity.getId())
 			.execute() > 0;
 	}

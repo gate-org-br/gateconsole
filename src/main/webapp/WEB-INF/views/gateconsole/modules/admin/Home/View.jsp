@@ -70,7 +70,7 @@
 										<g:icon type="${item}"/>
 									</td>
 									<td>
-										<g:print value="${item.userID}"/>
+										<g:print value="${item.username}"/>
 									</td>
 									<td>
 										<g:print value="${item.name}"/>
@@ -83,7 +83,7 @@
 										<g:icon type="${item}"/>
 									</td>
 									<td>
-										<g:print value="${item.roleID}"/>
+										<g:print value="${item.rolename}"/>
 									</td>
 									<td>
 										<g:print value="${item.name}"/>

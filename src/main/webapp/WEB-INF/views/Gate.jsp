@@ -29,14 +29,14 @@
 								Login:
 								<span>
 									<g:icon type="gate.entity.User"/>
-									<input type="text" required='required' name='$userid' maxlength='64' tabindex="1" title='Entre com o seu login.'/>
+									<input type="text" required='required' name='$username' maxlength='64' tabindex="1" title='Entre com o seu login.'/>
 								</span>
 							</label>
 							<label>
 								Senha:
 								<span>
 									<g:icon type="passwd"/>
-									<input type="password" required='required' name='$passwd' maxlength='32' tabindex="1" title='Entre com a sua senha.'/>
+									<input type="password" required='required' name='$password' maxlength='32' tabindex="1" title='Entre com a sua senha.'/>
 								</span>
 							</label>
 						</fieldset>
@@ -61,9 +61,9 @@
 		<g:if condition="${not empty messages}">
 			<script type='text/javascript'>
 				<g:iterator source="${messages}" target="message">
-						    alert('${message}');
+				alert('${message}');
 				</g:iterator						>
-			</script						>
-		</g:if						>
-	</g:login>
-</g:template>
+				< /script						>
+			</g:if						>
+		</g:login>
+	</g:template>

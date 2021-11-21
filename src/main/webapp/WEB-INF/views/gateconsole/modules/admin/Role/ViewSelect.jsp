@@ -32,7 +32,7 @@
 		<label data-size='2'>
 			Sigla:
 			<span>
-				<g:label property='form.roleID'/>
+				<g:label property='form.rolename'/>
 			</span>
 		</label>
 		<label data-size='4'>

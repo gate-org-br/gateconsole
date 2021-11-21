@@ -14,11 +14,13 @@ import gateconsole.contol.RoleControl;
 import gateconsole.contol.UserControl;
 import java.util.Collection;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+@RequestScoped
 @Name("Perfis")
 @CopyIcon(Role.class)
-public class RoleScreen extends Screen
+public class RoleScreen extends gate.base.Screen
 {
 
 	private Role form;
@@ -169,6 +171,7 @@ public class RoleScreen extends Screen
 		return new UserControl().search(new User().setRole(getForm()));
 	}
 
+	@RequestScoped
 	@Name("Funções")
 	@CopyIcon(Func.class)
 	public static class FuncScreen extends Screen

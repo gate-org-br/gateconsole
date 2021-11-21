@@ -30,14 +30,14 @@
 							<tbody>
 								<g:iterator source="${screen.page}" target="role" children="${e -> e.children}">
 									<tr data-depth='${depth}' data-target='_stack' title='Perfil'
-									    data-on-hide="reload" 
+									    data-on-hide="reload"
 									    data-action='Gate?MODULE=${MODULE}&SCREEN=${SCREEN}&ACTION=Select&form.id=${role.id}'>
 										<td></td>
 										<td style='padding-left: ${depth*40}px; font-weight: ${role.isMaster() ? "bold" : "normal"}'>
 											<g:icon type="gate.entity.Role"/>
 											${role.name}
-											<g:if condition="${not empty role.roleID}">
-												(<g:print value="${role.roleID}"/>)
+											<g:if condition="${not empty role.rolename}">
+												(<g:print value="${role.rolename}"/>)
 											</g:if>
 										</td>
 									</tr>
@@ -62,9 +62,9 @@
 												<tr data-depth='${depth+1}'>
 													<td></td>
 													<td style='padding-left: ${(depth+1)*40}px;
-													    color: ${auth.mode eq "ALLOW" ? "green" : "red"};
-													    font-weight: ${auth.type eq "PUBLIC" ? "bold" : "normal"}'>
-														<g:icon type="${auth.mode}" title='${auth.mode.toString()}'/>&nbsp;<g:icon type="${auth.type}" title='${auth.type.toString()}'/>&nbsp;<g:print value="${auth}"/>
+													    color: ${auth.access eq "GRANT" ? "green" : "red"};
+													    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
+														<g:icon type="${auth.access}" title='${auth.access.toString()}'/>&nbsp;<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>&nbsp;<g:print value="${auth}"/>
 													</td>
 												</tr>
 											</g:iterator>
@@ -82,9 +82,9 @@
 											<tr data-depth='${depth+1}'>
 												<td></td>
 												<td style='padding-left: ${(depth+1)*40}px;
-												    color: ${auth.mode eq "ALLOW" ? "green" : "red"};
-												    font-weight: ${auth.type eq "PUBLIC" ? "bold" : "normal"}'>
-													<g:icon type="${auth.mode}" title='${auth.mode.toString()}'/>&nbsp;<g:icon type="${auth.type}" title='${auth.type.toString()}'/>&nbsp;<g:print value="${auth}"/>
+												    color: ${auth.access eq "GRANT" ? "green" : "red"};
+												    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
+													<g:icon type="${auth.access}" title='${auth.access.toString()}'/>&nbsp;<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>&nbsp;<g:print value="${auth}"/>
 												</td>
 											</tr>
 										</g:iterator>
@@ -119,9 +119,9 @@
 													<tr data-depth='${depth+1}'>
 														<td></td>
 														<td style='padding-left: ${(depth+1)*40}px;
-														    color: ${auth.mode eq "ALLOW" ? "green" : "red"};
-														    font-weight: ${auth.type eq "PUBLIC" ? "bold" : "normal"}'>
-															<g:icon type="${auth.mode}" title='${auth.mode.toString()}'/>&nbsp;<g:icon type="${auth.type}" title='${auth.type.toString()}'/>&nbsp;<g:print value="${auth}"/>
+														    color: ${auth.access eq "GRANT" ? "green" : "red"};
+														    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
+															<g:icon type="${auth.access}" title='${auth.access.toString()}'/>&nbsp;<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>&nbsp;<g:print value="${auth}"/>
 														</td>
 													</tr>
 												</g:iterator>
@@ -131,10 +131,10 @@
 												<tr data-depth='${depth+1}'>
 													<td></td>
 													<td style='padding-left: ${(depth+1)*40}px;
-													    color: ${auth.mode eq "ALLOW" ? "green" : "red"};
-													    font-weight: ${auth.type eq "PUBLIC" ? "bold" : "normal"}'>
-														<g:icon type="${auth.mode}" title='${auth.mode.toString()}'/>
-														<g:icon type="${auth.type}" title='${auth.type.toString()}'/>
+													    color: ${auth.access eq "GRANT" ? "green" : "red"};
+													    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
+														<g:icon type="${auth.access}" title='${auth.access.toString()}'/>
+														<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>
 														<g:print value="${auth}"/>
 													</td>
 												</tr>
@@ -151,7 +151,7 @@
 
 		<footer>
 			<g-coolbar>
-				<g:link target="_stack" data-on-hide="reload" 
+				<g:link target="_stack" data-on-hide="reload"
 					module='#' screen='#' action='Insert' tabindex='1'/>
 			</g-coolbar>
 		</footer>

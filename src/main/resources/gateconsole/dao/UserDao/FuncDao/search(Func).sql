@@ -1,6 +1,6 @@
 select
     Uzer.id,
-    Uzer.userID as userID,
+    Uzer.username as username,
     Uzer.name as name
 from
     Uzer

@@ -38,7 +38,7 @@
 									Login:
 									<span>
 										<g:icon type="2096"/>
-										<input type='TEXT' required='required' name='user.userID'
+										<input type='TEXT' required='required' name='user.username'
 										       maxlength='64' tabindex='1' title='Entre com o seu login.'/>
 									</span>
 								</label>
@@ -46,7 +46,7 @@
 									Senha:
 									<span>
 										<g:icon type="passwd"/>
-										<input type='PASSWORD' required='required' name='user.passwd'
+										<input type='PASSWORD' required='required' name='user.password'
 										       maxlength='32' tabindex='1' title='Entre com a sua senha.'/>
 									</span>
 								</label>
@@ -62,7 +62,7 @@
 									Empresa:
 									<span>
 										<g:icon type="2048"/>
-										<input type='TEXT' required='required' name='user.details'
+										<input type='TEXT' required='required' name='user.description'
 										       maxlength='256' tabindex='1' title='Entre com o nome da empresa onde trabalha.'/>
 									</span>
 								</label>

@@ -28,7 +28,7 @@
 			<label data-size='2'>
 				Login:
 				<span>
-					<g:label property='form.userID'/>
+					<g:label property='form.username'/>
 				</span>
 			</label>
 			<label data-size='2'>
@@ -103,9 +103,9 @@
 				</span>
 			</label>
 			<label>
-				Detalhes:
+				Descrição:
 				<span style='flex-basis: 80px'>
-					<g:label property='form.details'/>
+					<g:label property='form.description'/>
 				</span>
 			</label>
 		</fieldset>

@@ -59,7 +59,7 @@ public class RoleControl extends Control
 
 	public void insert(Role role) throws AppException
 	{
-		Constraints.validate(role, "master", "active", "name", "email", "description", "roleID");
+		Constraints.validate(role, "master", "active", "name", "email", "description", "rolename");
 		try (RoleDao dao = new RoleDao())
 		{
 			dao.insert(role);
@@ -69,7 +69,7 @@ public class RoleControl extends Control
 	public void update(Role role) throws AppException
 	{
 		Constraints.validate(role, "master", "active",
-			"name", "email", "description", "roleID");
+			"name", "email", "description", "rolename");
 
 		try (RoleDao dao = new RoleDao())
 		{

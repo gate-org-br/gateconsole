@@ -7,7 +7,6 @@ import gate.annotation.Handler;
 import gate.annotation.Icon;
 import gate.annotation.Name;
 import gate.annotation.Public;
-import gate.base.Screen;
 import gate.error.ConversionException;
 import gate.handler.JsonTextHandler;
 import gate.io.URL;
@@ -17,12 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import javax.enterprise.context.RequestScoped;
 
 @Public
 @Icon("2072")
 @Name("Demo")
+@RequestScoped
 @Description("Demonstração")
-public class DemoScreen extends Screen
+public class DemoScreen extends gate.base.Screen
 {
 
 	private Doc.Type type;

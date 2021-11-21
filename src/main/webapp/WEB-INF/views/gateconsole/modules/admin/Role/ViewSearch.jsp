@@ -9,9 +9,9 @@
 						<tr data-ret='${target.id}, ${target.name}' tabindex="1">
 							<td style='padding-left: ${depth*40}px'>
 								${target.name}
-								<g:if condition="${not empty target.roleID}">
+								<g:if condition="${not empty target.rolename}">
 									<span style='color: gray'>
-										(<g:print value="${target.roleID}"/>)
+										(<g:print value="${target.rolename}"/>)
 									</span>
 								</g:if>
 							</td>

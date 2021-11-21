@@ -14,11 +14,13 @@ import gateconsole.contol.FuncControl;
 import gateconsole.contol.RoleControl;
 import gateconsole.contol.UserControl;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+@RequestScoped
 @Name("Funções")
-@Icon("gate.entity.Func")
-public class FuncScreen extends Screen
+@CopyIcon(Func.class)
+public class FuncScreen extends gate.base.Screen
 {
 
 	private Func form;
@@ -139,6 +141,7 @@ public class FuncScreen extends Screen
 		return page;
 	}
 
+	@RequestScoped
 	@Name("Usuários")
 	@CopyIcon(User.class)
 	public static class UserScreen extends Screen
@@ -230,6 +233,7 @@ public class FuncScreen extends Screen
 		}
 	}
 
+	@RequestScoped
 	@Name("Perfis")
 	@CopyIcon(Role.class)
 	public static class RoleScreen extends Screen
