@@ -4,6 +4,7 @@ import gate.annotation.CopyIcon;
 import gate.annotation.Icon;
 import gate.annotation.Name;
 import gate.base.Screen;
+import gate.command.Command;
 import gate.entity.Func;
 import gate.entity.Role;
 import gate.entity.User;
@@ -23,12 +24,15 @@ import javax.inject.Inject;
 public class RoleScreen extends gate.base.Screen
 {
 
+	@Inject
+	RoleControl control;
+
+	@Inject
+	UserControl userControl;
+
 	private Role form;
 
 	private Collection<Role> page;
-
-	@Inject
-	private RoleControl control;
 
 	public String call()
 	{
@@ -39,15 +43,15 @@ public class RoleScreen extends gate.base.Screen
 		{
 			setMessages(ex.getMessages());
 		}
-		return "/WEB-INF/views/gateconsole/modules/admin/Role/View.jsp";
+		return "/views/gateconsole/modules/admin/Role/View.html";
 	}
 
 	@Name("Sub Perfis")
 	@CopyIcon(Role.class)
 	public String callImport()
 	{
-		setPage(control.getChildRoles(getForm().getRole()));
-		return "/WEB-INF/views/gateconsole/modules/admin/Role/ViewImport.jsp";
+		page = control.search(getForm().getRole());
+		return "/views/gateconsole/modules/admin/Role/ViewImport.html";
 	}
 
 	@Icon("search")
@@ -61,21 +65,20 @@ public class RoleScreen extends gate.base.Screen
 		{
 			setMessages(ex.getMessages());
 		}
-		return "/WEB-INF/views/gateconsole/modules/admin/Role/ViewSearch.jsp";
+		return "/views/gateconsole/modules/admin/Role/ViewSearch.html";
 	}
 
 	@Icon("select")
 	@Name("Detalhe")
-	public String callSelect()
+	public Object callSelect()
 	{
 		try
 		{
-			setForm(control.select(getForm().getId()));
-			return "/WEB-INF/views/gateconsole/modules/admin/Role/ViewSelect.jsp";
-		} catch (AppException e)
+			form = control.select(getForm().getId());
+			return "/views/gateconsole/modules/admin/Role/ViewSelect.html";
+		} catch (AppException ex)
 		{
-			setMessages(e.getMessages());
-			return call();
+			return Command.hide(ex.getMessages());
 		}
 	}
 
@@ -88,60 +91,69 @@ public class RoleScreen extends gate.base.Screen
 			try
 			{
 				control.insert(getForm());
-				return callSelect();
 			} catch (AppException ex)
 			{
 				setMessages(ex.getMessages());
 			}
 		}
 
-		return "/WEB-INF/views/gateconsole/modules/admin/Role/ViewInsert.jsp";
+		return "/views/gateconsole/modules/admin/Role/ViewInsert.html";
 	}
 
 	@Icon("update")
 	@Name("Alterar")
-	public String callUpdate()
+	public Object callUpdate()
 	{
 		if (isGET())
 		{
 			try
 			{
-				setForm(control.select(getForm().getId()));
-			} catch (AppException e)
+				form = control.select(getForm().getId());
+			} catch (AppException ex)
 			{
-				setMessages(e.getMessages());
-				return call();
+				return Command.hide(ex.getMessages());
 			}
-
 		} else if (getMessages().isEmpty())
 		{
 			try
 			{
 				control.update(getForm());
-				return callSelect();
-			} catch (AppException e)
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.action("Select")
+					.parameter("form.id", getForm().getId());
+			} catch (AppException ex)
 			{
-				setMessages(e.getMessages());
+				setMessages(ex.getMessages());
 			}
 		}
 
-		return "/WEB-INF/views/gateconsole/modules/admin/Role/ViewUpdate.jsp";
+		return "/views/gateconsole/modules/admin/Role/ViewUpdate.html";
 	}
 
 	@Icon("delete")
 	@Name("Remover")
-	public String callDelete()
+	public Object callDelete()
 	{
 		try
 		{
 			control.delete(getForm());
-			getMessages().add("O perfil foi removido com sucesso.");
-			return "/WEB-INF/views/gateconsole/modules/admin/Role/ViewResult.jsp";
+			return Command.hide("O perfil foi removido com sucesso.");
 		} catch (AppException ex)
 		{
-			setMessages(ex.getMessages());
-			return callSelect();
+			return Command.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.action("Select")
+				.messages(ex.getMessages())
+				.parameter("form.id", getForm().getId());
 		}
+	}
+
+	public List<User> getUsers()
+	{
+		return userControl.search(getForm());
 	}
 
 	public Role getForm()
@@ -151,24 +163,9 @@ public class RoleScreen extends gate.base.Screen
 		return form;
 	}
 
-	public void setForm(Role form)
-	{
-		this.form = form;
-	}
-
 	public Collection<Role> getPage()
 	{
 		return page;
-	}
-
-	public void setPage(Collection<Role> page)
-	{
-		this.page = page;
-	}
-
-	public List<User> getUsers()
-	{
-		return new UserControl().search(new User().setRole(getForm()));
 	}
 
 	@RequestScoped
@@ -182,16 +179,13 @@ public class RoleScreen extends gate.base.Screen
 		private Page<Func> page;
 
 		@Inject
-		private FuncControl funcControl;
-
-		@Inject
-		private FuncControl.RoleControl control;
+		FuncControl.RoleControl control;
 
 		public String call()
 		{
 
 			page = paginate(ordenate(control.search(role)));
-			return "/WEB-INF/views/gateconsole/modules/admin/Role/Func/View.jsp";
+			return "/views/gateconsole/modules/admin/Role/Func/View.html";
 		}
 
 		@Icon("insert")
@@ -243,11 +237,6 @@ public class RoleScreen extends gate.base.Screen
 		public Page<Func> getPage()
 		{
 			return page;
-		}
-
-		public List<Func> getFuncs()
-		{
-			return funcControl.search();
 		}
 	}
 }

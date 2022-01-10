@@ -1,5 +1,11 @@
 {
 	"elements": {
+		"g:print": {
+			"attributes": {
+				"value": {}
+			}
+		},
+		"g-path": {},
 		"g-coolbar": {}
 	},
 	"attributes": {
@@ -9,14 +15,26 @@
 		"g:module": {
 			"context": "a"
 		},
+		"g:template": {
+			"context": "main"
+		},
 		"g:type": {
 			"context": "input"
+		},
+		"g:iterate": {
+			"context": "tr"
 		},
 		"g:action": {
 			"context": "a"
 		},
+		"g:condition": {
+			"context": "fieldset"
+		},
 		"th:each": {
 			"context": "tr"
+		},
+		"g:if": {
+			"context": "span"
 		}
 	}
 }

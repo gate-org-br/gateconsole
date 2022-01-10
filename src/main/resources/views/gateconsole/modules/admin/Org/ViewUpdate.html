@@ -1,0 +1,104 @@
+<main g:template="/views/FULL.html">
+	<article>
+		<section>
+			<form id="form" method='POST' action='#' enctype='multipart/form-data' style="height: 100%">
+				<fieldset style="height: 100%">
+					<legend>
+						<g-path/>
+					</legend>
+
+					<label data-size="4">
+						Sigla:
+						<span>
+							<input type='text' g:property='form.orgID' tabindex='1'/>
+						</span>
+					</label>
+					<label data-size="4">
+						Nome:
+						<span>
+							<input type='text' g:property='form.name' tabindex='1'/>
+						</span>
+					</label>
+					<label data-size="8">
+						Logo:
+						<span>
+							<input type='file' g:property="form.icon" tabindex='1' required=''/>
+						</span>
+					</label>
+					<label style="height: calc(50% - 80px)">
+						Descrição:
+						<span>
+							<textarea g:property='form.description' tabindex='1'/>
+						</span>
+					</label>
+					<label style="height: calc(50% - 80px)">
+						Autenticadores:
+						<span>
+							<textarea g:property='form.authenticators' tabindex='1'/>
+						</span>
+					</label>
+					<fieldset>
+						<legend>
+							<i g:icon="2003"/>Expediente
+						</legend>
+						<label data-size="2">
+							Seg:
+							<span>
+								<input type='text' g:property="form.mon" tabindex='1'/>
+							</span>
+						</label>
+						<label data-size="2">
+							Ter:
+							<span>
+								<input type='text' g:property="form.tue" tabindex='1'/>
+							</span>
+						</label>
+						<label data-size="2">
+							Qua:
+							<span>
+								<input type='text' g:property="form.wed" tabindex='1'/>
+							</span>
+						</label>
+						<label data-size="2">
+							Qui:
+							<span>
+								<input type='text' g:property="form.thu" tabindex='1'/>
+							</span>
+						</label>
+						<label data-size="2">
+							Sex:
+							<span>
+								<input type='text' g:property="form.fri" tabindex='1'/>
+							</span>
+						</label>
+						<label data-size="2">
+						</label>
+						<label data-size="2">
+							Sab:
+							<span>
+								<input type='text' g:property="form.sat" tabindex='1'/>
+							</span>
+						</label>
+						<label data-size="2">
+							Dom:
+							<span>
+								<input type='text' g:property="form.sun" tabindex='1'/>
+							</span>
+						</label>
+					</fieldset>
+				</fieldset>
+			</form>
+		</section>
+		<footer>
+			<g-coolbar>
+				<button g:action="Commit" class="Commit" form="form" tabindex='2'>
+					Concluir<i g:icon='commit'/>
+				</button>
+				<hr/>
+				<a g:screen="#" class="Cancel" tabindex='2'>
+					Desistir<i g:icon='cancel'/>
+				</a>
+			</g-coolbar>
+		</footer>
+	</article>
+</main>

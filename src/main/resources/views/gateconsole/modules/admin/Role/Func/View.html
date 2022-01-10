@@ -1,0 +1,57 @@
+<main g:template="/views/PAGE.html">
+	<form method='POST' g:action="Insert">
+		<fieldset>
+			<label>
+				<span>
+					<input type="text" g:property='func.name'
+					       tabindex='1' placeholder="Incluir"
+					       g:options="${funcoes}" g:labels="${e -> e.name}" g:values="${e -> e.id}"/>
+					<input type="hidden" g:property='func.id' id="func.id"/>
+				</span>
+			</label>
+
+			<input type="hidden" g:property="role.id"/>
+		</fieldset>
+
+
+		<g-coolbar>
+			<button class="Action" g:action='Insert'/>
+		</g-coolbar>
+	</form>
+
+	<table class='c2'
+	       g:condition="${not empty screen.page}"
+	       g:otherwise="Nenhum registro encontrado">
+		<colgroup>
+			<col/>
+			<col style="width: 48px"/>
+		</colgroup>
+
+		<caption>
+			FUNÇÕES ENCONTRADAS: ${screen.page.paginator.dataSize}
+		</caption>
+		<thead>
+			<tr>
+				<th>
+					Nome
+				</th>
+				<th g:icon="delete"/>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td g:paginator colspan='2'/>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr th:each="target: ${screen.page}">
+				<td g:print="${target.name}"/>
+				<td>
+					<a g:action="Delete" _role.id="${screen.role.id}" _func.id="${target.id}">
+						<i g:icon="delete"/>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</main>

@@ -4,10 +4,13 @@ import gate.annotation.Description;
 import gate.annotation.Icon;
 import gate.annotation.Name;
 import gate.constraint.Required;
-import gate.messaging.Message;
+import gate.entity.Mail;
+import gate.entity.Server;
+import gate.error.AppException;
 import gate.messaging.MessageException;
 import gate.messaging.Messenger;
 import gate.type.mime.MimeMail;
+import gateconsole.contol.ServerControl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -19,37 +22,57 @@ import javax.inject.Inject;
 public class MailScreen extends gate.base.Screen
 {
 
-	private List<Message> page
+	private List<Mail> page
 		= new ArrayList<>();
 
 	@Inject
-	private Messenger messenger;
+	Messenger messenger;
+
+	@Inject
+	ServerControl control;
 
 	@Required
 	@Name("Destino")
 	@Description("Endereço de destino para o email de teste")
 	private String destination;
 
+	private Server form;
+
 	public String call()
 	{
 		try
 		{
 			page = messenger.search();
+			form = control.select(Server.Type.SMTP);
 		} catch (MessageException ex)
 		{
 			setMessages(ex.getMessages());
 		}
-		return "/WEB-INF/views/gateconsole/modules/admin/Mail/View.jsp";
+		return "/views/gateconsole/modules/admin/Mail/View.html";
+	}
+
+	@Icon("commit")
+	@Name("Aplicar")
+	public String callUpdate()
+	{
+		try
+		{
+			getForm().setType(Server.Type.SMTP);
+			control.update(form);
+		} catch (AppException ex)
+		{
+			setMessages(ex.getMessages());
+		}
+		return call();
 	}
 
 	@Icon("2034")
-	@Name("Enviar email de teste")
+	@Name("Postar")
 	public String callPost()
 	{
 		try
 		{
-			messenger.post(destination, destination,
-				MimeMail.of("EMail de teste", "Favor desconsiderar"));
+			messenger.post(destination, MimeMail.of("EMail de teste", "Favor desconsiderar"));
 			destination = null;
 		} catch (MessageException ex)
 		{
@@ -68,7 +91,12 @@ public class MailScreen extends gate.base.Screen
 		this.destination = destination;
 	}
 
-	public List<Message> getPage()
+	public Server getForm()
+	{
+		return form;
+	}
+
+	public List<Mail> getPage()
 	{
 		return page;
 	}

@@ -1,0 +1,75 @@
+<main g:template="/views/FULL.html">
+	<fieldset>
+		<legend>
+			<g-path/>
+		</legend>
+		<label data-size='8'>
+			Nome:
+			<span>
+				<label g:property='form.name'/>
+			</span>
+		</label>
+		<label data-size='8'>
+			Perfil Pai:
+			<span>
+				<label g:property='form.role.name'/>
+				<a g:if="${not empty screen.form.role.id}"
+				   g:screen="Role" g:action="Select" _form.id="${screen.form.role.id}">
+					<i g:icon="search"/>
+				</a>
+			</span>
+		</label>
+		<label data-size='1'>
+			Master:
+			<span>
+				<label g:property='form.master'/>
+			</span>
+		</label>
+		<label data-size='1'>
+			Ativa:
+			<span>
+				<label g:property='form.active'/>
+			</span>
+		</label>
+		<label data-size='2'>
+			Sigla:
+			<span>
+				<label g:property='form.rolename'/>
+			</span>
+		</label>
+		<label data-size='4'>
+			E-Mail:
+			<span>
+				<label g:property='form.email'/>
+			</span>
+		</label>
+		<label data-size='8'>
+			Responsável:
+			<span>
+				<label g:property='form.manager.name'/>
+			</span>
+		</label>
+		<label g:if="${not empty screen.form.description}">
+			Descrição:
+			<span style='flex-basis: 60px'>
+				<label g:property='form.description'/>
+			</span>
+		</label>
+	</fieldset>
+
+	<g-coolbar>
+		<a g:action='Update' _form.id="${screen.form.id}"/>
+		<a g:action='Delete' _form.id="${screen.form.id}"/>
+		<hr/>
+		<a href="#" target="_hide">
+			Retornar<i g:icon="cancel"/>
+		</a>
+	</g-coolbar>
+
+	<g-tab-control>
+		<a g:screen="Auth" _form.role.id="${screen.form.id}" data-selected='${param.tab eq "Auth"}'/>
+		<a g:screen="RoleScreen$Func" _role.id="${screen.form.id}" data-selected='${param.tab eq "Func"}'/>
+		<a g:screen="User" g:action="Import" _form.role.id="${screen.form.id}" _form.active="true" data-selected='${param.tab eq "User"}'/>
+		<a g:screen="Role" g:action="Import" _form.role.id="${screen.form.id}" data-selected='${param.tab eq "Role"}'/>
+	</g-tab-control>
+</main>

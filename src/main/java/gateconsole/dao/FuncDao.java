@@ -16,11 +16,6 @@ import java.util.List;
 public class FuncDao extends Dao
 {
 
-	public FuncDao()
-	{
-		super("Gate");
-	}
-
 	public FuncDao(Link link)
 	{
 		super(link);
@@ -77,6 +72,11 @@ public class FuncDao extends Dao
 	public static class UserDao extends Dao
 	{
 
+		public UserDao(Link link)
+		{
+			super(link);
+		}
+
 		public List<Func> search(User user)
 		{
 			return getLink()
@@ -107,6 +107,11 @@ public class FuncDao extends Dao
 
 	public static class RoleDao extends Dao
 	{
+
+		public RoleDao(Link link)
+		{
+			super(link);
+		}
 
 		public List<Func> search(Role role)
 		{

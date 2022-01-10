@@ -1,5 +1,6 @@
 package gateconsole.contol;
 
+import gate.annotation.DataSource;
 import gate.base.Control;
 import gate.constraint.Constraints;
 import gate.entity.Auth;
@@ -8,27 +9,39 @@ import gate.entity.Func;
 import gate.entity.Role;
 import gate.entity.User;
 import gate.error.AppException;
-import gate.error.ConstraintViolationException;
 import gate.sql.Link;
+import gate.sql.LinkSource;
 import gate.type.ID;
 import gateconsole.dao.AuthDao;
 import gateconsole.dao.BondDao;
 import gateconsole.dao.RoleDao;
 import gateconsole.dao.UserDao;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.ws.rs.Produces;
 
+@Dependent
 public class RoleControl extends Control
 {
 
+	@Inject
+	@DataSource("Gate")
+	LinkSource linksource;
+
+	@Produces
+	@RequestScoped
+	@Named("perfis")
 	public List<Role> search() throws AppException
 	{
-		try (Link link = new Link("Gate");
-			RoleDao roleDao = new RoleDao(link);
-			UserDao userDao = new UserDao(link);
-			BondDao bondDao = new BondDao(link);
-			AuthDao authDao = new AuthDao(link))
+		try ( Link link = linksource.getLink();
+			 RoleDao roleDao = new RoleDao(link);
+			 UserDao userDao = new UserDao(link);
+			 BondDao bondDao = new BondDao(link);
+			 AuthDao authDao = new AuthDao(link))
 		{
 			List<Role> roles = roleDao.search();
 			List<User> users = userDao.search();
@@ -49,9 +62,19 @@ public class RoleControl extends Control
 		}
 	}
 
+	public List<Role> search(Role role)
+	{
+		try ( Link link = linksource.getLink();
+			 RoleDao dao = new RoleDao(link))
+		{
+			return dao.search(role);
+		}
+	}
+
 	public Role select(ID id) throws AppException
 	{
-		try (RoleDao dao = new RoleDao())
+		try ( Link link = linksource.getLink();
+			 RoleDao dao = new RoleDao(link))
 		{
 			return dao.select(id);
 		}
@@ -60,7 +83,8 @@ public class RoleControl extends Control
 	public void insert(Role role) throws AppException
 	{
 		Constraints.validate(role, "master", "active", "name", "email", "description", "rolename");
-		try (RoleDao dao = new RoleDao())
+		try ( Link link = linksource.getLink();
+			 RoleDao dao = new RoleDao(link))
 		{
 			dao.insert(role);
 		}
@@ -71,12 +95,12 @@ public class RoleControl extends Control
 		Constraints.validate(role, "master", "active",
 			"name", "email", "description", "rolename");
 
-		try (RoleDao dao = new RoleDao())
+		try ( Link link = linksource.getLink();
+			 RoleDao dao = new RoleDao(link))
 		{
 			dao.beginTran();
 
-			if (!dao.update(role))
-				throw new AppException("Tentativa de alterar um perfil inexistente.");
+			dao.update(role);
 
 			List<Role> roles = dao.search();
 			if (roles.stream().anyMatch(e
@@ -91,31 +115,25 @@ public class RoleControl extends Control
 
 	public void delete(Role role) throws AppException
 	{
-
-		try (RoleDao dao = new RoleDao())
+		try ( Link link = linksource.getLink();
+			 RoleDao dao = new RoleDao(link))
 		{
-			if (!dao.delete(role))
-				throw new AppException("Tentativa de remover um perfil inexistente.");
-		} catch (ConstraintViolationException e)
-		{
-			throw new AppException(e.getMessage());
+			dao.delete(role);
 		}
 	}
 
-	public Collection<Role> getChildRoles(Role role)
-	{
-		try (RoleDao dao = new RoleDao())
-		{
-			return dao.getChildRoles(role);
-		}
-	}
-
+	@Dependent
 	public static class FuncControl extends Control
 	{
 
+		@Inject
+		@DataSource("Gate")
+		LinkSource linksource;
+
 		public List<Role> search(Func func)
 		{
-			try (RoleDao.FuncDao dao = new RoleDao.FuncDao())
+			try ( Link link = linksource.getLink();
+				 RoleDao.FuncDao dao = new RoleDao.FuncDao(link))
 			{
 				return dao.search(func);
 			}
@@ -123,7 +141,8 @@ public class RoleControl extends Control
 
 		public void insert(Role role, Func func) throws AppException
 		{
-			try (RoleDao.FuncDao dao = new RoleDao.FuncDao())
+			try ( Link link = linksource.getLink();
+				 RoleDao.FuncDao dao = new RoleDao.FuncDao(link))
 			{
 				dao.insert(role, func);
 			}
@@ -132,7 +151,8 @@ public class RoleControl extends Control
 
 		public void delete(Role role, Func func) throws AppException
 		{
-			try (RoleDao.FuncDao dao = new RoleDao.FuncDao())
+			try ( Link link = linksource.getLink();
+				 RoleDao.FuncDao dao = new RoleDao.FuncDao(link))
 			{
 				dao.delete(role, func);
 			}

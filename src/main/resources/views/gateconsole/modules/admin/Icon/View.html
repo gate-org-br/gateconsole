@@ -1,0 +1,20 @@
+<main g:template="/views/FULL.html">
+	<g-icon-pane>
+		<a g:icons g:if="${icon.name ne '??????'}"
+		   style="flex-basis: 4%; min-width: 80px; margin: 0.5%"
+		   href="#" data-copy-onclick="${icon.code}" tabindex="1">
+			<g:icon type="${icon.code}"/>
+
+			${icon.code}<br/>${icon.name}
+		</a>
+	</g-icon-pane>
+	<g-icon-pane>
+		<a g:icons g:if="${icon.name eq '??????'}"
+		   style="flex-basis: 4%; min-width: 80px; margin: 0.5%"
+		   href="#" data-copy-onclick="${icon.code}" tabindex="1">
+			<g:icon type="${icon.code}"/>
+
+			${icon.code}
+		</a>
+	</g-icon-pane>
+</main>

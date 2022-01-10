@@ -1,0 +1,107 @@
+<main g:template="/views/PAGE.html">
+	<form method='POST' g:action='Insert'>
+		<fieldset>
+			<label data-size='2'>
+				Acesso:
+				<span>
+					<select g:property="form.access" tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Escopo:
+				<span>
+					<select g:property="form.scope" tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='4'>
+				Module:
+				<span>
+					<input type='text' g:property="form.module" id='module' tabindex='1'/>
+					<a g:screen='App' g:action="Search" data-get='module, screen, action' title='Pesquisar acessos'>
+						<i g:icon='search'/>
+					</a>
+				</span>
+			</label>
+			<label data-size='4'>
+				Screen:
+				<span>
+					<input type='text' g:property="form.screen" id='screen' tabindex='1'/>
+					<a g:screen='App' g:action="Search" data-get='module, screen, action' title='Pesquisar acessos'>
+						<i g:icon='search'/>
+					</a>
+				</span>
+			</label>
+			<label data-size='4'>
+				Action:
+				<span>
+					<input type='text' g:property="form.action" id='action' tabindex='1'/>
+					<a g:screen='App' g:action="Search" data-get='module, screen, action' title='Pesquisar acessos'>
+						<i g:icon='search'/>
+					</a>
+				</span>
+			</label>
+		</fieldset>
+
+		<g-coolbar>
+			<button class="Action" g:action="Insert" tabindex="2"/>
+		</g-coolbar>
+
+		<input type='hidden' g:property="form.user.id" required=''/>
+		<input type='hidden' g:property="form.role.id" required=''/>
+		<input type='hidden' g:property="form.func.id" required=''/>
+	</form>
+
+	<table data-collapse="Phone"
+	       class="c1 c2 c3 c4 c5 c6"
+	       g:condition='${not empty screen.page}'
+	       g:otherwise='Nenhum registro encontrado'>
+		<caption g:print='ACESSOS: ${screen.page.size()}'/>
+
+		<col style='width: 12.5%'/>
+		<col style='width: 12.5%'/>
+		<col style='width: 25%'/>
+		<col style='width: 25%'/>
+		<col style='width: 25%'/>
+		<col style='width: 64px'/>
+
+		<thead>
+			<tr>
+				<th>
+					Acesso
+				</th>
+				<th>
+					Escopo
+				</th>
+				<th>
+					Module
+				</th>
+				<th>
+					Screen
+				</th>
+				<th>
+					Action
+				</th>
+				<th g:icon='delete'/>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each='target: ${screen.page}'>
+				<td title="Acesso" g:print='${target.access}'/>
+				<td title="Escopo" g:print='${target.scope}'/>
+				<td title="Module" g:print="${target.module}" g:empty="*"/>
+				<td title="Screen" g:print="${target.screen}" g:empty="*"/>
+				<td title="Action" g:print="${target.action}" g:empty="*"/>
+				<td title="Remover">
+					<a g:action="Delete"
+					   _form.id='${target.id}'
+					   _form.role.id='${screen.form.role.id}'
+					   _form.user.id='${screen.form.user.id}'
+					   _form.func.id='${screen.form.func.id}'>
+						<i g:icon="delete"/>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</main>

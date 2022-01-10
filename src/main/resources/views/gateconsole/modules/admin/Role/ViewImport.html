@@ -1,0 +1,24 @@
+<main g:template="/views/PAGE.html">
+	<table g:condition="${not empty screen.page}"
+	       g:otherwise="Nenhum registro encontrado">
+		<caption>
+			PERFIS
+		</caption>
+		<thead>
+			<tr>
+				<th>
+					Nome
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr g:iterate="${screen.page}"
+			    g:action='Select' _form.id='${target.id}'
+			    data-target='_parent' >
+				<td>
+					${target.name}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</main>

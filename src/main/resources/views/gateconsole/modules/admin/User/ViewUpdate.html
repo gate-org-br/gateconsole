@@ -1,0 +1,106 @@
+<main g:template="/views/FULL.html">
+	<form method='POST' action='#' enctype='multipart/form-data'>
+		<fieldset>
+			<legend>
+				<g-path/>
+			</legend>
+			<label data-size='4'>
+				Nome:
+				<span>
+					<input type='text' g:property='form.name' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Login:
+				<span>
+					<input type='text' g:property='form.username' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Ativo:
+				<span>
+					<select g:property="form.active" tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='8'>
+				Perfil
+				<span>
+					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
+					<input type="text" property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
+					<a g:screen="Role" g:action="Search"
+					   data-get='form.role.id, form.role.name' tabindex='1' >
+						<i g:icon="search"/>
+					</a>
+				</span>
+			</label>
+			<label data-size='4'>
+				E-Mail:
+				<span>
+					<i g:icon="2034"/>
+					<input type='text' g:property='form.email' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				CPF:
+				<span>
+					<input type='text' g:property='form.CPF' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Matrícula:
+				<span>
+					<input type='text' g:property='form.code' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Data de Nascimento:
+				<span>
+					<input type='text' g:property='form.birthdate' class="Date" tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Sexo:
+				<span>
+					<select g:property='form.sex' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Telefone:
+				<span>
+					<i g:icon="gate.type.Phone"/>
+					<input type='text' g:property='form.phone' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Celular:
+				<span>
+					<i g:icon="gate.type.Phone"/>
+					<input type='text' g:property='form.cellPhone' tabindex='1'/>
+				</span>
+			</label>
+			<label>
+				Detalhes:
+				<span style='flex-basis: 80px'>
+					<textarea g:property='form.description' tabindex='1'/>
+				</span>
+			</label>
+			<label>
+				Foto:
+				<span>
+					<input type="file" g:property='form.photo' tabindex='1'/>
+				</span>
+			</label>
+			<input type="hidden" g:property='form'/>
+		</fieldset>
+		<g-coolbar>
+			<button class="Commit" tabindex='2'>
+				Concluir<i g:icon="commit"/>
+			</button>
+			<hr/>
+			<a g:action="Select" _form.id="${screen.form.id}"
+			   class="Cancel" tabindex='2'>
+				Desistir<i g:icon='cancel'/>
+			</a>
+		</g-coolbar>
+	</form>
+</main>

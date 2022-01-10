@@ -1,0 +1,27 @@
+<main g:template="/views/FULL.html">
+	<form method='POST' action='#'>
+		<fieldset>
+			<legend>
+				<g:path/>
+			</legend>
+			<label>
+				Nome:
+				<span>
+					<g:text property='form.name' tabindex='1'/>
+				</span>
+			</label>
+		</fieldset>
+
+		<g-coolbar>
+			<g:link class="Commit" method="post" tabindex='2'>
+				Concluir<g:icon type="commit"/>
+			</g:link>
+			<hr/>
+			<g:link class="Cancel" action="Select" _form.id="${screen.form.id}" tabindex='2'>
+				Desistir<g:icon type='cancel'/>
+			</g:link>
+		</g-coolbar>
+
+		<g:hidden property='form.id'/>
+	</form>
+</main>

@@ -11,6 +11,7 @@ import gate.sql.Link;
 import gate.sql.condition.Condition;
 import gate.sql.delete.Delete;
 import gate.sql.insert.Insert;
+import gate.sql.select.Select;
 import gate.sql.update.Update;
 import gate.type.ID;
 import gate.type.MD5;
@@ -20,11 +21,6 @@ import java.util.List;
 
 public class UserDao extends Dao
 {
-
-	public UserDao()
-	{
-		super("Gate");
-	}
 
 	public UserDao(Link link)
 	{
@@ -41,20 +37,32 @@ public class UserDao extends Dao
 
 	public List<User> search()
 	{
-		return getLink()
-			.search(User.class)
-			.properties("=active", "id", "role.id", "role.name", "code",
-				"email", "username", "+name", "phone", "cellPhone", "CPF", "sex", "birthdate", "registration")
-			.parameters(Boolean.TRUE);
+		return getLink().from(getClass().getResource("UserDao/search().sql"))
+			.constant()
+			.fetchEntityList(User.class);
 	}
 
 	public List<User> search(User filter)
 	{
+		return Select.of(getClass().getResource("UserDao/search(User).sql"))
+			.where(Condition.TRUE
+				.and("active").eq(filter.getActive())
+				.and("name").lk(filter.getName())
+				.and("login").eq(filter.getUsername())
+				.and("email").eq(filter.getEmail())
+				.and("CPF").eq(filter.getCPF())
+				.and("Role$id").eq(filter.getRole().getId()))
+			.build()
+			.connect(getLink())
+			.fetchEntityList(User.class);
+	}
+
+	public List<User> search(Role role)
+	{
 		return getLink()
-			.search(User.class)
-			.properties("=id", "=active", "=role.id", "%role.name", "=email", "=username", "+%name", "=phone", "code",
-				"=cellPhone", "=CPF", "=sex", "=birthdate", ">=registration")
-			.matching(filter);
+			.from("SELECT id, name FROM gate.Uzer WHERE Role$id = ?")
+			.parameters(role.getId())
+			.fetchEntityList(User.class);
 	}
 
 	public User select(ID id) throws AppException
@@ -143,6 +151,11 @@ public class UserDao extends Dao
 
 	public static class FuncDao extends Dao
 	{
+
+		public FuncDao(Link link)
+		{
+			super(link);
+		}
 
 		public List<User> search(Func func)
 		{

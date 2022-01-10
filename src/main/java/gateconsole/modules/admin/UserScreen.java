@@ -38,8 +38,6 @@ public class UserScreen extends gate.base.Screen
 	private User form;
 	private Doc.Type type;
 
-	private Boolean value;
-
 	@Required
 	@Description("Entre com o arquivo a ser importado")
 	private DataFile file;
@@ -49,13 +47,13 @@ public class UserScreen extends gate.base.Screen
 		"name", "username", "email", "phone", "cellPhone", "description");
 
 	@Inject
-	private UserControl control;
+	UserControl control;
 
 	public String call()
 	{
 		if (isPOST() && getMessages().isEmpty())
 			page = paginate(ordenate(control.search(getForm())));
-		return "/WEB-INF/views/gateconsole/modules/admin/User/View.jsp";
+		return "/views/gateconsole/modules/admin/User/View.html";
 	}
 
 	@Name("Usuários")
@@ -63,13 +61,13 @@ public class UserScreen extends gate.base.Screen
 	public Object callImport()
 	{
 		page = control.search(getForm());
-		return "/WEB-INF/views/gateconsole/modules/admin/User/ViewImport.jsp";
+		return "/views/gateconsole/modules/admin/User/ViewImport.html";
 	}
 
 	public String callNoRole()
 	{
 		page = paginate(ordenate(control.getSubscriptions()));
-		return "/WEB-INF/views/gateconsole/modules/admin/User/ViewNoRole.jsp";
+		return "/views/gateconsole/modules/admin/User/ViewNoRole.html";
 	}
 
 	@Icon("select")
@@ -77,7 +75,7 @@ public class UserScreen extends gate.base.Screen
 	public String callSelect() throws AppException
 	{
 		form = control.select(getForm().getId());
-		return "/WEB-INF/views/gateconsole/modules/admin/User/ViewSelect.jsp";
+		return "/views/gateconsole/modules/admin/User/ViewSelect.html";
 	}
 
 	@Name("Novo")
@@ -95,7 +93,7 @@ public class UserScreen extends gate.base.Screen
 				.setParameter("form.id", getForm().getId());
 		} else
 			getForm().setActive(true);
-		return "/WEB-INF/views/gateconsole/modules/admin/User/ViewInsert.jsp";
+		return "/views/gateconsole/modules/admin/User/ViewInsert.html";
 	}
 
 	@Icon("update")
@@ -112,7 +110,7 @@ public class UserScreen extends gate.base.Screen
 				.setParameter("form.id", getForm().getId());
 		} else if (isGET())
 			form = control.select(getForm().getId());
-		return "/WEB-INF/views/gateconsole/modules/admin/User/ViewUpdate.jsp";
+		return "/views/gateconsole/modules/admin/User/ViewUpdate.html";
 	}
 
 	@Icon("passwd")
@@ -146,7 +144,7 @@ public class UserScreen extends gate.base.Screen
 	@Description("Importar Usuários")
 	public String callUpload()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/User/ViewUpload.jsp";
+		return "/views/gateconsole/modules/admin/User/ViewUpload.html";
 	}
 
 	@Asynchronous
@@ -245,16 +243,16 @@ public class UserScreen extends gate.base.Screen
 		private List<Func> page;
 
 		@Inject
-		private FuncControl funcControl;
+		FuncControl funcControl;
 
 		@Inject
-		private FuncControl.UserControl control;
+		FuncControl.UserControl control;
 
 		public String call()
 		{
 
 			page = control.search(user);
-			return "/WEB-INF/views/gateconsole/modules/admin/User/Func/View.jsp";
+			return "/views/gateconsole/modules/admin/User/Func/View.html";
 		}
 
 		@Icon("insert")
@@ -275,6 +273,8 @@ public class UserScreen extends gate.base.Screen
 
 		@Icon("delete")
 		@Name("Remover")
+		@Color("#660000")
+		@Confirm("Tem certeza de que deseja remover este registro?")
 		public String callDelete()
 		{
 
@@ -313,15 +313,5 @@ public class UserScreen extends gate.base.Screen
 		{
 			return funcControl.search();
 		}
-	}
-
-	public Boolean getValue()
-	{
-		return value;
-	}
-
-	public void setValue(Boolean value)
-	{
-		this.value = value;
 	}
 }

@@ -24,14 +24,14 @@ public class AccessScreen extends gate.base.Screen
 	private User form;
 
 	@Inject
-	private Messenger messenger;
+	Messenger messenger;
 
 	@Inject
-	private UserControl control;
+	UserControl control;
 
 	public String call()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Access/View.jsp";
+		return "/views/gateconsole/modules/admin/Access/View.html";
 	}
 
 	public String callSelect()
@@ -39,7 +39,7 @@ public class AccessScreen extends gate.base.Screen
 		try
 		{
 			form = control.select(getForm().getId());
-			return "/WEB-INF/views/gateconsole/modules/admin/Access/ViewSelect.jsp";
+			return "/views/gateconsole/modules/admin/Access/ViewSelect.html";
 		} catch (AppException e)
 		{
 			setMessages(e.getMessages());
@@ -55,7 +55,7 @@ public class AccessScreen extends gate.base.Screen
 			if (getForm().getEmail() != null)
 				messenger.post(getUser().getEmail(), getForm().getEmail(), MimeMail.of("Cadastro acatado",
 					"Seu pedido de cadastro foi acatado."));
-			return "/WEB-INF/views/gateconsole/modules/admin/Access/ViewResult.jsp";
+			return "/views/gateconsole/modules/admin/Access/ViewResult.html";
 		} catch (AppException e)
 		{
 			setMessages(e.getMessages());
@@ -72,7 +72,7 @@ public class AccessScreen extends gate.base.Screen
 				messenger.post(getUser().getEmail(), getForm().getEmail(), MimeMail.of("Cadastro recusado",
 					"Seu pedido de cadastro foi recusado."));
 			control.delete(getForm());
-			return "/WEB-INF/views/gateconsole/modules/admin/Access/ViewResult.jsp";
+			return "/views/gateconsole/modules/admin/Access/ViewResult.html";
 		} catch (AppException e)
 		{
 			setMessages(e.getMessages());

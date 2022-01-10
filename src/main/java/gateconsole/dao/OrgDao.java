@@ -13,14 +13,9 @@ import java.util.Optional;
 public class OrgDao extends Dao
 {
 
-	public OrgDao()
+	public OrgDao(Link link)
 	{
-		super("Gate");
-	}
-
-	public OrgDao(Link connection)
-	{
-		super(connection);
+		super(link);
 	}
 
 	public Optional<Org> select()

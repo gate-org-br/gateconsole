@@ -16,6 +16,6 @@ public class IconScreen extends gate.base.Screen
 
 	public String call()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Icon/View.jsp";
+		return "/views/gateconsole/modules/admin/Icon/View.html";
 	}
 }

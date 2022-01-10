@@ -21,14 +21,14 @@ public class AuthScreen extends gate.base.Screen
 	private Collection<Auth> page;
 
 	@Inject
-	private AuthControl control;
+	AuthControl control;
 
 	@Name("Acessos")
 	@Icon("gate.entity.Auth")
 	public String call() throws AppException
 	{
 		setPage(control.search(getForm()));
-		return "/WEB-INF/views/gateconsole/modules/admin/Auth/View.jsp";
+		return "/views/gateconsole/modules/admin/Auth/View.html";
 	}
 
 	@Icon("1002")

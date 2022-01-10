@@ -1,9 +1,9 @@
 SELECT
     Uzer.id AS id,
     Uzer.active AS active,
-    Uzer.code as code,
-    Role.id AS 'role.id',
-    Role.name AS 'role.name',
+    Uzer.code AS code,
+    Role$id AS 'role.id',
+    gate.fullname(Role$id) AS 'role.name',
     Uzer.name AS name,
     Uzer.username AS username,
     Uzer.email AS email,
@@ -17,7 +17,5 @@ SELECT
     Uzer.registration AS registration
 FROM
     Uzer
-       LEFT JOIN
-    Role ON Uzer.Role$id = Role.id
 WHERE
     Uzer.id = ?

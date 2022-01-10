@@ -13,19 +13,14 @@ import java.util.List;
 public class SearchDao extends Dao
 {
 
-	public SearchDao()
+	public SearchDao(Link link)
 	{
-		super("Gate");
-	}
-
-	public SearchDao(Link c)
-	{
-		super(c);
+		super(link);
 	}
 
 	public List<Object> search(String text)
 	{
-		try (Command command = getLink()
+		try ( Command command = getLink()
 			.from(getClass().getResource("SearchDao/search(String).sql"))
 			.parameters(text,
 				text,
@@ -36,7 +31,7 @@ public class SearchDao extends Dao
 			.createCommand())
 		{
 			List<Object> objects = new ArrayList<>();
-			try (Cursor cursor = command.getCursor())
+			try ( Cursor cursor = command.getCursor())
 			{
 				while (cursor.next())
 				{

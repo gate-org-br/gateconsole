@@ -1,0 +1,91 @@
+<main g:template="/views/FULL.html">
+	<article>
+		<section>
+			<fieldset>
+				<legend>
+					<g-path/>
+				</legend>
+				<label data-size="8">
+					Sigla:
+					<span>
+						<label g:property='form.orgID'/>
+					</span>
+				</label>
+				<label data-size="8">
+					Nome:
+					<span>
+						<label g:property='form.name'/>
+					</span>
+				</label>
+				<label style="height: calc(50% - 80px)">
+					Descrição:
+					<span style='flex-grow: 1'>
+						<label g:property='form.description'/>
+					</span>
+				</label>
+				<label style="height: calc(50% - 80px)">
+					Autenticadores:
+					<span style='flex-basis: 80px'>
+						<label g:property='form.authenticators'/>
+					</span>
+				</label>
+
+				<fieldset>
+					<legend>
+						<i g:icon="2003"/>Expediente
+					</legend>
+					<label data-size="2">
+						Seg:
+						<span>
+							<label g:property="form.mon" g:empty="N/A"/>
+						</span>
+					</label>
+					<label data-size="2">
+						Ter:
+						<span>
+							<label g:property="form.tue" g:empty="N/A"/>
+						</span>
+					</label>
+					<label data-size="2">
+						Qua:
+						<span>
+							<label g:property="form.wed" g:empty="N/A"/>
+						</span>
+					</label>
+					<label data-size="2">
+						Qui:
+						<span>
+							<label g:property="form.thu" g:empty="N/A"/>
+						</span>
+					</label>
+					<label data-size="2">
+						Sex:
+						<span>
+							<label g:property="form.fri" g:empty="N/A"/>
+						</span>
+					</label>
+					<label data-size="2">
+					</label>
+					<label data-size="2">
+						Sab:
+						<span>
+							<label g:property="form.sat" g:empty="N/A"/>
+						</span>
+					</label>
+					<label data-size="2">
+						Dom:
+						<span>
+							<label g:property="form.sun" g:empty="N/A"/>
+						</span>
+					</label>
+				</fieldset>
+			</fieldset>
+		</section>
+
+		<footer>
+			<g-coolbar>
+				<a g:action="Update"/>
+			</g-coolbar>
+		</footer>
+	</article>
+</main>

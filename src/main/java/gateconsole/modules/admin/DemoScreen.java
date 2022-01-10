@@ -37,67 +37,55 @@ public class DemoScreen extends gate.base.Screen
 	@Name("Tab Bar")
 	public String callTabBar()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewTabBar.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewTabBar.html";
 	}
 
 	@Name("Pickers")
 	public String callPickers()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewPickers.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewPickers.html";
 	}
 
 	@Name("Tooltip")
 	public String callTooltip()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewTooltip.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewTooltip.html";
 	}
 
 	@Name("Mensagens")
 	public String callMessage()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewMessage.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewMessage.html";
 	}
 
 	@Name("Chart")
 	public String callChart()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewChart.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewChart.html";
 	}
 
 	@Name("Context Menu")
 	public String callContextMenu()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewContextMenu.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewContextMenu.html";
 	}
 
 	@Name("Select")
 	public String callSelect()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewSelect.jsp";
-	}
-
-	@Name("Grid 1")
-	public String callGrid1()
-	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewGrid1.jsp";
-	}
-
-	@Name("Grid 2")
-	public String callGrid2()
-	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewGrid2.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewSelect.html";
 	}
 
 	@Name("Text Editor")
 	public String callTextEditor()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/TextEditor.jsp";
+		return "/views/gateconsole/modules/admin/Demo/TextEditor.html";
 	}
 
 	@Name("Other")
 	public String callOther()
 	{
-		return "/WEB-INF/views/gateconsole/modules/admin/Demo/ViewOther.jsp";
+		return "/views/gateconsole/modules/admin/Demo/ViewOther.html";
 	}
 
 	@Icon("report")
@@ -137,7 +125,7 @@ public class DemoScreen extends gate.base.Screen
 			.setScreen("Icon");
 	}
 
-	@Icon("3046")
+	@Icon("1001")
 	@Name("Block")
 	public String callBlock()
 	{

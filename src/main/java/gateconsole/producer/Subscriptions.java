@@ -13,7 +13,7 @@ public class Subscriptions
 {
 
 	@Inject
-	private UserControl control;
+	UserControl control;
 
 	private List<User> subscriptions;
 

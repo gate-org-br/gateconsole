@@ -1,0 +1,41 @@
+<main g:template="/views/FULL.html">
+	<article>
+		<section>
+			<fieldset>
+				<legend>
+					<g-path/>
+				</legend>
+				<fieldset>
+					<table g:condition="${not empty screen.page}"
+					       g:otherwise="Nenhum registro encontrado">
+						<caption g:print="FUNÇÕES: ${screen.page.size()}"/>
+						<thead>
+							<tr>
+								<td>
+									<input data-filter type="text"/>
+								</td>
+							</tr>
+							<tr>
+								<th data-sortable>
+									Nome
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="target: ${screen.page}"
+							    data-target='_stack' g:action="Select" _form.id="${target.id}" data-on-hide="reload">
+								<td  g:print="${target.name}"/>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
+			</fieldset>
+		</section>
+
+		<footer>
+			<g-coolbar>
+				<a class="Action" g:action='Insert' target='_stack' data-on-hide="reload" tabindex='3'/>
+			</g-coolbar>
+		</footer>
+	</article>
+</main>

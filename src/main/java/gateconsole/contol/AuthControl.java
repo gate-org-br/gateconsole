@@ -1,22 +1,33 @@
 package gateconsole.contol;
 
+import gate.annotation.DataSource;
 import gate.base.Control;
 import gate.constraint.Constraints;
 import gate.entity.Auth;
 import gate.error.AppException;
 import gate.error.NotFoundException;
+import gate.sql.Link;
+import gate.sql.LinkSource;
 import gate.type.ID;
 import gateconsole.dao.AuthDao;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Stream;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
 
+@Dependent
 public class AuthControl extends Control
 {
 
+	@Inject
+	@DataSource("Gate")
+	LinkSource linksource;
+
 	public Collection<Auth> search(Auth auth)
 	{
-		try ( AuthDao dao = new AuthDao())
+		try ( Link link = linksource.getLink();
+			 AuthDao dao = new AuthDao(link))
 		{
 			return dao.search(auth);
 		}
@@ -24,7 +35,8 @@ public class AuthControl extends Control
 
 	public Auth select(ID id) throws NotFoundException
 	{
-		try ( AuthDao dao = new AuthDao())
+		try ( Link link = linksource.getLink();
+			 AuthDao dao = new AuthDao(link))
 		{
 			return dao.select(id);
 		}
@@ -42,7 +54,8 @@ public class AuthControl extends Control
 			&& model.getScope() == Auth.Scope.PUBLIC)
 			throw new AppException("Acessos de usuário não podem ser públicos.");
 
-		try ( AuthDao dao = new AuthDao())
+		try ( Link link = linksource.getLink();
+			 AuthDao dao = new AuthDao(link))
 		{
 			dao.insert(model);
 		}
@@ -50,7 +63,8 @@ public class AuthControl extends Control
 
 	public void update(Auth model) throws AppException
 	{
-		try ( AuthDao dao = new AuthDao())
+		try ( Link link = linksource.getLink();
+			 AuthDao dao = new AuthDao(link))
 		{
 			Constraints.validate(model, "access", "scope", "module", "screen", "action");
 
@@ -70,7 +84,8 @@ public class AuthControl extends Control
 	public void delete(Auth model) throws AppException
 	{
 
-		try ( AuthDao dao = new AuthDao())
+		try ( Link link = linksource.getLink();
+			 AuthDao dao = new AuthDao(link))
 		{
 			dao.delete(model);
 		}

@@ -1,0 +1,113 @@
+<main g:template="/views/FULL.html">
+	<form id='form' method='POST' action='#'>
+		<fieldset>
+			<legend>
+				<g-path/>
+			</legend>
+			<label data-size='2'>
+				Login:
+				<span>
+					<input type="text" g:property='form.username' tabindex='1' required=''/>
+				</span>
+			</label>
+			<label data-size='2'>
+				Ativo:
+				<span>
+					<select g:property="form.active" tabindex='1' required=''/>
+				</span>
+			</label>
+			<label data-size='4'>
+				Nome:
+				<span>
+					<input type="text" g:property='form.name' tabindex='1' required=''/>
+				</span>
+			</label>
+			<label data-size='4'>
+				CPF:
+				<span>
+					<input type="text" g:property='form.CPF' tabindex='1' required=''/>
+				</span>
+			</label>
+			<label data-size='4'>
+				E-Mail:
+				<span>
+					<i g:icon="2034"/>
+					<input type="text" g:property='form.email' tabindex='1'/>
+				</span>
+			</label>
+			<label>
+				Perfil
+				<span>
+					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
+					<input type="text" g:property='form.role.name' id='form.role.name' required='' data-getter="getter"/>
+					<a id="getter"
+					   g:screen="Role" g:action="Search" _form.name="@{form.role.name}"
+					   data-get='form.role.id, form.role.name' tabindex='1'>
+						<i g:icon="search"/>
+					</a>
+				</span>
+			</label>
+		</fieldset>
+
+		<g-coolbar>
+			<button class="Action" tabindex='2'>
+				Pesquisar<i g:icon="search"/>
+			</button>
+			<button g:action="Report" formtarget="_report" tabindex='2'/>
+			<a g:action='Upload' target='_stack' data-on-hide="reload" tabindex='2'/>
+			<a g:action='Insert' target='_stack' data-on-hide="reload" tabindex='2'/>
+		</g-coolbar>
+
+		<table class="c1 c5"
+		       data-collapse="Phone"
+		       g:condition="${not empty screen.page}"
+		       g:otherwise="${screen.POST ? 'Nenhum registro encontrado'
+				      : 'Entre com os critérios de busca e clique em pesquisar'}">
+
+			<caption g:print="USUÁRIOS: ${screen.page.paginator.dataSize}"/>
+
+			<col style="width: 60px"/>
+			<col/>
+			<col/>
+			<col/>
+			<col style="width: 120px"/>
+
+			<thead>
+				<tr>
+					<th g:ordenate="active">
+						Ativo
+					</th>
+					<th g:ordenate="name">
+						Nome
+					</th>
+					<th g:ordenate="username">
+						Login
+					</th>
+					<th g:ordenate="role.name">
+						Perfil
+					</th>
+					<th ordenate="registration">
+						Cadastro
+					</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="5" g:paginator/>
+				</tr>
+			</tfoot>
+			<tbody>
+				<tr th:each="target: ${screen.page}"
+				    g:action='Select' _form.id='${target.id}'
+				    data-target='_stack' data-on-hide="reload">
+					<td title="Ativo" g:print="${target.active}"/>
+					<td title="Nome" g:print="${target.name}"/>
+					<td title="Login" g:print="${target.username}"/>
+					<td title="Perfil" g:print="${target.role.name}"/>
+					<td title="Cadastro" g:print="${target.registration}"/>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</main>
+

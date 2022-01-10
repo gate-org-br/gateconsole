@@ -1,0 +1,77 @@
+<main g:template="/views/FULL.html">
+	<form method='POST' action='#'>
+		<fieldset>
+			<legend>
+				<g-path/>
+			</legend>
+			<label data-size="8">
+				Nome:
+				<span>
+					<input type='text' g:property='form.name' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size="8">
+				Perfil Pai:
+				<span>
+					<input type='hidden' g:property="form.role.id" id='form.role.id' required=''/>
+					<input type='text' g:property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
+					<a g:action="Search"
+					   data-get='form.role.id, form.role.name'
+					   tabindex='1' title='Selecionar Perfil'>
+						<i g:icon="search"/>
+					</a>
+				</span>
+			</label>
+			<label data-size="1">
+				Master:
+				<span>
+					<select g:property='form.master' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size="1">
+				Ativa:
+				<span>
+					<select g:property='form.active' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size="2">
+				Sigla:
+				<span>
+					<input type='text' g:property='form.rolename' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size="4">
+				E-Mail:
+				<span>
+					<input type='text' g:property='form.email' tabindex='1'/>
+				</span>
+			</label>
+			<label data-size="8">
+				Responsável:
+				<span>
+					<select g:property='form.manager.id'
+						g:options="${screen.users}"
+						g:labels="${e -> e.name}"
+						g:values="${e -> e.id}"
+						tabindex='1'  required=''/>
+				</span>
+			</label>
+			<label>
+				Descrição:
+				<span style='flex-basis: 60px'>
+					<textarea g:property='form.description' tabindex='1'/>
+				</span>
+			</label>
+		</fieldset>
+
+		<g-coolbar>
+			<button class="Commit" tabindex='2'>
+				Concluir<i g:icon="commit"/>
+			</button>
+			<hr/>
+			<a class="Cancel" href='#' target="_hide" tabindex='2'>
+				Desistir<i g:icon="cancel"/>
+			</a>
+		</g-coolbar>
+	</form>
+</main>

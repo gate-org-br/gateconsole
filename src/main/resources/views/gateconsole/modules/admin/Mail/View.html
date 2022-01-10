@@ -1,0 +1,88 @@
+<main g:template="/views/FULL.html">
+	<g-tab-control>
+		<a href='#'>
+			Configurações<i g:icon='2020'/>
+		</a>
+		<div>
+			<form method="post" g:action="Update">
+				<fieldset>
+					<label data-size='4'>
+						SMTP:
+						<span>
+							<input type='text' g:property='form.host'/>
+						</span>
+					</label>
+					<label data-size='4'>
+						Porta:
+						<span>
+							<input type='text' g:property='form.port'/>
+						</span>
+					</label>
+					<label data-size='4'>
+						Usuário:
+						<span>
+							<input type='text' g:property='form.username'/>
+						</span>
+					</label>
+					<label data-size='4'>
+						Senha:
+						<span>
+							<input type='password' g:property='form.password'/>
+						</span>
+					</label>
+				</fieldset>
+				<g-coolbar>
+					<button g:action="Update"/>
+				</g-coolbar>
+			</form>
+		</div>
+
+		<a href='#'>
+			EMail de Teste<i g:icon='2034'/>
+		</a>
+		<div>
+			<form method="post" g:action="Post">
+				<fieldset>
+					<label>
+						Destino:
+						<span>
+							<g:email property="destination" tabindex="1"/>
+						</span>
+					</label>
+				</fieldset>
+
+				<g-coolbar>
+					<button g:action="Post"/>
+				</g-coolbar>
+			</form>
+		</div>
+	</g-tab-control>
+
+	<table class="c1 c2"
+	       g:condition='${not empty screen.page}'
+	       g:otherwise='Não há nenhuma mensagem pendente de envio'>
+		<col style='width: 80px'/>
+		<col style='width: 120px'/>
+		<col style="width: calc(50% - 100px)"/>
+		<col style="width: calc(50% - 100px)"/>
+		<caption>MENSAGENS PENDENTES DE ENVIO: ${screen.page.size()}</caption>
+		<thead>
+			<tr>
+				<th>
+					<g:icon type="gateconsole.modules.admin.MailScreen"/>
+				</th>
+				<th>Postagem</th>
+				<th>Remetente</th>
+				<th>Destinatário</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr g:iterate='${screen.page}'>
+				<td g:print='${indx+1}'/>
+				<td g:print="${item.date}"/>
+				<td g:print="${item.sender}"/>
+				<td g:print="${item.receiver}"/>
+			</tr>
+		</tbody>
+	</table>
+</main>

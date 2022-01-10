@@ -9,6 +9,7 @@ import gateconsole.contol.SearchControl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 @Icon("2008")
 @Name("Home")
@@ -21,18 +22,23 @@ public class HomeScreen extends gate.base.Screen
 	private String form;
 	private List<Object> page;
 
+	@Inject
+	SearchControl control;
+
 	public Object call()
 	{
 		if (isPOST())
+		{
 			try
-		{
-			setPage(new SearchControl().search(getForm()));
-		} catch (AppException e)
-		{
-			setMessages(e.getMessages());
+			{
+				setPage(control.search(getForm()));
+			} catch (AppException ex)
+			{
+				setMessages(ex.getMessages());
+			}
 		}
 
-		return "/WEB-INF/views/gateconsole/modules/admin/Home/View.jsp";
+		return "/views/gateconsole/modules/admin/Home/View.html";
 	}
 
 	public String getForm()

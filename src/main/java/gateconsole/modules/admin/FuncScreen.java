@@ -1,14 +1,16 @@
 package gateconsole.modules.admin;
 
+import gate.annotation.Color;
+import gate.annotation.Confirm;
 import gate.annotation.CopyIcon;
 import gate.annotation.Icon;
 import gate.annotation.Name;
 import gate.base.Screen;
+import gate.command.Command;
 import gate.entity.Func;
 import gate.entity.Role;
 import gate.entity.User;
 import gate.error.AppException;
-import gate.io.URL;
 import gate.util.Page;
 import gateconsole.contol.FuncControl;
 import gateconsole.contol.RoleControl;
@@ -27,32 +29,25 @@ public class FuncScreen extends gate.base.Screen
 	private List<Func> page;
 
 	@Inject
-	private FuncControl control;
+	FuncControl control;
 
 	public String call()
 	{
 		page = control.search(getForm());
-		return "/WEB-INF/views/gateconsole/modules/admin/Func/View.jsp";
-	}
-
-	public String callIndex()
-	{
-		page = control.search(getForm());
-		return "/WEB-INF/index.html";
+		return "/views/gateconsole/modules/admin/Func/View.html";
 	}
 
 	@Icon("select")
 	@Name("Detalhe")
-	public String callSelect()
+	public Object callSelect()
 	{
 		try
 		{
 			form = control.select(getForm().getId());
-			return "/WEB-INF/views/gateconsole/modules/admin/Func/ViewSelect.jsp";
-		} catch (AppException e)
+			return "/views/gateconsole/modules/admin/Func/ViewSelect.html";
+		} catch (AppException ex)
 		{
-			setMessages(e.getMessages());
-			return call();
+			return Command.hide(ex.getMessages());
 		}
 	}
 
@@ -65,18 +60,18 @@ public class FuncScreen extends gate.base.Screen
 			try
 			{
 				control.insert(getForm());
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setAction("Select")
-					.setParameter("form.id", getForm().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.action("Select")
+					.parameter("form.id", getForm().getId());
 			} catch (AppException ex)
 			{
 				setMessages(ex.getMessages());
 			}
 		}
 
-		return "/WEB-INF/views/gateconsole/modules/admin/Func/ViewInsert.jsp";
+		return "/views/gateconsole/modules/admin/Func/ViewInsert.html";
 	}
 
 	@Icon("update")
@@ -90,42 +85,44 @@ public class FuncScreen extends gate.base.Screen
 				form = control.select(getForm().getId());
 			} catch (AppException ex)
 			{
-				return "/WEB-INF/views/gateconsole/modules/admin/Func/ViewResult.jsp";
+				return Command.hide(ex.getMessages());
 			}
 		} else if (getMessages().isEmpty())
 		{
 			try
 			{
 				control.update(getForm());
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setAction("Select")
-					.setParameter("form.id", getForm().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.action("Select")
+					.parameter("form.id", getForm().getId());
 			} catch (AppException ex)
 			{
 				setMessages(ex.getMessages());
 			}
 		}
-		return "/WEB-INF/views/gateconsole/modules/admin/Func/ViewUpdate.jsp";
+		return "/views/gateconsole/modules/admin/Func/ViewUpdate.html";
 	}
 
 	@Icon("delete")
 	@Name("Remover")
+	@Color("#660000")
+	@Confirm("Tem certeza de que deseja remover este registro?")
 	public Object callDelete()
 	{
 		try
 		{
 			control.delete(getForm());
-			return "/WEB-INF/views/gateconsole/modules/admin/Func/ViewResult.jsp";
+			return Command.hide();
 		} catch (AppException ex)
 		{
-			return new URL("Gate")
-				.setModule(getModule())
-				.setScreen(getScreen())
-				.setAction("Select")
-				.setMessages(ex.getMessages())
-				.setParameter("form.id", getForm().getId());
+			return Command.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.action("Select")
+				.messages(ex.getMessages())
+				.parameter("form.id", getForm().getId());
 		}
 	}
 
@@ -152,58 +149,55 @@ public class FuncScreen extends gate.base.Screen
 		private Page<User> page;
 
 		@Inject
-		private UserControl userControl;
-
-		@Inject
-		private UserControl.FuncControl control;
+		UserControl.FuncControl control;
 
 		public String call()
 		{
 
 			page = paginate(ordenate(control.search(func)));
-			return "/WEB-INF/views/gateconsole/modules/admin/Func/User/View.jsp";
+			return "/views/gateconsole/modules/admin/Func/User/View.html";
 		}
 
 		@Icon("insert")
 		@Name("Adcionar")
-		public Object callInsert()
+		public Command callInsert()
 		{
 
 			try
 			{
 				control.insert(user, func);
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.parameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setMessages(ex.getMessages())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.messages(ex.getMessages())
+					.parameter("func.id", getFunc().getId());
 			}
 		}
 
 		@Icon("delete")
 		@Name("Remover")
-		public Object callDelete()
+		public Command callDelete()
 		{
 			try
 			{
 				control.delete(user, func);
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.parameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setMessages(ex.getMessages())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.messages(ex.getMessages())
+					.parameter("func.id", getFunc().getId());
 			}
 		}
 
@@ -226,11 +220,6 @@ public class FuncScreen extends gate.base.Screen
 		{
 			return page;
 		}
-
-		public List<User> getUsers()
-		{
-			return userControl.search();
-		}
 	}
 
 	@RequestScoped
@@ -244,59 +233,56 @@ public class FuncScreen extends gate.base.Screen
 		private Page<Role> page;
 
 		@Inject
-		private RoleControl roleControl;
-
-		@Inject
-		private RoleControl.FuncControl control;
+		RoleControl.FuncControl control;
 
 		public String call()
 		{
 
 			page = paginate(ordenate(control.search(func)));
-			return "/WEB-INF/views/gateconsole/modules/admin/Func/Role/View.jsp";
+			return "/views/gateconsole/modules/admin/Func/Role/View.html";
 		}
 
 		@Icon("insert")
 		@Name("Adcionar")
-		public URL callInsert()
+		public Command callInsert()
 		{
 
 			try
 			{
 				control.insert(role, func);
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.parameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setMessages(ex.getMessages())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.messages(ex.getMessages())
+					.parameter("func.id", getFunc().getId());
 			}
 		}
 
 		@Icon("delete")
 		@Name("Remover")
-		public URL callDelete()
+		public Command callDelete()
 		{
 
 			try
 			{
 				control.delete(role, func);
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.parameter("func.id", getFunc().getId());
 			} catch (AppException ex)
 			{
-				return new URL("Gate")
-					.setModule(getModule())
-					.setScreen(getScreen())
-					.setMessages(ex.getMessages())
-					.setParameter("func.id", getFunc().getId());
+				return Command.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.messages(ex.getMessages())
+					.parameter("func.id", getFunc().getId());
 			}
 		}
 
@@ -317,12 +303,6 @@ public class FuncScreen extends gate.base.Screen
 		public Page<Role> getPage()
 		{
 			return page;
-		}
-
-		public List<Role> getRoles()
-			throws AppException
-		{
-			return roleControl.search();
 		}
 	}
 }

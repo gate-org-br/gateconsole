@@ -17,11 +17,6 @@ import java.util.List;
 public class AuthDao extends Dao
 {
 
-	public AuthDao()
-	{
-		super("Gate");
-	}
-
 	public AuthDao(Link link)
 	{
 		super(link);

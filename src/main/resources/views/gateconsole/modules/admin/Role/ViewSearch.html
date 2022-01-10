@@ -1,0 +1,16 @@
+<main g:template="/views/DIAG.html">
+	<table g:condition='${not empty screen.page}'>
+		<tbody>
+			<tr g:iterate='${screen.page}'
+			    data-ret='${target.id}, ${target.name}' tabindex="1">
+				<td style='padding-left: ${depth*40}px'>
+					${target.name}
+					<span g:if="${not empty target.rolename}"
+					      style='color: gray'>
+						(<g:print value="${target.rolename}"/>)
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</main>

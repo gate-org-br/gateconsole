@@ -1,6 +1,7 @@
 package gateconsole.contol;
 
 import gate.Progress;
+import gate.annotation.DataSource;
 import gate.base.Control;
 import gate.constraint.Constraints;
 import gate.entity.Func;
@@ -8,56 +9,73 @@ import gate.entity.Role;
 import gate.entity.User;
 import gate.error.AppException;
 import gate.error.ConstraintViolationException;
+import gate.sql.Link;
+import gate.sql.LinkSource;
 import gate.type.ID;
 import gate.type.mime.MimeData;
 import gateconsole.dao.UserDao;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Dependent
 public class UserControl extends Control
 {
 
+	@Inject
+	@DataSource("Gate")
+	LinkSource linksource;
+
 	private static final int MAX_PHOTO_SIZE = 65535;
 
 	public List<User> getSubscriptions()
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			return dao.getSubscriptions();
 		}
 	}
 
+	@Produces
+	@RequestScoped
+	@Named("users")
 	public List<User> search()
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
-			return dao.search().stream().peek(e -> e.setRole(getUser().getRole().getRoot().select(e.getRole().getId())))
-				.collect(Collectors.toList());
+			return dao.search();
 		}
 	}
 
 	public List<User> search(User filter)
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
-			return dao.search(filter).stream()
-				.peek(e -> e.setRole(getUser().getRole().getRoot()
-				.select(e.getRole()
-					.getId())))
-				.collect(Collectors.toList());
+			return dao.search(filter);
+		}
+	}
+
+	public List<User> search(Role role)
+	{
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
+		{
+			return dao.search(role);
 		}
 	}
 
 	public User select(ID id) throws AppException
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
-			User user = dao.select(id);
-			if (user.getRole().getId() != null)
-				user.setRole(getUser().getRole().getRoot().select(user.getRole().getId()));
-			return user;
+			return dao.select(id);
 		}
 	}
 
@@ -67,7 +85,8 @@ public class UserControl extends Control
 
 		if (value.getPhoto() != null && value.getPhoto().getSize() > MAX_PHOTO_SIZE)
 			throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			if (value.getPassword() == null)
 				value.setPassword(value.getUsername()).toString();
@@ -79,7 +98,8 @@ public class UserControl extends Control
 	{
 		Progress.startup(values.size(), "Inserindo usuários");
 
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			dao.getLink().beginTran();
 			for (User value : values)
@@ -115,7 +135,8 @@ public class UserControl extends Control
 
 	public MimeData getPhoto(ID id)
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			return dao.getPhoto(id);
 		}
@@ -129,7 +150,8 @@ public class UserControl extends Control
 
 		if (model.getPhoto() != null && model.getPhoto().getSize() > 65535)
 			throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			dao.update(model);
 		}
@@ -137,7 +159,8 @@ public class UserControl extends Control
 
 	public void accept(User model, Role role) throws AppException
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			dao.accept(model, role);
 		}
@@ -145,7 +168,8 @@ public class UserControl extends Control
 
 	public void delete(User user) throws AppException
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			if (!dao.delete(user))
 				throw new AppException("Tentativa de remover um USUÁRIO inexistente.");
@@ -154,19 +178,26 @@ public class UserControl extends Control
 
 	public void password(User user) throws AppException
 	{
-		try ( UserDao dao = new UserDao())
+		try ( Link link = linksource.getLink();
+			 UserDao dao = new UserDao(link))
 		{
 			if (!dao.setPasswd(user))
 				throw new AppException("Tentativa de resetar a senha de um USUÁRIO inexistente.");
 		}
 	}
 
+	@Dependent
 	public static class FuncControl extends Control
 	{
 
+		@Inject
+		@DataSource("Gate")
+		LinkSource linksource;
+
 		public List<User> search(Func func)
 		{
-			try ( UserDao.FuncDao dao = new UserDao.FuncDao())
+			try ( Link link = linksource.getLink();
+				 UserDao.FuncDao dao = new UserDao.FuncDao(link))
 			{
 				return dao.search(func);
 			}
@@ -174,7 +205,8 @@ public class UserControl extends Control
 
 		public void insert(User user, Func func) throws AppException
 		{
-			try ( UserDao.FuncDao dao = new UserDao.FuncDao())
+			try ( Link link = linksource.getLink();
+				 UserDao.FuncDao dao = new UserDao.FuncDao(link))
 			{
 				dao.insert(user, func);
 			}
@@ -183,7 +215,8 @@ public class UserControl extends Control
 
 		public void delete(User user, Func func) throws AppException
 		{
-			try ( UserDao.FuncDao dao = new UserDao.FuncDao())
+			try ( Link link = linksource.getLink();
+				 UserDao.FuncDao dao = new UserDao.FuncDao(link))
 			{
 				dao.delete(user, func);
 			}

@@ -19,14 +19,14 @@ public class OrgScreen extends gate.base.Screen
 	private Org form;
 
 	@Inject
-	private OrgControl control;
+	OrgControl control;
 
 	public Object call()
 	{
 		try
 		{
 			form = control.select().orElseThrow(NotFoundException::new);
-			return "/WEB-INF/views/gateconsole/modules/admin/Org/View.jsp";
+			return "/views/gateconsole/modules/admin/Org/View.html";
 		} catch (NotFoundException ex)
 		{
 			return new URL("Gate")
@@ -41,7 +41,7 @@ public class OrgScreen extends gate.base.Screen
 	public String callUpdate()
 	{
 		form = control.select().orElse(new Org());
-		return "/WEB-INF/views/gateconsole/modules/admin/Org/ViewUpdate.jsp";
+		return "/views/gateconsole/modules/admin/Org/ViewUpdate.html";
 	}
 
 	@Icon("commit")

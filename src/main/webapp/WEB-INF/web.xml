@@ -14,4 +14,9 @@
 		<param-name>name</param-name>
 		<param-value>Console de Aministração</param-value>
 	</context-param>
+
+	<context-param>
+		<param-name>id</param-name>
+		<param-value>Gate</param-value>
+	</context-param>
 </web-app>

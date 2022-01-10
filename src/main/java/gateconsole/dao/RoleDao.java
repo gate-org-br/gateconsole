@@ -9,9 +9,9 @@ import gate.sql.Link;
 import gate.sql.condition.Condition;
 import gate.sql.delete.Delete;
 import gate.sql.insert.Insert;
+import gate.sql.update.Update;
 import gate.type.Hierarchy;
 import gate.type.ID;
-import java.util.Collection;
 import java.util.List;
 
 public class RoleDao extends Dao
@@ -22,35 +22,41 @@ public class RoleDao extends Dao
 		super("Gate");
 	}
 
-	public RoleDao(Link c)
+	public RoleDao(Link link)
 	{
-		super(c);
+		super(link);
 	}
 
 	public List<Role> search() throws AppException
 	{
 		List<Role> roles = getLink()
-			.search(Role.class)
-			.properties("id", "active", "master", "role.id", "rolename", "+name", "email", "description", "manager.id",
-				"manager.name")
-			.parameters();
+			.from(getClass().getResource("RoleDao/search().sql"))
+			.constant()
+			.fetchEntityList(Role.class);
 		Hierarchy.setup(roles);
 		return roles;
+	}
+
+	public List<Role> search(Role role)
+	{
+		return getLink()
+			.from(getClass().getResource("RoleDao/search(Role).sql"))
+			.parameters(role.getId())
+			.fetchEntityList(Role.class);
 	}
 
 	public Role select(ID id) throws NotFoundException
 	{
 		return getLink()
-			.select(Role.class)
-			.properties("=id", "active", "master", "role.id", "rolename", "role.name",
-				"email", "name", "description", "manager.id", "manager.name")
-			.parameters(id).orElseThrow(NotFoundException::new);
+			.from(getClass().getResource("RoleDao/select(ID).sql"))
+			.parameters(id)
+			.fetchEntity(Role.class)
+			.orElseThrow(NotFoundException::new);
 	}
 
 	public void insert(Role value) throws AppException
 	{
-		getLink().prepare(Insert
-			.into("gate.Role")
+		Insert.into("gate.Role")
 			.set("active", value.getActive())
 			.set("master", value.getMaster())
 			.set("Role$id", value.getRole().getId())
@@ -58,34 +64,48 @@ public class RoleDao extends Dao
 			.set("name", value.getName())
 			.set("email", value.getEmail())
 			.set("description", value.getDescription())
-			.set("Manager$id", value.getManager().getId())).fetchGeneratedKeys(ID.class)
-			.forEach(value::setId);
+			.set("Manager$id", value.getManager().getId())
+			.build()
+			.connect(getLink())
+			.fetchGeneratedKey(ID.class)
+			.ifPresent(value::setId);
 	}
 
-	public boolean update(Role value) throws AppException
+	public void update(Role value) throws AppException
 	{
-		return getLink()
-			.update(Role.class)
-			.properties("=id", "active", "master", "role.id", "rolename", "name", "email", "description", "manager.id").execute(value) > 0;
+		if (Update.table("gate.Role")
+			.set("active", value.getActive())
+			.set("master", value.getMaster())
+			.set("Role$id", value.getRole().getId())
+			.set("rolename", value.getRolename())
+			.set("name", value.getName())
+			.set("email", value.getEmail())
+			.set("description", value.getDescription())
+			.set("Manager$id", value.getManager().getId())
+			.where(Condition.of("id").eq(value.getId()))
+			.build()
+			.connect(getLink())
+			.execute() == 0)
+			throw new NotFoundException();
 	}
 
-	public boolean delete(Role... values) throws AppException
+	public void delete(Role value) throws AppException
 	{
-		return getLink().delete(Role.class).execute(values) > 0;
-	}
-
-	public Collection<Role> getChildRoles(Role role)
-	{
-		return getLink()
-			.search(Role.class)
-			.properties("=role.id", "id", "active", "master",
-				"rolename", "role.name", "email", "name",
-				"description", "manager.id", "manager.name")
-			.parameters(role.getId());
+		if (Delete.from("gate.Role")
+			.where(Condition.of("id").eq(value.getId()))
+			.build()
+			.connect(getLink())
+			.execute() == 0)
+			throw new NotFoundException();
 	}
 
 	public static class FuncDao extends Dao
 	{
+
+		public FuncDao(Link link)
+		{
+			super(link);
+		}
 
 		public List<Role> search(Func func)
 		{
