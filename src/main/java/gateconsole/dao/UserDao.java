@@ -48,7 +48,7 @@ public class UserDao extends Dao
 			.where(Condition.TRUE
 				.and("active").eq(filter.getActive())
 				.and("name").lk(filter.getName())
-				.and("login").eq(filter.getUsername())
+				.and("username").eq(filter.getUsername())
 				.and("email").eq(filter.getEmail())
 				.and("CPF").eq(filter.getCPF())
 				.and("Role$id").eq(filter.getRole().getId()))

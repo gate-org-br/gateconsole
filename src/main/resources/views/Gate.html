@@ -47,12 +47,23 @@
 						<button class="Commit" tabindex="2">
 							Concluir<g:icon type="commit"/>
 						</button>
+						<hr/>
+						<a g:superuser 
+						   tabindex="3"
+						   target="_popup" 
+						   data-auto-click
+						   style='color: #660000'
+						   g:condition='${not empty exception}'>
+							Erro<g:icon type="2200"/>
+							<div style='background-color: white'
+							     title="Erro de sistema" 
+							     g:stacktrace='${exception}'/>
+						</a>
 					</g-coolbar>
 				</div>
 			</div>
 
 			<g:alert messages="${messages}"/>
-			<div g:superuser data-popup title="Erro de sistema" g:stacktrace="${exception}"/>
 		</form>
 	</body>
 </main>
