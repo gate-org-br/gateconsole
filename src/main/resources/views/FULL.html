@@ -1,31 +1,32 @@
 <body g:template="/views/MAIN.html">
-    <main>
-        <header>
-            <img src='Logo.svg' alt="Logomarca"/>
-            <label g:print="${app.id}"/>
-            <label g:print="${version}"/>
-        </header>
+	<main>
+		<header>
+			<img src='Logo.svg' alt="Logomarca"/>
+			<label g:print="${app.id}"/>
+			<label g:print="${version}"/>
+		</header>
 
-        <nav>
-            <g-tabbar>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="Home"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="Role"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="User"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="Func"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="Org"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="App"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="Mail"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="Icon"/>
-                <a target="_top" g:module="gateconsole.modules.admin" g:screen="Demo"/>
-                <a target="_top" g:if="${not empty subscriptions}"
-                   g:module="gateconsole.modules.admin" g:screen="Access"/>
-                <hr/>
-                <g:exit icon="exit" name="Sair" target="_top"/>
-            </g-tabbar>
-        </nav>
-        <section g:insert>
-        </section>
-    </main>
+		<nav>
+			<g-tabbar>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Home"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Role"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="User"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Func"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Org"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="App"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Mail"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Icon"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Emoji"/>
+				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Demo"/>
+				<a target="_top" g:if="${not empty subscriptions}"
+				   g:module="gateconsole.modules.admin" g:screen="Access"/>
+				<hr/>
+				<g:exit icon="exit" name="Sair" target="_top"/>
+			</g-tabbar>
+		</nav>
+		<section g:insert>
+		</section>
+	</main>
 
-    <g:alert/>
+	<g:alert/>
 </body>

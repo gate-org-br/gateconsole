@@ -1,0 +1,29 @@
+gate:
+        denveloper:
+        
+db:
+        host: 127.0.0.1
+        password: P@s*2word
+        gate:
+                username: gate
+                password: ${db.password}
+
+quarkus:
+        http:
+                port: 9990
+        package:
+                type: uber-jar
+        datasource:
+                db-kind: mysql
+                username: ${db.gate.username}
+                password: ${db.gate.password}
+                jdbc:
+                        max-size: 16
+                        url: jdbc:mysql://${db.host}:3306/gate
+                Gate:
+                        db-kind: mysql
+                        username: ${db.gate.username}
+                        password: ${db.gate.password}
+                        jdbc:
+                                max-size: 16
+                                url: jdbc:mysql://${db.host}:3306/gate
