@@ -1,6 +1,3 @@
-gate:
-        denveloper:
-        
 db:
         host: 127.0.0.1
         password: P@s*2word
