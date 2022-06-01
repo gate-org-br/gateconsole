@@ -1,0 +1,7 @@
+from openjdk:17-alpine
+
+ENV JAVA_OPTS=-Ddb.host=127.0.0.1
+
+COPY ./target/gateconsole-10.0.3-runner.jar ./
+
+ENTRYPOINT exec java $JAVA_OPTS  -jar gateconsole-10.0.1-runner.jar

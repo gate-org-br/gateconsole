@@ -107,11 +107,11 @@ public class DemoScreen extends gate.base.Screen
 	public URL callProgress()
 	{
 		Progress.startup(100, "Starting");
-		for (int i = 0; i < 100; i++)
+		for (int i = 1; i <= 100; i++)
 		{
 			try
 			{
-				Progress.update("Processing");
+				Progress.update("Processing " + i);
 				Thread.sleep(50);;
 			} catch (InterruptedException ex)
 			{
