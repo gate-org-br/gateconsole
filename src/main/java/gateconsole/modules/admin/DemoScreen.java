@@ -26,6 +26,7 @@ import javax.enterprise.context.RequestScoped;
 public class DemoScreen extends gate.base.Screen
 {
 
+	private String text;
 	private Doc.Type type;
 	private List<Doc.Type> types = new ArrayList<>();
 
@@ -165,6 +166,16 @@ public class DemoScreen extends gate.base.Screen
 	public List<Doc.Type> getOptions()
 	{
 		return List.of(Doc.Type.PDF, Doc.Type.DOC, Doc.Type.XLS, Doc.Type.CSV);
+	}
+
+	public String getText()
+	{
+		return text;
+	}
+
+	public void setText(String text)
+	{
+		this.text = text;
 	}
 
 	private static class TestData extends ArrayList<List<Object>>
