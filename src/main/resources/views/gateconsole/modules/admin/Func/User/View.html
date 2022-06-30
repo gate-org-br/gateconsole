@@ -21,10 +21,11 @@
 		</g-coolbar>
 	</form>
 
-	<table class="c2"
+	<table class="c3"
 	       g:condition="${not empty screen.page}"
 	       g:otherwise="Nenhum registro encontrado">
 		<colgroup>
+			<col/>
 			<col/>
 			<col style="width: 48px"/>
 		</colgroup>
@@ -37,17 +38,21 @@
 				<th>
 					Nome
 				</th>
+				<th>
+					Perfil
+				</th>
 				<th g:icon="delete"/>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<td g:paginator colspan='2' style="text-align: right"/>
+				<td g:paginator colspan='3'/>
 			</tr>
 		</tfoot>
 		<tbody>
 			<tr th:each="target: ${screen.page}">
 				<td g:print="${target.name}"/>
+				<td g:print="${target.role.name}"/>
 				<td>
 					<a g:action="Delete"
 					   _func.id='${screen.func.id}'

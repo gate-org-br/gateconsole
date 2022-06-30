@@ -1,11 +1,12 @@
-select
+SELECT 
     Uzer.id,
-    Uzer.username as username,
-    Uzer.name as name
-from
+    Uzer.username AS username,
+    Uzer.name AS name,
+    gate.fullname(Uzer.Role$id) AS 'role.name'
+FROM
     Uzer
-        join
+        JOIN
     UzerFunc ON Uzer.id = UzerFunc.Uzer$id
-where
+WHERE
     UzerFunc.Func$id = ?
-order by Uzer.name
+ORDER BY Uzer.name

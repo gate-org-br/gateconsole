@@ -89,6 +89,12 @@ public class DemoScreen extends gate.base.Screen
 		return "/views/gateconsole/modules/admin/Demo/ViewOther.html";
 	}
 
+	@Name("Chat")
+	public String callChat()
+	{
+		return "/views/gateconsole/modules/admin/Demo/ViewChat.html";
+	}
+
 	@Icon("report")
 	@Name("Imprimir")
 	public Doc callReport()

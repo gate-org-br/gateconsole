@@ -182,6 +182,7 @@ public class FuncScreen extends gate.base.Screen
 
 		@Icon("delete")
 		@Name("Remover")
+		@Color("#660000")
 		public Command callDelete()
 		{
 			try

@@ -20,13 +20,26 @@
 				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Demo"/>
 				<a target="_top" g:if="${not empty subscriptions}"
 				   g:module="gateconsole.modules.admin" g:screen="Access"/>
+
+				<a target="_chat"
+					data-host-id="${screen.user.id}" 
+					data-host-name="${screen.user.name}"></a>
+
 				<hr/>
 				<g:exit icon="exit" name="Sair" target="_top"/>
 			</g-tabbar>
 		</nav>
 		<section g:insert>
 		</section>
-	</main>
 
+		<footer g:condition="${not empty screen.user.id}">
+			<label>
+				${user.role.name}
+			</label>
+			<label>
+				${user.name}
+			</label>
+		</footer>
+	</main>
 	<g:alert/>
 </body>

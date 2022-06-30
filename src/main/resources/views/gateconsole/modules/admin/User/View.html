@@ -99,7 +99,7 @@
 			<tbody>
 				<tr th:each="target: ${screen.page}"
 				    g:action='Select' _form.id='${target.id}'
-				    data-target='_stack' data-on-hide="reload">
+				    data-target='_stack' data-on-hide="submit(form)">
 					<td title="Ativo" g:print="${target.active}"/>
 					<td title="Nome" g:print="${target.name}"/>
 					<td title="Login" g:print="${target.username}"/>

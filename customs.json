@@ -5,8 +5,33 @@
 				"value": {}
 			}
 		},
+		"g-window-section": {},
+		"g-window-header": {},
+		"g-message": {
+			"attributes": {
+				"type": {}
+			}
+		},
+		"slot": {},
+		"g-chat-message": {
+			"attributes": {
+				"date": {},
+				"type": {}
+			}
+		},
+		"g-contact": {},
+		"g-chat-message-list": {},
+		"g-chat-notification-config": {
+			"attributes": {
+				"label": {}
+			}
+		},
+		"g-message-list": {},
+		"g-chat-contact": {},
 		"g-path": {},
-		"g-coolbar": {}
+		"g-contact-list": {},
+		"g-coolbar": {},
+		"g-user-list": {}
 	},
 	"attributes": {
 		"g:print": {
