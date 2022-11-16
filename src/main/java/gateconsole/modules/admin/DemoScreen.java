@@ -11,8 +11,11 @@ import gate.entity.User;
 import gate.error.AppException;
 import gate.error.ConversionException;
 import gate.handler.JsonTextHandler;
-import gate.handler.OptionHandler;
 import gate.io.URL;
+import gate.lang.json.JsonArray;
+import gate.lang.json.JsonElement;
+import gate.lang.json.JsonObject;
+import gate.lang.json.JsonString;
 import gate.report.Doc;
 import gate.report.Report;
 import gate.type.ID;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import javax.enterprise.context.RequestScoped;
 
 @Public
@@ -35,20 +39,20 @@ public class DemoScreen extends gate.base.Screen
 	private List<Doc.Type> types = new ArrayList<>();
 
 	private static final List<User> USERS
-		= List.of(new User().setId(new ID(1)).setName("Amanda Rodrigues").setUsername("amandarodrigues").setUsername("amandarodrigues@gate.org"),
-			new User().setId(new ID(2)).setName("Amanda Borges").setUsername("amandaborges").setUsername("amandaborges@gate.org"),
-			new User().setId(new ID(2)).setName("Anderson Borges").setUsername("andersonborges").setUsername("andersonborges@gate.org"),
-			new User().setId(new ID(2)).setName("Anderson Lima").setUsername("andersonlima").setUsername("andersonlima@gate.org"),
-			new User().setId(new ID(3)).setName("Barbara Gomes").setUsername("barbaragomes").setUsername("bgomes@gate.org"),
-			new User().setId(new ID(4)).setName("Barbie Rodrigues").setUsername("barbierodrigues").setUsername("brodrigues@gate.org"),
-			new User().setId(new ID(5)).setName("Barbie Sampaio").setUsername("barbiesampaio").setUsername("barbiesampaio@gate.org"),
-			new User().setId(new ID(6)).setName("Bartira Souza").setUsername("bartirasouza").setUsername("bartirasouza@gate.org"),
-			new User().setId(new ID(7)).setName("Bartira Nunes").setUsername("bartiranunes").setUsername("bartiranunes@gate.org"),
-			new User().setId(new ID(8)).setName("Bartolomeu Borges").setUsername("bartolomeuborges").setUsername("bartolomeuborges@gate.org"),
-			new User().setId(new ID(9)).setName("Bruno Silva").setUsername("brunosilva").setUsername("brunosilva@gate.org"),
-			new User().setId(new ID(10)).setName("Carla Sampaio").setUsername("carlasampaio").setUsername("carlasampaio@gate.org"),
-			new User().setId(new ID(11)).setName("Carlos Gomes").setUsername("carlosgomes").setUsername("carlosgomes@gate.org"),
-			new User().setId(new ID(12)).setName("Carlene Souza").setUsername("carlenesouza").setUsername("carlenesouza@gate.org"));
+		= List.of(new User().setId(new ID(1)).setName("Amanda Rodrigues").setUsername("amandarodrigues").setEmail("amandarodrigues@gate.org"),
+			new User().setId(new ID(2)).setName("Amanda Borges").setUsername("amandaborges").setEmail("amandaborges@gate.org"),
+			new User().setId(new ID(2)).setName("Anderson Borges").setUsername("andersonborges").setEmail("andersonborges@gate.org"),
+			new User().setId(new ID(2)).setName("Anderson Lima").setUsername("andersonlima").setEmail("andersonlima@gate.org"),
+			new User().setId(new ID(3)).setName("Barbara Gomes").setUsername("barbaragomes").setEmail("bgomes@gate.org"),
+			new User().setId(new ID(4)).setName("Barbie Rodrigues").setUsername("barbierodrigues").setEmail("brodrigues@gate.org"),
+			new User().setId(new ID(5)).setName("Barbie Sampaio").setUsername("barbiesampaio").setEmail("barbiesampaio@gate.org"),
+			new User().setId(new ID(6)).setName("Bartira Souza").setUsername("bartirasouza").setEmail("bartirasouza@gate.org"),
+			new User().setId(new ID(7)).setName("Bartira Nunes").setUsername("bartiranunes").setEmail("bartiranunes@gate.org"),
+			new User().setId(new ID(8)).setName("Bartolomeu Borges").setUsername("bartolomeuborges").setEmail("bartolomeuborges@gate.org"),
+			new User().setId(new ID(9)).setName("Bruno Silva").setUsername("brunosilva").setEmail("brunosilva@gate.org"),
+			new User().setId(new ID(10)).setName("Carla Sampaio").setUsername("carlasampaio").setEmail("carlasampaio@gate.org"),
+			new User().setId(new ID(11)).setName("Carlos Gomes").setUsername("carlosgomes").setEmail("carlosgomes@gate.org"),
+			new User().setId(new ID(12)).setName("Carlene Souza").setUsername("carlenesouza").setEmail("carlenesouza@gate.org"));
 
 	public String call()
 	{
@@ -174,19 +178,54 @@ public class DemoScreen extends gate.base.Screen
 		return TestData.INSTANCE.stream().skip(size).limit(10).collect(Collectors.toList());
 	}
 
-	@Handler(OptionHandler.class)
-	public List<User> callSelectOptions()
+	public JsonArray callSelectOptions()
 	{
-		return USERS;
+		return JsonArray.of(USERS, e -> e.getName(),
+			e -> e.getId().toString(),
+			e -> new JsonObject()
+				.setString("Nome", e.getName())
+				.setString("Login", e.getUsername())
+				.setString("E-Mail", e.getEmail()));
 	}
 
-	@Handler(OptionHandler.class)
-	public List<User> callSearchOptions() throws AppException
+	public JsonArray callSelectGrid()
+	{
+
+		return JsonArray.of(Stream.concat(Stream.of(List.of("ID", "Nome", "Login", "E-Mail")),
+			USERS.stream().map(e -> List.of(e.getId().toString(), e.getName(),
+			e.getUsername(), e.getEmail()))).collect(Collectors.toList()));
+	}
+
+	public JsonElement callSearchOptions() throws AppException
 	{
 		String body = getRequest().getBody().trim().toUpperCase();
-		return body.length() >= 3
-			? USERS.stream().filter(e -> e.getName().toUpperCase().contains(body)).collect(Collectors.toList())
-			: List.of();
+		if (body.length() < 3)
+			return JsonString.of("Entre com no mínimo 3 caracteres para fazer sua pesquisa");
+
+		var values = USERS.stream().filter(e -> e.getName().toUpperCase().startsWith(body)).collect(Collectors.toList());
+
+		return JsonArray.of(values,
+			e -> e.getName(),
+			e -> e.getId().toString(),
+			e -> new JsonObject()
+				.setString("Nome", e.getName())
+				.setString("Login", e.getUsername())
+				.setString("E-Mail", e.getEmail()));
+	}
+
+	public JsonElement callSearchGrid()
+	{
+		String body = getRequest().getBody().trim().toUpperCase();
+		if (body.length() < 3)
+			return JsonString.of("Entre com no mínimo 3 caracteres para fazer sua pesquisa");
+
+		var values = USERS.stream()
+			.filter(e -> e.getName().toUpperCase().startsWith(body))
+			.map(e -> List.of(e.getId().toString(), e.getName(),
+			e.getUsername(), e.getEmail()))
+			.collect(Collectors.toList());
+		values.add(0, List.of("ID", "Nome", "Login", "E-Mail"));
+		return JsonArray.of(values);
 	}
 
 	public void setType(Doc.Type type)
