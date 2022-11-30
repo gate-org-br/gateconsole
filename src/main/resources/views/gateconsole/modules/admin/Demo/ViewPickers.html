@@ -284,7 +284,7 @@
 										<label>
 											Object:
 											<span>
-												<input type="hidden"/><input type="text" readonly/><G:link target='_search' action='SearchOptions' title='Selecionar'><i>&#X2010</i></G:link>
+												<input type="hidden"/><input type="text" readonly/><G:link target='_select' action='SelectObjects' title='Selecionar'><i>&#X2010</i></G:link>
 											</span>
 										</label>
 									</fieldset>
@@ -297,6 +297,35 @@
 						<span>
 							<input type="hidden"/>
 							<input type="text" readonly/>
+						<g:link target='_select' action='SelectObjects' title='Selecionar'>
+							<i>&#X2010</i>
+						</g:link>
+					</span>
+				</label>
+			</fieldset>
+		</div>
+	</div>
+
+	<div>
+		<div>
+			<pre class="language-markup"><code><!--
+									<fieldset>
+										<label>
+											Object:
+											<span>
+												<input type="hidden"/><input type="text"/><G:link target='_search' action='SearchOptions' title='Selecionar'><i>&#X2010</i></G:link>
+											</span>
+										</label>
+									</fieldset>
+								--></code></pre>
+			</div>
+			<div>
+				<fieldset>
+					<label>
+						Object:
+						<span>
+							<input type="hidden"/>
+							<input type="text"/>
 						<g:link target='_search' action='SearchOptions' title='Selecionar'>
 							<i>&#X2010</i>
 						</g:link>
@@ -314,7 +343,7 @@
 										<label>
 											Object:
 											<span>
-												<input type="hidden"/><input type="text" readonly/><G:link target='_search' action='SearchGrid' title='Selecionar'><i>&#X2010</i></G:link>
+												<input type="hidden"/><input type="text"/><G:link target='_search' action='SearchGrid' title='Selecionar'><i>&#X2010</i></G:link>
 											</span>
 										</label>
 									</fieldset>
@@ -326,7 +355,7 @@
 						Object:
 						<span>
 							<input type="hidden"/>
-							<input type="text" readonly/>
+							<input type="text"/>
 						<g:link target='_search' action='SearchGrid' title='Selecionar'>
 							<i>&#X2010</i>
 						</g:link>
@@ -335,4 +364,34 @@
 			</fieldset>
 		</div>
 	</div>
+
+	<div>
+		<div>
+			<pre class="language-markup"><code><!--
+									<fieldset>
+										<label>
+											Object:
+											<span>
+												<input type="hidden"/><input type="text"/><G:link target='_search' action='SearchObjects' title='Selecionar'><i>&#X2010</i></G:link>
+											</span>
+										</label>
+									</fieldset>
+								--></code></pre>
+			</div>
+			<div>
+				<fieldset>
+					<label>
+						Object:
+						<span>
+							<input type="hidden"/>
+							<input type="text"/>
+						<g:link target='_search' action='SearchObjects' title='Selecionar'>
+							<i>&#X2010</i>
+						</g:link>
+					</span>
+				</label>
+			</fieldset>
+		</div>
+	</div>
+
 </G:template>

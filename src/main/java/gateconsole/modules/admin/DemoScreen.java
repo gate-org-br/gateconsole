@@ -196,13 +196,27 @@ public class DemoScreen extends gate.base.Screen
 			e.getUsername(), e.getEmail()))).collect(Collectors.toList()));
 	}
 
+	public JsonArray callSelectObjects()
+	{
+		return USERS.stream().map(e -> new JsonObject()
+			.setString("ID", e.getId().toString())
+			.setString("Nome", e.getName())
+			.setString("Login", e.getUsername())
+			.setString("E-Mail", e.getEmail()))
+			.collect(Collectors.toCollection(() -> new JsonArray()));
+	}
+
 	public JsonElement callSearchOptions() throws AppException
 	{
 		String body = getRequest().getBody().trim().toUpperCase();
 		if (body.length() < 3)
 			return JsonString.of("Entre com no mínimo 3 caracteres para fazer sua pesquisa");
 
-		var values = USERS.stream().filter(e -> e.getName().toUpperCase().startsWith(body)).collect(Collectors.toList());
+		var values = USERS.stream()
+			.filter(e -> e.getName().toUpperCase().startsWith(body)
+			|| e.getEmail().toUpperCase().startsWith(body)
+			|| e.getUsername().toUpperCase().startsWith(body))
+			.collect(Collectors.toList());
 
 		return JsonArray.of(values,
 			e -> e.getName(),
@@ -220,12 +234,32 @@ public class DemoScreen extends gate.base.Screen
 			return JsonString.of("Entre com no mínimo 3 caracteres para fazer sua pesquisa");
 
 		var values = USERS.stream()
-			.filter(e -> e.getName().toUpperCase().startsWith(body))
+			.filter(e -> e.getName().toUpperCase().startsWith(body)
+			|| e.getEmail().toUpperCase().startsWith(body)
+			|| e.getUsername().toUpperCase().startsWith(body))
 			.map(e -> List.of(e.getId().toString(), e.getName(),
 			e.getUsername(), e.getEmail()))
 			.collect(Collectors.toList());
 		values.add(0, List.of("ID", "Nome", "Login", "E-Mail"));
 		return JsonArray.of(values);
+	}
+
+	public JsonElement callSearchObjects()
+	{
+		String body = getRequest().getBody().trim().toUpperCase();
+		if (body.length() < 3)
+			return JsonString.of("Entre com no mínimo 3 caracteres para fazer sua pesquisa");
+
+		return USERS.stream()
+			.filter(e -> e.getName().toUpperCase().startsWith(body)
+			|| e.getEmail().toUpperCase().startsWith(body)
+			|| e.getUsername().toUpperCase().startsWith(body))
+			.map(e -> new JsonObject()
+			.setString("ID", e.getId().toString())
+			.setString("Nome", e.getName())
+			.setString("Login", e.getUsername())
+			.setString("E-Mail", e.getEmail()))
+			.collect(Collectors.toCollection(() -> new JsonArray()));
 	}
 
 	public void setType(Doc.Type type)
