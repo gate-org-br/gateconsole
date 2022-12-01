@@ -7,7 +7,7 @@
 			<table id="dataset">
 				<thead>
 					<tr>
-						<th>Ano</th>
+						<th>Programador</th>
 						<th>Pendentes</th>
 						<th>Concluídos</th>
 						<th>Cancelados</th>
@@ -35,16 +35,20 @@
 				</tbody>
 			</table>
 			<g-coolbar>
-				<a href='#' data-chart='lchart' data-series='#dataset' title='Tarefas por programador'>
+				<a href='#' data-chart='lchart' data-series='#dataset' title='Tarefas por ano'>
 					Normal<g:icon type="lchart"/>
 				</a>
 
-				<a href='#' data-reverse data-chart='lchart' data-series='#dataset' title='Tarefas por programador'>
-					Invertido<g:icon type="lchart"/>
+				<a href='#' data-chart='lchart' data-series='#dataset(dir=Y)' title='Tarefas por ano'>
+					Dir = Y<g:icon type="lchart"/>
 				</a>
 
-				<a href='#' data-reverse data-min="2" data-chart='lchart' data-series='#dataset' title='Tarefas por programador'>
-					Limitado<g:icon type="lchart"/>
+				<a href='#' data-chart='lchart' data-series='#dataset(min=4)' title='Tarefas por ano'>
+					Min = 4<g:icon type="lchart"/>
+				</a>
+
+				<a href='#' data-chart='pchart' data-series='#dataset(max=1)' title='Tarefas do ano de 2020'>
+					Max = 1<g:icon type="pchart"/>
 				</a>
 
 				<a href='#' data-chart='pchart' title='Programadores por Linguagem'
@@ -65,7 +69,7 @@
 			<table id="dataset">
 				<thead>
 					<tr>
-						<th>Ano</th>
+						<th>Programador</th>
 						<th>2020</th>
 						<th>2021</th>
 						<th>2022</th>
@@ -109,12 +113,16 @@
 					Tabela<G:icon type="lchart"/>
 				</a>
 
-				<a href='#' data-reverse data-chart='lchart' data-series='#dataset' title='Tarefas por ano'>
-					Tabela Invertida<G:icon type="lchart"/>
+				<a href='#' data-chart='lchart' data-series='#dataset(dir=Y)' title='Tarefas por ano'>
+					Dir = Y<G:icon type="lchart"/>
 				</a>
 
-				<a href='#' data-min="4" data-chart='lchart' data-series='#dataset' title='Tarefas por ano'>
-					Tabela Limitada<G:icon type="lchart"/>
+				<a href='#' data-chart='lchart' data-series='#dataset(min=4)' title='Tarefas por ano'>
+					Min = 4<G:icon type="lchart"/>
+				</a>
+
+				<a href='#' data-chart='pchart' data-series='#dataset(max=1)' title='Tarefas do ano de 2020'>
+					Max = 1<G:icon type="pchart"/>
 				</a>
 
 				<hr/>
