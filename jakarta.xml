@@ -6,7 +6,7 @@
 
 	<groupId>io.github.gate-org-br</groupId>
 	<artifactId>gateconsole</artifactId>
-	<version>10.2.0</version>
+	<version>10.2.2</version>
 	<packaging>war</packaging>
 
 	<name>gateconsole</name>
