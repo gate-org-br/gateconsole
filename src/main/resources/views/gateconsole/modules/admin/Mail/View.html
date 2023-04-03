@@ -18,21 +18,33 @@
 							<input type='text' g:property='form.port'/>
 						</span>
 					</label>
-					<label data-size='4'>
+					<label data-size='2'>
 						Usuário:
 						<span>
 							<input type='text' g:property='form.username'/>
 						</span>
 					</label>
-					<label data-size='4'>
+					<label data-size='2'>
 						Senha:
 						<span>
 							<input type='password' g:property='form.password'/>
 						</span>
 					</label>
+					<label data-size='2'>
+						TSL:
+						<span>
+							<select type='TSL' g:property='form.useTLS'/>
+						</span>
+					</label>
+					<label data-size='2'>
+						SSL:
+						<span>
+							<select type='SSL' g:property='form.useSSL'/>
+						</span>
+					</label>
 				</fieldset>
 				<g-coolbar>
-					<button g:action="Update"/>
+					<button class='primary' g:action="Update"/>
 				</g-coolbar>
 			</form>
 		</div>
@@ -52,7 +64,7 @@
 				</fieldset>
 
 				<g-coolbar>
-					<button g:action="Post"/>
+					<button class='primary' g:action="Post"/>
 				</g-coolbar>
 			</form>
 		</div>

@@ -51,8 +51,8 @@ public class FuncScreen extends gate.base.Screen
 		}
 	}
 
-	@Name("Nova")
 	@Icon("insert")
+	@Name("Nova função")
 	public Object callInsert()
 	{
 		if (isPOST() && getMessages().isEmpty())
@@ -75,7 +75,7 @@ public class FuncScreen extends gate.base.Screen
 	}
 
 	@Icon("update")
-	@Name("Alterar")
+	@Name("Alterar função")
 	public Object callUpdate()
 	{
 		if (isGET())
@@ -106,8 +106,7 @@ public class FuncScreen extends gate.base.Screen
 	}
 
 	@Icon("delete")
-	@Name("Remover")
-	@Color("#660000")
+	@Name("Remover função")
 	@Confirm("Tem certeza de que deseja remover este registro?")
 	public Object callDelete()
 	{
@@ -159,7 +158,7 @@ public class FuncScreen extends gate.base.Screen
 		}
 
 		@Icon("insert")
-		@Name("Adcionar")
+		@Name("Adcionar usuário")
 		public Command callInsert()
 		{
 
@@ -244,7 +243,7 @@ public class FuncScreen extends gate.base.Screen
 		}
 
 		@Icon("insert")
-		@Name("Adcionar")
+		@Name("Adcionar perfil")
 		public Command callInsert()
 		{
 

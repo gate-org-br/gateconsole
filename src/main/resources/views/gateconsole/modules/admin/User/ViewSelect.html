@@ -109,14 +109,16 @@
 	</figure>
 
 	<g-coolbar>
-		<g:link action='Update' _form.id="${screen.form.id}"/>
-		<g:link action="Delete" _form.id="${screen.form.id}"/>
+		<a href='#' class='primary' g:action='Update' _form.id="${screen.form.id}"/>
+		<a href='#' class='danger' g:action="Delete" _form.id="${screen.form.id}"/>
 		<hr/>
-		<g:hide icon="return" name="Retornar"/>
+		<a href='#' class="tertiary" target="_hide">
+			Retornar<g:icon type="return"/>
+		</a>
 	</g-coolbar>
 
 	<g-tab-control>
-		<g:link screen="Auth" _form.user.id="${screen.form.id}"/>
-		<g:link screen="UserScreen$Func" _user.id="${screen.form.id}"/>
+		<a href='#' g:screen="Auth" _form.user.id="${screen.form.id}"/>
+		<a href='#' g:screen="UserScreen$Func" _user.id="${screen.form.id}"/>
 	</g-tab-control>
 </main>

@@ -82,8 +82,8 @@ public class RoleScreen extends gate.base.Screen
 		}
 	}
 
-	@Name("Novo")
 	@Icon("insert")
+	@Name("Novo perfil")
 	public String callInsert()
 	{
 		if (isPOST() && getMessages().isEmpty())
@@ -101,7 +101,7 @@ public class RoleScreen extends gate.base.Screen
 	}
 
 	@Icon("update")
-	@Name("Alterar")
+	@Name("Alterar perfil")
 	public Object callUpdate()
 	{
 		if (isGET())
@@ -133,7 +133,7 @@ public class RoleScreen extends gate.base.Screen
 	}
 
 	@Icon("delete")
-	@Name("Remover")
+	@Name("Remover perfil")
 	public Object callDelete()
 	{
 		try
@@ -189,7 +189,7 @@ public class RoleScreen extends gate.base.Screen
 		}
 
 		@Icon("insert")
-		@Name("Adcionar")
+		@Name("Adcionar função")
 		public String callInsert()
 		{
 
@@ -205,7 +205,7 @@ public class RoleScreen extends gate.base.Screen
 		}
 
 		@Icon("delete")
-		@Name("Remover")
+		@Name("Remover função")
 		public String callDelete()
 		{
 

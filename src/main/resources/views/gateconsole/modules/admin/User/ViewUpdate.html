@@ -26,7 +26,7 @@
 				Perfil
 				<span>
 					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
-					<input type="text" property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
+					<input type="text" g:property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
 					<a g:screen="Role" g:action="Search"
 					   data-get='form.role.id, form.role.name' tabindex='1' >
 						<i g:icon="search"/>
@@ -93,12 +93,12 @@
 			<input type="hidden" g:property='form'/>
 		</fieldset>
 		<g-coolbar>
-			<button class="Commit" tabindex='2'>
-				Concluir<i g:icon="commit"/>
+			<button class="primary" tabindex='2'>
+				Concluir alteração<i g:icon="commit"/>
 			</button>
 			<hr/>
 			<a g:action="Select" _form.id="${screen.form.id}"
-			   class="Cancel" tabindex='2'>
+			   class="tertiary" tabindex='2'>
 				Desistir<i g:icon='cancel'/>
 			</a>
 		</g-coolbar>

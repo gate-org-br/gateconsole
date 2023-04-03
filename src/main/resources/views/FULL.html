@@ -17,13 +17,16 @@
 				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Mail"/>
 				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Icon"/>
 				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Emoji"/>
-				<a target="_top" g:module="gateconsole.modules.admin" g:screen="Demo"/>
 				<a target="_top" g:if="${not empty subscriptions}"
 				   g:module="gateconsole.modules.admin" g:screen="Access"/>
 
-				<a target="_chat"
-					data-host-id="${screen.user.id}" 
-					data-host-name="${screen.user.name}"></a>
+				<g-chat-button host-id="${screen.user.id}"
+					       host-name="${screen.user.name}">
+					<g:icon type='2015'/>
+					<g-chat-counter host-id="${screen.user.id}" >
+						Chat
+					</g-chat-counter>
+				</g-chat-button>
 
 				<hr/>
 				<g:exit icon="exit" name="Sair" target="_top"/>

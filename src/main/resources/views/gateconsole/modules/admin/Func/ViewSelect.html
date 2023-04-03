@@ -12,17 +12,17 @@
 	</fieldset>
 
 	<g-coolbar>
-		<g:link action='Update' _form.id="${screen.form.id}" tabindex="2"/>
-		<g:link action="Delete" _form.id="${screen.form.id}" tabindex="2"/>
+		<a href='#' class='primary' g:action='Update' _form.id="${screen.form.id}" tabindex="2"/>
+		<a href='#' class='danger' g:action="Delete" _form.id="${screen.form.id}" tabindex="2"/>
 		<hr/>
-		<g:hide tabindex="2">
+		<a href='#' class='tertiary' target='_hide' tabindex="2">
 			Retornar<g:icon type="return"/>
-		</g:hide>
+		</a>
 	</g-coolbar>
 
 	<g-tab-control>
-		<g:link screen="Auth" _form.func.id="${screen.form.id}"/>
-		<g:link screen="FuncScreen$User" _func.id="${screen.form.id}"/>
-		<g:link screen="FuncScreen$Role" _func.id="${screen.form.id}"/>
+		<a href='#' g:screen="Auth" _form.func.id="${screen.form.id}"/>
+		<a href='#' g:screen="FuncScreen$User" _func.id="${screen.form.id}"/>
+		<a href='#' g:screen="FuncScreen$Role" _func.id="${screen.form.id}"/>
 	</g-tab-control>
 </main>

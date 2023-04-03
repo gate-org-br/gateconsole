@@ -24,6 +24,8 @@ public class ServerDao extends Dao
 			.expression("port")
 			.expression("username")
 			.expression("password")
+			.expression("useTLS")
+			.expression("useSSL")
 			.from("Server")
 			.where(Condition.of("type").eq(type))
 			.build()
@@ -40,6 +42,8 @@ public class ServerDao extends Dao
 			.set("port", server.getPort())
 			.set("username", server.getUsername())
 			.set("password", server.getPassword())
+			.set("useTLS", server.getUseTLS())
+			.set("useSSL", server.getUseSSL())
 			.build()
 			.connect(getLink())
 			.execute();

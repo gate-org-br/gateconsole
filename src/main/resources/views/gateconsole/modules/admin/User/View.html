@@ -31,15 +31,15 @@
 			<label data-size='4'>
 				E-Mail:
 				<span>
-					<i g:icon="2034"/>
 					<input type="text" g:property='form.email' tabindex='1'/>
+					<i g:icon="2034"/>
 				</span>
 			</label>
 			<label>
 				Perfil
 				<span>
-					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
 					<input type="text" g:property='form.role.name' id='form.role.name' required='' data-getter="getter"/>
+					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
 					<a id="getter"
 					   g:screen="Role" g:action="Search" _form.name="@{form.role.name}"
 					   data-get='form.role.id, form.role.name' tabindex='1'>
@@ -50,12 +50,12 @@
 		</fieldset>
 
 		<g-coolbar>
-			<button class="Action" tabindex='2'>
+			<button class="primary" tabindex='2'>
 				Pesquisar<i g:icon="search"/>
 			</button>
+			<a class='alternative' g:action='Insert' target='_stack' data-on-hide="reload" tabindex='2'/>
 			<button g:action="Report" formtarget="_report" tabindex='2'/>
 			<a g:action='Upload' target='_stack' data-on-hide="reload" tabindex='2'/>
-			<a g:action='Insert' target='_stack' data-on-hide="reload" tabindex='2'/>
 		</g-coolbar>
 
 		<table class="c1 c5"
@@ -99,7 +99,7 @@
 			<tbody>
 				<tr th:each="target: ${screen.page}"
 				    g:action='Select' _form.id='${target.id}'
-				    data-target='_stack' data-on-hide="submit(form)">
+				    data-target='_stack'>
 					<td title="Ativo" g:print="${target.active}"/>
 					<td title="Nome" g:print="${target.name}"/>
 					<td title="Login" g:print="${target.username}"/>

@@ -1,27 +1,26 @@
 <main g:template="/views/MAIN.html">
 	<body>
-		<form method ='POST'
+		<form class="Login" method ='POST'
 		      target ='_top'
 		      action='Gate?MODULE=gateconsole.modules.admin'>
-			<div class="Login">
-				<div>
-					<div>
-						<img src='Logo.svg'/>
-						<label>${app.id}</label>
-						<label>Vers√£o ${version}</label>
-					</div>
-
+			<main>
+				<header>
+					<img src='Logo.svg'/>
+					<label>${app.id}</label>
+					<label>Vers„o ${version}</label>
+				</header>
+				<section>
 					<g-tab-control type="dummy">
-						<a href='Gate' data-selected="true" style="flex-basis: 25%">
+						<a href='Gate' data-selected="true">
 							Fazer Logon<g:icon type="2000"/>
 						</a>
-						<a href='SetupPassword' style="flex-basis: 25%">
+						<a href='SetupPassword'>
 							Trocar Senha<g:icon type="passwd"/>
 						</a>
-						<a href='ResetPassword' style="flex-basis: 25%">
+						<a href='ResetPassword'>
 							Recuperar Senha<g:icon type="2023"/>
 						</a>
-						<a href='CreateAccount' style="flex-basis: 25%">
+						<a href='CreateAccount'>
 							Criar Conta<g:icon type="gate.entity.User"/>
 						</a>
 						<div>
@@ -29,8 +28,8 @@
 								<label>
 									Login:
 									<span>
-										<g:icon type="gate.entity.User"/>
 										<input type="text" required='required' name='$username' maxlength='64' tabindex="1" title='Entre com o seu login.'/>
+										<g:icon type="gate.entity.User"/>
 									</span>
 								</label>
 								<label>
@@ -42,28 +41,17 @@
 							</fieldset>
 						</div>
 					</g-tab-control>
-
+				</section>
+				<footer>
 					<g-coolbar>
-						<button class="Commit" tabindex="2">
-							Concluir<g:icon type="commit"/>
+						<button class="primary" tabindex="2">
+							Entrar<g:icon type="commit"/>
 						</button>
-						<hr/>
-						<a g:superuser 
-						   tabindex="3"
-						   target="_popup" 
-						   data-auto-click
-						   style='color: #660000'
-						   g:condition='${not empty exception}'>
-							Erro<g:icon type="2200"/>
-							<div style='background-color: white'
-							     title="Erro de sistema" 
-							     g:stacktrace='${exception}'/>
-						</a>
 					</g-coolbar>
-				</div>
-			</div>
-
-			<g:alert messages="${messages}"/>
+				</footer>
+			</main>
 		</form>
+
+		<g:alert messages="${messages}"/>
 	</body>
 </main>

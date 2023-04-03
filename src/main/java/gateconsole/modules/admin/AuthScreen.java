@@ -32,7 +32,7 @@ public class AuthScreen extends gate.base.Screen
 	}
 
 	@Icon("1002")
-	@Name("Adicionar")
+	@Name("Adicionar acesso")
 	public String callInsert() throws AppException
 	{
 		try

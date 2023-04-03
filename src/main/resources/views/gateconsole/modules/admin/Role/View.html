@@ -6,51 +6,107 @@
 					<g-path/>
 				</legend>
 
-				<fieldset g:condition="${not empty screen.page}"
-					  g:otherwise="Nenhum perfil encontrado">
+				<table class='c1 TREEVIEW'
+				       g:condition="${not empty screen.page}"
+				       g:otherwise="Nenhum perfil encontrado">
+					<col style='width: 50px; min-width: 50px'/>
+					<col/>
 
-					<table class='c1 TREEVIEW'>
-						<col style='width: 50px; min-width: 50px'/>
-						<col/>
+					<thead>
+						<tr>
+							<th>
+								#
+							</th>
+							<th>
+								Nome
+							</th>
+						</tr>
+					</thead>
 
-						<thead>
-							<tr>
-								<th>
-									#
-								</th>
-								<th>
-									Nome
-								</th>
+					<tbody>
+						<g:iterator source="${screen.page}" target="role">
+							<tr data-depth='${depth}'
+							    g:action='Select' _form.id='${role.id}'
+							    data-target='_stack' data-on-hide="reload"
+							    title='Perfil'>
+								<td></td>
+								<td style='padding-left: ${depth*40}px; font-weight: ${role.isMaster() ? "bold" : "normal"}'>
+									<g:icon type="gate.entity.Role"/>
+									${role.name}
+									<g:print value="${role.rolename}" format="(%s)"/>
+								</td>
 							</tr>
-						</thead>
-
-						<tbody>
-							<g:iterator source="${screen.page}" target="role">
-								<tr data-depth='${depth}'
-								    g:action='Select' _form.id='${role.id}'
-								    data-target='_stack' data-on-hide="reload"
-								    title='Perfil'>
+							<g:if condition="${not empty role.funcs}">
+								<tr data-depth='${depth+1}'>
 									<td></td>
-									<td style='padding-left: ${depth*40}px; font-weight: ${role.isMaster() ? "bold" : "normal"}'>
-										<g:icon type="gate.entity.Role"/>
-										${role.name}
-										<g:print value="${role.rolename}" format="(%s)"/>
+									<td style='padding-left: ${(depth+1)*40}px; color: #000099;'>
+										<g:icon type="gate.entity.Func"/>
+										Funções
 									</td>
 								</tr>
-								<g:if condition="${not empty role.funcs}">
-									<tr data-depth='${depth+1}'>
+								<g:iterator source="${role.funcs}" target="_func">
+									<tr data-depth='${depth+1}'
+									    g:screen='Func' g:action='Select' _form.id='${_func.id}'
+									    data-target='_stack' data-on-hide="reload">
 										<td></td>
-										<td style='padding-left: ${(depth+1)*40}px; color: #000099;'>
+										<td style='padding-left: ${(depth+1)*40}px;'>
 											<g:icon type="gate.entity.Func"/>
-											Funções
+											<g:print value="${_func}"/>
 										</td>
 									</tr>
-									<g:iterator source="${role.funcs}" target="_func">
-										<tr data-depth='${depth+1}'
-										    g:screen='Func' g:action='Select' _form.id='${_func.id}'
-										    data-target='_stack' data-on-hide="reload">
+									<g:iterator source="${_func.auths}" target="auth">
+										<tr data-depth='${depth+1}'>
 											<td></td>
-											<td style='padding-left: ${(depth+1)*40}px;'>
+											<td style='padding-left: ${(depth+1)*40}px;
+											    color: ${auth.access eq "GRANT" ? "green" : "red"};
+											    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
+												<g:icon type="${auth.access}" title='${auth.access.toString()}'/>&nbsp;<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>&nbsp;<g:print value="${auth}"/>
+											</td>
+										</tr>
+									</g:iterator>
+								</g:iterator>
+							</g:if>
+							<g:if condition="${not empty role.auths}">
+								<tr data-depth='${depth+1}'>
+									<td></td>
+									<td style='padding-left: ${(depth+1)*40}px; color: #000099;'>
+										<g:icon type="gate.entity.Auth"/>
+										Acessos
+									</td>
+								</tr>
+								<g:iterator source="${role.auths}" target="auth">
+									<tr data-depth='${depth+1}'>
+										<td></td>
+										<td style='padding-left: ${(depth+1)*40}px;
+										    color: ${auth.access eq "GRANT" ? "green" : "red"};
+										    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
+											<g:icon type="${auth.access}" title='${auth.access.toString()}'/>&nbsp;<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>&nbsp;<g:print value="${auth}"/>
+										</td>
+									</tr>
+								</g:iterator>
+							</g:if>
+							<g:if condition="${not empty role.users}">
+								<tr data-depth='${depth+1}'>
+									<td></td>
+									<td style='padding-left: ${(depth+1)*40}px; color: #000099;'>
+										<g:icon type="gate.entity.User"/>
+										Usuários
+									</td>
+								</tr>
+								<g:iterator source="${role.users}" target="_user">
+									<tr data-depth='${depth+1}' data-target='_stack'
+									    data-action='Gate?MODULE=${MODULE}&SCREEN=User&ACTION=Select&form.id=${_user.id}'>
+										<td></td>
+										<td style='padding-left: ${(depth+1)*40}px;'>
+											<g:icon type="gate.entity.User"/>
+											<g:print value="${_user}"/>
+										</td>
+									</tr>
+									<g:iterator source="${_user.funcs}" target="_func">
+										<tr data-depth='${depth+1}' data-target='_stack'
+										    data-action='Gate?MODULE=${MODULE}&SCREEN=Func&ACTION=Select&form.id=${_func.id}'>
+											<td></td>
+											<td style='padding-left: ${(depth+1)*40}px; color: black; font-weight: bold'>
 												<g:icon type="gate.entity.Func"/>
 												<g:print value="${_func}"/>
 											</td>
@@ -66,88 +122,30 @@
 											</tr>
 										</g:iterator>
 									</g:iterator>
-								</g:if>
-								<g:if condition="${not empty role.auths}">
-									<tr data-depth='${depth+1}'>
-										<td></td>
-										<td style='padding-left: ${(depth+1)*40}px; color: #000099;'>
-											<g:icon type="gate.entity.Auth"/>
-											Acessos
-										</td>
-									</tr>
-									<g:iterator source="${role.auths}" target="auth">
+
+									<g:iterator source="${_user.auths}" target="auth">
 										<tr data-depth='${depth+1}'>
 											<td></td>
 											<td style='padding-left: ${(depth+1)*40}px;
 											    color: ${auth.access eq "GRANT" ? "green" : "red"};
 											    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
-												<g:icon type="${auth.access}" title='${auth.access.toString()}'/>&nbsp;<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>&nbsp;<g:print value="${auth}"/>
+												<g:icon type="${auth.access}" title='${auth.access.toString()}'/>
+												<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>
+												<g:print value="${auth}"/>
 											</td>
 										</tr>
 									</g:iterator>
-								</g:if>
-								<g:if condition="${not empty role.users}">
-									<tr data-depth='${depth+1}'>
-										<td></td>
-										<td style='padding-left: ${(depth+1)*40}px; color: #000099;'>
-											<g:icon type="gate.entity.User"/>
-											Usuários
-										</td>
-									</tr>
-									<g:iterator source="${role.users}" target="_user">
-										<tr data-depth='${depth+1}' data-target='_stack'
-										    data-action='Gate?MODULE=${MODULE}&SCREEN=User&ACTION=Select&form.id=${_user.id}'>
-											<td></td>
-											<td style='padding-left: ${(depth+1)*40}px;'>
-												<g:icon type="gate.entity.User"/>
-												<g:print value="${_user}"/>
-											</td>
-										</tr>
-										<g:iterator source="${_user.funcs}" target="_func">
-											<tr data-depth='${depth+1}' data-target='_stack'
-											    data-action='Gate?MODULE=${MODULE}&SCREEN=Func&ACTION=Select&form.id=${_func.id}'>
-												<td></td>
-												<td style='padding-left: ${(depth+1)*40}px; color: black; font-weight: bold'>
-													<g:icon type="gate.entity.Func"/>
-													<g:print value="${_func}"/>
-												</td>
-											</tr>
-											<g:iterator source="${_func.auths}" target="auth">
-												<tr data-depth='${depth+1}'>
-													<td></td>
-													<td style='padding-left: ${(depth+1)*40}px;
-													    color: ${auth.access eq "GRANT" ? "green" : "red"};
-													    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
-														<g:icon type="${auth.access}" title='${auth.access.toString()}'/>&nbsp;<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>&nbsp;<g:print value="${auth}"/>
-													</td>
-												</tr>
-											</g:iterator>
-										</g:iterator>
-
-										<g:iterator source="${_user.auths}" target="auth">
-											<tr data-depth='${depth+1}'>
-												<td></td>
-												<td style='padding-left: ${(depth+1)*40}px;
-												    color: ${auth.access eq "GRANT" ? "green" : "red"};
-												    font-weight: ${auth.scope eq "PUBLIC" ? "bold" : "normal"}'>
-													<g:icon type="${auth.access}" title='${auth.access.toString()}'/>
-													<g:icon type="${auth.scope}" title='${auth.scope.toString()}'/>
-													<g:print value="${auth}"/>
-												</td>
-											</tr>
-										</g:iterator>
-									</g:iterator>
-								</g:if>
-							</g:iterator>
-						</tbody>
-					</table>
-				</fieldset>
+								</g:iterator>
+							</g:if>
+						</g:iterator>
+					</tbody>
+				</table>
 			</fieldset>
 		</section>
 
 		<footer>
 			<g-coolbar>
-				<a g:action='Insert' target="_stack" data-on-hide="reload" tabindex='1'/>
+				<a class='primary' g:action='Insert' target="_stack" data-on-hide="reload" tabindex='1'/>
 			</g-coolbar>
 		</footer>
 	</article>

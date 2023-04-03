@@ -8,12 +8,12 @@ import gate.annotation.Description;
 import gate.annotation.Icon;
 import gate.annotation.Name;
 import gate.base.Screen;
+import gate.command.Command;
 import gate.constraint.Required;
 import gate.entity.Func;
 import gate.entity.User;
 import gate.error.AppException;
 import gate.error.ConversionException;
-import gate.io.URL;
 import gate.lang.property.Property;
 import gate.report.Doc;
 import gate.report.Form;
@@ -78,36 +78,37 @@ public class UserScreen extends gate.base.Screen
 		return "/views/gateconsole/modules/admin/User/ViewSelect.html";
 	}
 
-	@Name("Novo")
 	@Icon("insert")
-	@Description("Novo Usuário")
+	@Name("Novo usuário")
 	public Object callInsert() throws AppException
 	{
 		if (isPOST() && getMessages().isEmpty())
 		{
 			control.insert(getForm());
-			return new URL("Gate")
-				.setModule(getModule())
-				.setScreen(getScreen())
-				.setAction("Select")
-				.setParameter("form.id", getForm().getId());
+			return Command
+				.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.action("Select")
+				.parameter("form.id", getForm().getId());
 		} else
 			getForm().setActive(true);
 		return "/views/gateconsole/modules/admin/User/ViewInsert.html";
 	}
 
 	@Icon("update")
-	@Name("Alterar")
+	@Name("Alterar usuário")
 	public Object callUpdate() throws AppException
 	{
 		if (isPOST() && getMessages().isEmpty())
 		{
 			control.update(getForm());
-			return new URL("Gate")
-				.setModule(getModule())
-				.setScreen(getScreen())
-				.setAction("Select")
-				.setParameter("form.id", getForm().getId());
+			return Command
+				.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.action("Select")
+				.parameter("form.id", getForm().getId());
 		} else if (isGET())
 			form = control.select(getForm().getId());
 		return "/views/gateconsole/modules/admin/User/ViewUpdate.html";
@@ -118,25 +119,26 @@ public class UserScreen extends gate.base.Screen
 	public Object callPasswd() throws AppException
 	{
 		control.password(getForm());
-		return new URL("Gate")
-			.setModule(getModule())
-			.setScreen(getScreen())
-			.setAction("Select")
-			.setParameter("form.id", getForm().getId())
-			.setMessages("Senha do usuário resetada para o login.");
+		return Command
+			.redirect()
+			.module(getModule())
+			.screen(getScreen())
+			.action("Select")
+			.parameter("form.id", getForm().getId())
+			.messages("Senha do usuário resetada para o login.");
 	}
 
 	@Icon("delete")
-	@Name("Remover")
-	@Color("#660000")
+	@Name("Remover usuário")
 	@Confirm("Tem certeza de que deseja remover este registro?")
 	public Object callDelete() throws AppException
 	{
 		control.delete(getForm());
-		return new URL("Gate")
-			.setModule(getModule())
-			.setScreen(getScreen())
-			.setMessages("Usuario removido com sucesso.");
+		return Command
+			.redirect()
+			.module(getModule())
+			.screen(getScreen())
+			.messages("Usuario removido com sucesso.");
 	}
 
 	@Icon("upload")
@@ -148,10 +150,13 @@ public class UserScreen extends gate.base.Screen
 	}
 
 	@Asynchronous
-	public URL callCommit() throws ConversionException, AppException
+	public Object callCommit() throws ConversionException, AppException
 	{
 		control.insert(getForm().getRole(), BACKUP.load(file));
-		return new URL("Gate").setModule(getModule()).setScreen(getScreen());
+		return Command
+			.redirect()
+			.module(getModule())
+			.screen(getScreen());
 	}
 
 	@Icon("report")

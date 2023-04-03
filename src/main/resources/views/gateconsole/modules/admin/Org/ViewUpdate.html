@@ -1,8 +1,8 @@
 <main g:template="/views/FULL.html">
 	<article>
 		<section>
-			<form id="form" method='POST' action='#' enctype='multipart/form-data' style="height: 100%">
-				<fieldset style="height: 100%">
+			<form id="form" method='POST' action='#' enctype='multipart/form-data'>
+				<fieldset>
 					<legend>
 						<g-path/>
 					</legend>
@@ -91,11 +91,11 @@
 		</section>
 		<footer>
 			<g-coolbar>
-				<button g:action="Commit" class="Commit" form="form" tabindex='2'>
-					Concluir<i g:icon='commit'/>
+				<button class='primary' g:action="Commit" form="form" tabindex='2'>
+					Concluir alteração<i g:icon='commit'/>
 				</button>
 				<hr/>
-				<a g:screen="#" class="Cancel" tabindex='2'>
+				<a class='tertiary' g:screen="#" tabindex='2'>
 					Desistir<i g:icon='cancel'/>
 				</a>
 			</g-coolbar>

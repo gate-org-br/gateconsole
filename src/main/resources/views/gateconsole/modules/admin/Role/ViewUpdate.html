@@ -13,8 +13,8 @@
 			<label data-size="8">
 				Perfil Pai:
 				<span>
-					<input type='hidden' g:property="form.role.id" id='form.role.id' required=''/>
 					<input type='text' g:property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
+					<input type='hidden' g:property="form.role.id" id='form.role.id' required=''/>
 					<a g:action="Search"
 					   data-get='form.role.id, form.role.name'
 					   tabindex='1' title='Selecionar Perfil'>
@@ -67,11 +67,11 @@
 		</fieldset>
 
 		<g-coolbar>
-			<button class="Commit" tabindex='2'>
-				Concluir<i g:icon="commit"/>
+			<button class="primary" tabindex='2'>
+				Concluir alteração<i g:icon="commit"/>
 			</button>
 			<hr/>
-			<a class="Cancel" g:action="Select"
+			<a class="tertiary" g:action="Select"
 			   _form.id="${screen.form.id}" tabindex='2'>
 				Desistir<g:icon type='cancel'/>
 			</a>

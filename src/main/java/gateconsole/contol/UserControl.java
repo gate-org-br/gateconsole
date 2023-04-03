@@ -84,7 +84,7 @@ public class UserControl extends Control
 		Constraints.validate(value, "active", "username", "name", "email", "description", "phone", "cellPhone", "CPF", "code");
 
 		if (value.getPhoto() != null && value.getPhoto().getSize() > MAX_PHOTO_SIZE)
-			throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
+			throw new AppException(String.format("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE));
 		try ( Link link = linksource.getLink();
 			 UserDao dao = new UserDao(link))
 		{
@@ -110,7 +110,7 @@ public class UserControl extends Control
 				Constraints.validate(value, "username", "name", "email", "description", "phone", "cellPhone", "CPF", "code");
 
 				if (value.getPhoto() != null && value.getPhoto().getSize() > MAX_PHOTO_SIZE)
-					throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
+					throw new AppException(String.format("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE));
 
 				if (value.getPassword() == null)
 					value.setPassword(value.getUsername());
@@ -121,9 +121,9 @@ public class UserControl extends Control
 				} catch (ConstraintViolationException ex)
 				{
 					if (value.getEmail() == null)
-						throw new AppException(ex, "%s: %s", ex.getMessage(), value.getUsername());
+						throw new AppException(String.format("%s: %s", ex.getMessage(), value.getUsername()), ex);
 					else
-						throw new AppException(ex, "%s: %s (%s)", ex.getMessage(), value.getUsername(), value.getEmail());
+						throw new AppException(String.format("%s: %s (%s)", ex.getMessage(), value.getUsername(), value.getEmail()), ex);
 				}
 
 				Progress.update(value.getName() + " inserido com sucesso");
@@ -149,7 +149,7 @@ public class UserControl extends Control
 			"cellPhone", "photo", "CPF");
 
 		if (model.getPhoto() != null && model.getPhoto().getSize() > 65535)
-			throw new AppException("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE);
+			throw new AppException(String.format("Fotos devem possuir no máximo %d bytes", MAX_PHOTO_SIZE));
 		try ( Link link = linksource.getLink();
 			 UserDao dao = new UserDao(link))
 		{

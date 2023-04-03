@@ -94,7 +94,7 @@
 		</fieldset>
 
 		<div class='Coolbar'>
-			<g:link class="Commit" method="post" module="#" screen="#" action="#" tabindex='2'>
+			<g:link class="primary" method="post" module="#" screen="#" action="#" tabindex='2'>
 				Concluir<g:icon type="commit"/>
 			</g:link>
 			<g:link class="Cancel" module="#" screen="#" action="Select" arguments="form.id=${screen.form.id}" tabindex='2'>
