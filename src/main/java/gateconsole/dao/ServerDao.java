@@ -26,6 +26,7 @@ public class ServerDao extends Dao
 			.expression("password")
 			.expression("useTLS")
 			.expression("useSSL")
+			.expression("timeout")
 			.from("Server")
 			.where(Condition.of("type").eq(type))
 			.build()
@@ -44,6 +45,7 @@ public class ServerDao extends Dao
 			.set("password", server.getPassword())
 			.set("useTLS", server.getUseTLS())
 			.set("useSSL", server.getUseSSL())
+			.set("timeout", server.getTimeout())
 			.build()
 			.connect(getLink())
 			.execute();
