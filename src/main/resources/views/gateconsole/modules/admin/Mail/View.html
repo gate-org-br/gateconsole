@@ -24,7 +24,7 @@
 							<input type='number' g:property='form.timeout'/>
 						</span>
 					</label>
-					<label data-size='2'>
+					<label data-size='4'>
 						Usuário:
 						<span>
 							<input type='text' g:property='form.username'/>
@@ -36,13 +36,13 @@
 							<input type='password' g:property='form.password'/>
 						</span>
 					</label>
-					<label data-size='2'>
+					<label data-size='1'>
 						TLS:
 						<span>
 							<select type='TLS' g:property='form.useTLS'/>
 						</span>
 					</label>
-					<label data-size='2'>
+					<label data-size='1'>
 						SSL:
 						<span>
 							<select type='SSL' g:property='form.useSSL'/>
@@ -76,13 +76,13 @@
 		</div>
 	</g-tab-control>
 
-	<table class="c1 c2"
+	<table class="c1 c2 c3"
 	       g:condition='${not empty screen.page}'
 	       g:otherwise='Não há nenhuma mensagem pendente de envio'>
 		<col style='width: 80px'/>
 		<col style='width: 120px'/>
-		<col style="width: calc(50% - 100px)"/>
-		<col style="width: calc(50% - 100px)"/>
+		<col style='width: 120px'/>
+
 		<caption>MENSAGENS PENDENTES DE ENVIO: ${screen.page.size()}</caption>
 		<thead>
 			<tr>
@@ -90,6 +90,7 @@
 					<g:icon type="gateconsole.modules.admin.MailScreen"/>
 				</th>
 				<th>Postagem</th>
+				<th>Tentativas</th>
 				<th>Remetente</th>
 				<th>Destinatário</th>
 			</tr>
@@ -97,9 +98,10 @@
 		<tbody>
 			<tr g:iterate='${screen.page}'>
 				<td g:print='${indx+1}'/>
-				<td g:print="${item.date}"/>
-				<td g:print="${item.sender}"/>
-				<td g:print="${item.receiver}"/>
+				<td g:print="${target.date}"/>
+				<td g:print="${target.attempts}"/>
+				<td g:print="${target.sender}"/>
+				<td g:print="${target.receiver}"/>
 			</tr>
 		</tbody>
 	</table>
