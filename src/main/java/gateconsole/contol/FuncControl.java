@@ -14,7 +14,10 @@ import gate.type.ID;
 import gateconsole.dao.FuncDao;
 import java.util.List;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Dependent
 @CopyInfo(User.class)
@@ -25,10 +28,13 @@ public class FuncControl extends Control
 	@DataSource("Gate")
 	LinkSource linksource;
 
+	@Produces
+	@Named("funcs")
+	@RequestScoped
 	public List<Func> search()
 	{
-		try ( Link link = linksource.getLink();
-			 FuncDao dao = new FuncDao(link))
+		try (Link link = linksource.getLink();
+			FuncDao dao = new FuncDao(link))
 		{
 			return dao.search();
 		}
@@ -36,8 +42,8 @@ public class FuncControl extends Control
 
 	public List<Func> search(Func filter)
 	{
-		try ( Link link = linksource.getLink();
-			 FuncDao dao = new FuncDao(link))
+		try (Link link = linksource.getLink();
+			FuncDao dao = new FuncDao(link))
 		{
 			return dao.search(filter);
 		}
@@ -45,8 +51,8 @@ public class FuncControl extends Control
 
 	public Func select(ID id) throws AppException
 	{
-		try ( Link link = linksource.getLink();
-			 FuncDao dao = new FuncDao(link))
+		try (Link link = linksource.getLink();
+			FuncDao dao = new FuncDao(link))
 		{
 			return dao.select(id);
 		}
@@ -56,8 +62,8 @@ public class FuncControl extends Control
 	{
 		Constraints.validate(func, "name");
 
-		try ( Link link = linksource.getLink();
-			 FuncDao dao = new FuncDao(link))
+		try (Link link = linksource.getLink();
+			FuncDao dao = new FuncDao(link))
 		{
 			dao.insert(func);
 		}
@@ -67,8 +73,8 @@ public class FuncControl extends Control
 	{
 		Constraints.validate(func, "name");
 
-		try ( Link link = linksource.getLink();
-			 FuncDao dao = new FuncDao(link))
+		try (Link link = linksource.getLink();
+			FuncDao dao = new FuncDao(link))
 		{
 			dao.update(func);
 		}
@@ -76,8 +82,8 @@ public class FuncControl extends Control
 
 	public void delete(Func user) throws AppException
 	{
-		try ( Link link = linksource.getLink();
-			 FuncDao dao = new FuncDao(link))
+		try (Link link = linksource.getLink();
+			FuncDao dao = new FuncDao(link))
 		{
 			dao.delete(user);
 		}
@@ -93,8 +99,8 @@ public class FuncControl extends Control
 
 		public List<Func> search(User user)
 		{
-			try ( Link link = linksource.getLink();
-				 FuncDao.UserDao dao = new FuncDao.UserDao(link))
+			try (Link link = linksource.getLink();
+				FuncDao.UserDao dao = new FuncDao.UserDao(link))
 			{
 				return dao.search(user);
 			}
@@ -102,8 +108,8 @@ public class FuncControl extends Control
 
 		public void insert(Func func, User user) throws AppException
 		{
-			try ( Link link = linksource.getLink();
-				 FuncDao.UserDao dao = new FuncDao.UserDao(link))
+			try (Link link = linksource.getLink();
+				FuncDao.UserDao dao = new FuncDao.UserDao(link))
 			{
 				dao.insert(func, user);
 			}
@@ -111,8 +117,8 @@ public class FuncControl extends Control
 
 		public void delete(Func func, User user) throws AppException
 		{
-			try ( Link link = linksource.getLink();
-				 FuncDao.UserDao dao = new FuncDao.UserDao(link))
+			try (Link link = linksource.getLink();
+				FuncDao.UserDao dao = new FuncDao.UserDao(link))
 			{
 				dao.delete(func, user);
 			}
@@ -129,8 +135,8 @@ public class FuncControl extends Control
 
 		public List<Func> search(Role role)
 		{
-			try ( Link link = linksource.getLink();
-				 FuncDao.RoleDao dao = new FuncDao.RoleDao(link))
+			try (Link link = linksource.getLink();
+				FuncDao.RoleDao dao = new FuncDao.RoleDao(link))
 			{
 				return dao.search(role);
 			}
@@ -138,8 +144,8 @@ public class FuncControl extends Control
 
 		public void insert(Func func, Role role) throws AppException
 		{
-			try ( Link link = linksource.getLink();
-				 FuncDao.RoleDao dao = new FuncDao.RoleDao(link))
+			try (Link link = linksource.getLink();
+				FuncDao.RoleDao dao = new FuncDao.RoleDao(link))
 			{
 				dao.insert(func, role);
 			}
@@ -147,8 +153,8 @@ public class FuncControl extends Control
 
 		public void delete(Func func, Role role) throws AppException
 		{
-			try ( Link link = linksource.getLink();
-				 FuncDao.RoleDao dao = new FuncDao.RoleDao(link))
+			try (Link link = linksource.getLink();
+				FuncDao.RoleDao dao = new FuncDao.RoleDao(link))
 			{
 				dao.delete(func, role);
 			}

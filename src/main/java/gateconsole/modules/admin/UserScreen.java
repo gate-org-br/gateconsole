@@ -131,14 +131,26 @@ public class UserScreen extends gate.base.Screen
 	@Icon("delete")
 	@Name("Remover usuário")
 	@Confirm("Tem certeza de que deseja remover este registro?")
-	public Object callDelete() throws AppException
+	public Object callDelete()
 	{
-		control.delete(getForm());
-		return Command
-			.redirect()
-			.module(getModule())
-			.screen(getScreen())
-			.messages("Usuario removido com sucesso.");
+		try
+		{
+			control.delete(getForm());
+			return Command
+				.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.messages("Usuario removido com sucesso.");
+		} catch (AppException ex)
+		{
+			return Command
+				.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.action("Select")
+				.parameter("form.id", getForm().getId())
+				.exception(ex);
+		}
 	}
 
 	@Icon("upload")

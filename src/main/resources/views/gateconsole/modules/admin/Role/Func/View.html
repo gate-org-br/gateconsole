@@ -3,10 +3,11 @@
 		<fieldset>
 			<label>
 				<span>
-					<input type="text" g:property='func.name'
-					       tabindex='1' placeholder="Incluir"
-					       g:options="${funcoes}" g:labels="${e -> e.name}" g:values="${e -> e.id}"/>
-					<input type="hidden" g:property='func.id' id="func.id"/>
+					<select data-method='post'
+						g:property='func.id'
+						g:options="${funcs}"
+						g:labels="${e -> e.name}"
+						g:values="${e -> e.id}"/>
 				</span>
 			</label>
 

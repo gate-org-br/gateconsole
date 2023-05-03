@@ -3,17 +3,14 @@
 		<fieldset>
 			<label>
 				<span>
-					<g:text property='func.name'
-						options="${screen.funcs}"
-						labels="${e -> e.name}"
-						values="${e -> e.id}"
-						tabindex='1'
-						placeholder="Incluir"/>
-					<g:hidden property="user.id"/>
-					<g:hidden id='func.id' property='func.id'
-						  data-method="post"/>
+					<select data-method='post'
+						g:property='func.id'
+						g:options="${funcs}"
+						g:labels="${e -> e.name}"
+						g:values="${e -> e.id}"/>
 				</span>
 			</label>
+			<input type="hidden" g:property="user.id"/>
 		</fieldset>
 	</form>
 

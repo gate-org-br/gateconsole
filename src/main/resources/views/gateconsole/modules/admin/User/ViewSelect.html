@@ -10,115 +10,74 @@
 			<legend>
 				<g-path/>
 			</legend>
-			<label data-size='2'>
-				Ativo:
-				<span>
-					<label g:property='form.active'/>
-				</span>
-			</label>
-			<label data-size='2'>
-				Cadastro:
-				<span>
-					<label g:property='form.registration'/>
-				</span>
+			<label data-size='4'>
+				Nome:
+				<span g:print='${screen.form.name}'/>
 			</label>
 			<label data-size='2'>
 				Login:
-				<span>
-					<label g:property='form.username'/>
-				</span>
+				<span g:print='${screen.form.username}'/>
 			</label>
 			<label data-size='2'>
-				Senha:
-				<span>
-					<label>Resetar</label>
-					<g:shortcut module="#" screen="#" action="Passwd" arguments="form.id=${screen.form.id}"/>
-				</span>
+				Ativo:
+				<span g:print='${screen.form.active}'/>
 			</label>
-			<label data-size='4'>
-				Nome:
-				<span>
-					<label g:property='form.name'/>
-				</span>
-			</label>
-			<label data-size='4'>
+			<label data-size='8'>
 				Perfil:
 				<span>
-					<label>
-						<g:print value="${screen.form.role.name}" empty="N/A"/>
-					</label>
-					<g:if condition="${not empty screen.form.role.id}">
-						<g:shortcut module="#" screen="Role" action="Select"
-							    arguments="form.id=${screen.form.role.id}"/>
-					</g:if>
-				</span>
-			</label>
-			<label data-size='2'>
-				CPF:
-				<span>
-					<label g:property='form.CPF'/>
-				</span>
-			</label>
-			<label data-size='2'>
-				Matrícula:
-				<span>
-					<label g:property='form.code'/>
-				</span>
-			</label>
-			<label data-size='2'>
-				Nascimento:
-				<span>
-					<g:icon type="gate.type.Date"/>
-					<label g:property='form.birthdate'/>
-				</span>
-			</label>
-			<label data-size='2'>
-				Sexo:
-				<span>
-					<label g:property='form.sex'/>
-				</span>
-			</label>
-			<label data-size='2'>
-				Telefone:
-				<span>
-					<g:icon type="gate.type.Phone"/>
-					<label g:property='form.phone'/>
-				</span>
-			</label>
-			<label data-size='2'>
-				Celular:
-				<span>
-					<g:icon type="gate.type.Phone"/>
-					<label g:property='form.cellPhone'/>
+					<label g:print="${screen.form.role.name}" g:empty="N/A"/>
+					<g:shortcut condition="${not empty screen.form.role.id}"
+						    screen="Role" action="Select"
+						    _form.id="${screen.form.role.id}"/>
 				</span>
 			</label>
 			<label data-size='4'>
 				E-Mail:
-				<span>
-					<g:icon type="2034"/>
-					<label g:property='form.email'/>
-				</span>
+				<span g:icon="2034" g:print='${screen.form.email}'/>
+			</label>
+			<label data-size='2'>
+				CPF:
+				<span g:print='${screen.form.CPF}'/>
+			</label>
+			<label data-size='2'>
+				Matrícula:
+				<span g:print='${screen.form.code}'/>
+			</label>
+			<label data-size='2'>
+				Nascimento:
+				<span g:icon="gate.type.Date" g:print='${screen.form.birthdate}'/>
+			</label>
+			<label data-size='2'>
+				Sexo:
+				<span g:print='${screen.form.sex}'/>
+			</label>
+			<label data-size='2'>
+				Telefone:
+				<span g:icon="gate.type.Phone" g:print='${screen.form.phone}'/>
+			</label>
+			<label data-size='2'>
+				Celular:
+				<span g:icon='gate.type.Phone' g:print='${screen.form.cellPhone}'/>
 			</label>
 			<label>
 				Descrição:
-				<span style='flex-basis: 80px'>
-					<label g:property='form.description'/>
-				</span>
+				<span style='flex-basis: 80px' g:print='${screen.form.description}'/>
 			</label>
 		</fieldset>
 	</figure>
 
 	<g-coolbar>
-		<a href='#' class='primary' g:action='Update' _form.id="${screen.form.id}"/>
-		<a href='#' class='danger' g:action="Delete" _form.id="${screen.form.id}"/>
+		<a class='primary' g:action='Update' _form.id="${screen.form.id}"/>
+		<a class='danger' g:action="Delete" _form.id="${screen.form.id}"/>
+		<a class='danger' g:action="Passwd" _form.id="${screen.form.id}"/>
 		<hr/>
-		<a href='#' class="tertiary" target="_hide">
+		<a class="tertiary" target="_hide">
 			Retornar<g:icon type="return"/>
 		</a>
 	</g-coolbar>
 
 	<g-tab-control>
-		<a href='#' g:screen="Auth" _form.user.id="${screen.form.id}"/>
-		<a href='#' g:screen="UserScreen$Func" _user.id="${screen.form.id}"/>
+		<a g:screen="Auth" _form.user.id="${screen.form.id}"/>
+		<a g:screen="UserScreen$Func" _user.id="${screen.form.id}"/>
 	</g-tab-control>
 </main>

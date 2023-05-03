@@ -84,13 +84,19 @@ public class RoleScreen extends gate.base.Screen
 
 	@Icon("insert")
 	@Name("Novo perfil")
-	public String callInsert()
+	public Object callInsert()
 	{
 		if (isPOST() && getMessages().isEmpty())
 		{
 			try
 			{
 				control.insert(getForm());
+				return Command
+					.redirect()
+					.module(getModule())
+					.screen(getScreen())
+					.action("Select")
+					.parameter("form.id", getForm().getId());
 			} catch (AppException ex)
 			{
 				setMessages(ex.getMessages());
