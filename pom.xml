@@ -6,7 +6,7 @@
 
 	<groupId>io.github.gate-org-br</groupId>
 	<artifactId>gateconsole</artifactId>
-	<version>11.0.1</version>
+	<version>11.0.2</version>
 	<packaging>war</packaging>
 
 	<name>gateconsole</name>
@@ -53,7 +53,7 @@
 		<dependency>
 			<groupId>io.github.gate-org-br</groupId>
 			<artifactId>gate</artifactId>
-			<version>11.0.0</version>
+			<version>11.0.1</version>
 		</dependency>
 	</dependencies>
 
