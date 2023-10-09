@@ -19,10 +19,7 @@ import gateconsole.dao.UserDao;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.ws.rs.Produces;
 
 @Dependent
 public class RoleControl extends Control
@@ -32,9 +29,6 @@ public class RoleControl extends Control
 	@DataSource("Gate")
 	LinkSource linksource;
 
-	@Produces
-	@RequestScoped
-	@Named("roles")
 	public List<Role> search() throws AppException
 	{
 		try (Link link = linksource.getLink();
