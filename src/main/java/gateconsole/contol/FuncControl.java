@@ -12,6 +12,7 @@ import gate.sql.Link;
 import gate.sql.LinkSource;
 import gate.type.ID;
 import gateconsole.dao.FuncDao;
+import gateconsole.dao.UserDao;
 import java.util.List;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
@@ -106,12 +107,17 @@ public class FuncControl extends Control
 			}
 		}
 
-		public void insert(Func func, User user) throws AppException
+		public Func insert(Func func, User user) throws AppException
 		{
 			try (Link link = linksource.getLink();
+				UserDao userDao = new UserDao(link);
+				FuncDao funcDao = new FuncDao(link);
 				FuncDao.UserDao dao = new FuncDao.UserDao(link))
 			{
+				func = funcDao.select(func.getId());
+				user = userDao.select(user.getId());
 				dao.insert(func, user);
+				return func;
 			}
 		}
 
@@ -142,12 +148,15 @@ public class FuncControl extends Control
 			}
 		}
 
-		public void insert(Func func, Role role) throws AppException
+		public Func insert(Func func, Role role) throws AppException
 		{
 			try (Link link = linksource.getLink();
+				FuncDao funcDao = new FuncDao(link);
 				FuncDao.RoleDao dao = new FuncDao.RoleDao(link))
 			{
+				func = funcDao.select(func.getId());
 				dao.insert(func, role);
+				return func;
 			}
 		}
 

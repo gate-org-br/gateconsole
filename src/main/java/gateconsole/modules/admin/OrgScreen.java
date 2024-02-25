@@ -1,18 +1,18 @@
 package gateconsole.modules.admin;
 
+import gate.annotation.CopyInfo;
 import gate.annotation.Icon;
 import gate.annotation.Name;
 import gate.entity.Org;
 import gate.error.AppException;
 import gate.error.NotFoundException;
-import gate.io.URL;
 import gateconsole.contol.OrgControl;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@Icon("2006")
-@RequestScoped
+@Dependent
 @Name("Organização")
+@CopyInfo(Org.class)
 public class OrgScreen extends gate.base.Screen
 {
 
@@ -29,10 +29,7 @@ public class OrgScreen extends gate.base.Screen
 			return "/views/gateconsole/modules/admin/Org/View.html";
 		} catch (NotFoundException ex)
 		{
-			return new URL("Gate")
-				.setModule(getModule())
-				.setScreen(getScreen())
-				.setAction("Update");
+			return "/views/gateconsole/modules/admin/Org/ViewUpdate.html";
 		}
 	}
 
@@ -46,28 +43,13 @@ public class OrgScreen extends gate.base.Screen
 
 	@Icon("commit")
 	@Name("Concluir")
-	public Object callCommit()
+	public Object callCommit() throws AppException
 	{
-		try
-		{
-			if (!getMessages().isEmpty())
-				throw new AppException(getMessages());
+		control.update(getForm());
+		getRequest().getSession().getServletContext()
+			.setAttribute("org", control.select().orElseThrow(NotFoundException::new));
+		return call();
 
-			control.update(getForm());
-			getRequest().getSession().getServletContext()
-				.setAttribute("org", control.select().orElseThrow(NotFoundException::new));
-
-			return new URL("Gate")
-				.setModule(getModule())
-				.setScreen(getScreen());
-		} catch (AppException ex)
-		{
-			return new URL("Gate")
-				.setModule(getModule())
-				.setScreen(getScreen())
-				.setAction("Update")
-				.setMessages(ex.getMessages());
-		}
 	}
 
 	@Icon("dwload")

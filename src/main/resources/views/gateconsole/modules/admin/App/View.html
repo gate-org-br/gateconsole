@@ -1,36 +1,32 @@
-<main g:template="/views/FULL.html">
-	<section>
-		<fieldset>
-			<legend>
-				<g-path/>
-			</legend>
-			<table class="c1 c2"
-			       g:condition="${not empty screen.page}"
-			       g:otherwise="Nenhum registro encontrado">
-				<colgroup>
-					<col style='width: 40px'/>
-					<col style='width: 120px'/>
-					<col/>
-				</colgroup>
-				<caption>APLICAÇÕES: ${screen.page.size()}</caption>
-				<thead>
-					<tr>
-						<th g:icon="2009"/>
-						<th>Sigla</th>
-						<th>Nome</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="target: ${screen.page}"
-					    g:action='Select' _id='${target.id}'
-					    data-target='_stack'
-					    title='${target.id}'>
-						<td g:icon="gate.entity.App"/>
-						<td g:print="${target.id}"/>
-						<td g:print="${target.name}"/>
-					</tr>
-				</tbody>
-			</table>
-		</fieldset>
-	</section>
-</main>
+<section>
+	<fieldset>
+		<legend>
+			<g-path/>
+		</legend>
+		<table is='g-table' class="c1 c2" data-empty='Nenhum registro encontrado'>
+			<colgroup>
+				<col style='width: 40px'/>
+				<col style='width: 120px'/>
+				<col/>
+			</colgroup>
+			<caption>APLICAÇÕES: ${screen.page.size()}</caption>
+			<thead>
+				<tr>
+					<th g:icon="2009"/>
+					<th data-sortable>Sigla</th>
+					<th data-sortable>Nome</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="target: ${screen.page}"
+				    g:action='Select' _id='${target.id}'
+				    data-target='@dialog'
+				    title='${target.id}'>
+					<td><g:icon type='gate.entity.App'/></td>
+					<td g:print="${target.id}"/>
+					<td g:print="${target.name}"/>
+				</tr>
+			</tbody>
+		</table>
+	</fieldset>
+</section>

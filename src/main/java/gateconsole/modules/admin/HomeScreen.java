@@ -8,12 +8,12 @@ import gate.error.AppException;
 import gateconsole.contol.SearchControl;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+@Dependent
 @Icon("2008")
 @Name("Home")
-@RequestScoped
 public class HomeScreen extends gate.base.Screen
 {
 
@@ -25,17 +25,12 @@ public class HomeScreen extends gate.base.Screen
 	@Inject
 	SearchControl control;
 
-	public Object call()
+	public Object call() throws AppException
 	{
 		if (isPOST())
 		{
-			try
-			{
-				setPage(control.search(getForm()));
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
+			setPage(control.search(getForm()));
+			return "/views/gateconsole/modules/admin/Home/Page.html";
 		}
 
 		return "/views/gateconsole/modules/admin/Home/View.html";

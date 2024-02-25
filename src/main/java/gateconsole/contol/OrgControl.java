@@ -22,8 +22,8 @@ public class OrgControl extends Control
 
 	public Optional<Org> select()
 	{
-		try ( Link link = linksource.getLink();
-			 OrgDao dao = new OrgDao(link))
+		try (Link link = linksource.getLink();
+			OrgDao dao = new OrgDao(link))
 		{
 			return dao.select();
 		}
@@ -32,8 +32,8 @@ public class OrgControl extends Control
 	public void update(Org model) throws AppException
 	{
 		Constraints.validate(model, "orgID", "name", "description", "authenticators", "sun", "mon", "tue", "wed", "fri", "thu", "sat");
-		try ( Link link = linksource.getLink();
-			 OrgDao dao = new OrgDao(link))
+		try (Link link = linksource.getLink();
+			OrgDao dao = new OrgDao(link))
 		{
 			dao.getLink().beginTran();
 			if (!dao.update(model))
@@ -48,8 +48,8 @@ public class OrgControl extends Control
 
 	public Object dwload()
 	{
-		try ( Link link = linksource.getLink();
-			 OrgDao dao = new OrgDao(link))
+		try (Link link = linksource.getLink();
+			OrgDao dao = new OrgDao(link))
 		{
 			return dao.dwload();
 		}

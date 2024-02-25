@@ -1,0 +1,12 @@
+<tr>
+	<td g:print="${screen.user.name}"/>
+	<td g:print="${screen.user.role.name}"/>
+	<td>
+		<a g:action="Delete"
+		   _func.id='${screen.func.id}'
+		   _user.id='${screen.user.id}'
+		   target='@remove(this.parent(1))'>
+			<g:icon type="delete"/>
+		</a>
+	</td>
+</tr>

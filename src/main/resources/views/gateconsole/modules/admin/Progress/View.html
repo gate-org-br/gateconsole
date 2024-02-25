@@ -1,0 +1,19 @@
+<main g:template="/views/FULL.html">
+	<form method='POST' action='#'>
+		<g-coolbar>
+			<button class='primary' g:action="Redirect"
+				formtarget="@redirect" tabindex='2'>
+				Redirect<g:icon type="search"/>
+			</button>
+			<button class='primary' g:action="Insert"
+				formtarget="@after-begin(tbody)" tabindex='2'>
+				Insert<g:icon type="search"/>
+			</button>
+		</g-coolbar>
+	</form>
+
+	<table>
+		<tbody>
+		</tbody>
+	</table>
+</main>

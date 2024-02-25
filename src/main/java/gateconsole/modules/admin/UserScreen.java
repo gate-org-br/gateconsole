@@ -36,7 +36,6 @@ public class UserScreen extends gate.base.Screen
 {
 
 	private User form;
-	private Doc.Type type;
 
 	@Required
 	@Description("Entre com o arquivo a ser importado")
@@ -51,9 +50,13 @@ public class UserScreen extends gate.base.Screen
 
 	public String call()
 	{
-		if (isPOST() && getMessages().isEmpty())
+
+		if (isPOST())
+		{
 			page = paginate(ordenate(control.search(getForm())));
-		return "/views/gateconsole/modules/admin/User/View.html";
+			return "/views/gateconsole/modules/admin/User/Page.html";
+		} else
+			return "/views/gateconsole/modules/admin/User/View.html";
 	}
 
 	@Name("Usuários")
@@ -80,17 +83,12 @@ public class UserScreen extends gate.base.Screen
 
 	@Icon("insert")
 	@Name("Novo usuário")
-	public Object callInsert() throws AppException
+	public String callInsert() throws AppException
 	{
 		if (isPOST() && getMessages().isEmpty())
 		{
 			control.insert(getForm());
-			return Command
-				.redirect()
-				.module(getModule())
-				.screen(getScreen())
-				.action("Select")
-				.parameter("form.id", getForm().getId());
+			return callSelect();
 		} else
 			getForm().setActive(true);
 		return "/views/gateconsole/modules/admin/User/ViewInsert.html";
@@ -98,17 +96,12 @@ public class UserScreen extends gate.base.Screen
 
 	@Icon("update")
 	@Name("Alterar usuário")
-	public Object callUpdate() throws AppException
+	public String callUpdate() throws AppException
 	{
 		if (isPOST() && getMessages().isEmpty())
 		{
 			control.update(getForm());
-			return Command
-				.redirect()
-				.module(getModule())
-				.screen(getScreen())
-				.action("Select")
-				.parameter("form.id", getForm().getId());
+			return callSelect();
 		} else if (isGET())
 			form = control.select(getForm().getId());
 		return "/views/gateconsole/modules/admin/User/ViewUpdate.html";
@@ -119,38 +112,15 @@ public class UserScreen extends gate.base.Screen
 	public Object callPasswd() throws AppException
 	{
 		control.password(getForm());
-		return Command
-			.redirect()
-			.module(getModule())
-			.screen(getScreen())
-			.action("Select")
-			.parameter("form.id", getForm().getId())
-			.messages("Senha do usuário resetada para o login.");
+		return "Senha do usuário resetada para o login.";
 	}
 
 	@Icon("delete")
 	@Name("Remover usuário")
 	@Confirm("Tem certeza de que deseja remover este registro?")
-	public Object callDelete()
+	public void callDelete() throws AppException
 	{
-		try
-		{
-			control.delete(getForm());
-			return Command
-				.redirect()
-				.module(getModule())
-				.screen(getScreen())
-				.messages("Usuario removido com sucesso.");
-		} catch (AppException ex)
-		{
-			return Command
-				.redirect()
-				.module(getModule())
-				.screen(getScreen())
-				.action("Select")
-				.parameter("form.id", getForm().getId())
-				.exception(ex);
-		}
+		control.delete(getForm());
 	}
 
 	@Icon("upload")
@@ -174,7 +144,7 @@ public class UserScreen extends gate.base.Screen
 	@Icon("report")
 	@Name("Imprimir")
 	@Description("Imprimir")
-	public Object callReport()
+	public Object callReport(Doc.Type type)
 	{
 		Report report = new Report();
 
@@ -199,7 +169,7 @@ public class UserScreen extends gate.base.Screen
 		grid.add().head("Perfil").body(e -> e.getRole().getName()).style().width(45);
 		grid.add().head("Name").body(User::getName).style().width(45);
 
-		return Doc.create(getType(), report);
+		return Doc.create(type, report);
 	}
 
 	public User getForm()
@@ -207,6 +177,11 @@ public class UserScreen extends gate.base.Screen
 		if (form == null)
 			form = new User();
 		return form;
+	}
+
+	public void setForm(User form)
+	{
+		this.form = form;
 	}
 
 	public Iterable<User> getPage()
@@ -229,21 +204,6 @@ public class UserScreen extends gate.base.Screen
 		return BACKUP.getProperties();
 	}
 
-	public Doc.Type getType()
-	{
-		return type;
-	}
-
-	public void setType(Doc.Type type)
-	{
-		this.type = type;
-	}
-
-	public void setForm(User form)
-	{
-		this.form = form;
-	}
-
 	public MimeData getPhoto()
 	{
 		return control.getPhoto(getForm().getId());
@@ -260,9 +220,6 @@ public class UserScreen extends gate.base.Screen
 		private List<Func> page;
 
 		@Inject
-		FuncControl funcControl;
-
-		@Inject
 		FuncControl.UserControl control;
 
 		public String call()
@@ -274,36 +231,20 @@ public class UserScreen extends gate.base.Screen
 
 		@Icon("insert")
 		@Name("Adicionar")
-		public String callInsert()
+		public String callInsert() throws AppException
 		{
 
-			try
-			{
-				control.insert(func, user);
-				func = null;
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
-			return call();
+			func = control.insert(func, user);
+			return "/views/gateconsole/modules/admin/User/Func/ViewInsert.html";
 		}
 
 		@Icon("delete")
 		@Name("Remover")
 		@Color("#660000")
-		@Confirm("Tem certeza de que deseja remover este registro?")
-		public String callDelete()
+		public void callDelete() throws AppException
 		{
 
-			try
-			{
-				control.delete(func, user);
-				func = null;
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
-			return call();
+			control.delete(func, user);
 		}
 
 		@Override
@@ -324,11 +265,6 @@ public class UserScreen extends gate.base.Screen
 		public List<Func> getPage()
 		{
 			return page;
-		}
-
-		public List<Func> getFuncs()
-		{
-			return funcControl.search();
 		}
 	}
 }

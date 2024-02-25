@@ -4,10 +4,11 @@
 
 	<groupId>io.github.gate-org-br</groupId>
 	<artifactId>gateconsole</artifactId>
-	<version>10.1.0</version>
+	<version>13.0.0</version>
 	<modelVersion>4.0.0</modelVersion>
 
 	<properties>
+		<maven.compiler.parameters>true</maven.compiler.parameters>
 		<compiler-plugin.version>3.8.1</compiler-plugin.version>
 		<maven.compiler.release>17</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +30,10 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-scheduler</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-undertow</artifactId>
@@ -74,7 +79,7 @@
 		<dependency>
 			<groupId>io.github.gate-org-br</groupId>
 			<artifactId>gate</artifactId>
-			<version>12.0.0</version>
+			<version>13.0.0</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -99,6 +104,9 @@
 				<version>${compiler-plugin.version}</version>
 				<configuration>
 					<parameters>${maven.compiler.parameters}</parameters>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>

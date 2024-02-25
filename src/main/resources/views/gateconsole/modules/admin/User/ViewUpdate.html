@@ -1,5 +1,5 @@
-<main g:template="/views/FULL.html">
-	<form method='POST' action='#' enctype='multipart/form-data'>
+<section>
+	<form method='POST' g:action='#' target='@outer-html(this.parent(section))' enctype='multipart/form-data'>
 		<fieldset>
 			<legend>
 				<g-path/>
@@ -25,10 +25,9 @@
 			<label data-size='8'>
 				Perfil
 				<span>
-					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
-					<input type="text" g:property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
-					<a g:screen="Role" g:action="Search"
-					   data-get='form.role.id, form.role.name' tabindex='1' >
+					<input type="text" g:property='form.role.name' readonly='readonly' not:required/>
+					<input type="hidden" g:property="form.role.id" not:required/>
+					<a g:screen="Role" g:action="Search" target='@pick(this.prev(0), this.prev(1))' tabindex='1' >
 						<i g:icon="search"/>
 					</a>
 				</span>
@@ -95,9 +94,10 @@
 			</button>
 			<hr/>
 			<a g:action="Select" _form.id="${screen.form.id}"
+			   target='@outer-html(this.parent(section))'
 			   class="tertiary" tabindex='2'>
 				Desistir<i g:icon='cancel'/>
 			</a>
 		</g-coolbar>
 	</form>
-</main>
+</section>

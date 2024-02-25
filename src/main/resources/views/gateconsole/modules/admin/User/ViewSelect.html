@@ -1,4 +1,4 @@
-<main g:template="/views/FULL.html">
+<section>
 	<figure>
 		<div g:with="photo"
 		     g:value="${screen.photo}"
@@ -28,7 +28,8 @@
 					<label g:print="${screen.form.role.name}" g:empty="N/A"/>
 					<g:shortcut condition="${not empty screen.form.role.id}"
 						    screen="Role" action="Select"
-						    _form.id="${screen.form.role.id}"/>
+						    _form.id="${screen.form.role.id}"
+						    target="@dialog"/>
 				</span>
 			</label>
 			<label data-size='4'>
@@ -44,7 +45,7 @@
 				<span g:print='${screen.form.code}'/>
 			</label>
 			<label data-size='2'>
-				Nascimento:
+				Data de Nascimento:
 				<span g:icon="gate.type.Date" g:print='${screen.form.birthdate}'/>
 			</label>
 			<label data-size='2'>
@@ -67,17 +68,18 @@
 	</figure>
 
 	<g-coolbar>
-		<a class='primary' g:action='Update' _form.id="${screen.form.id}"/>
-		<a class='danger' g:action="Delete" _form.id="${screen.form.id}"/>
-		<a class='danger' g:action="Passwd" _form.id="${screen.form.id}"/>
+		<a class='primary' g:action='Update' _form.id="${screen.form.id}" target='@outer-html(this.parent(section))'/>
+		<a class='danger' g:action="Passwd" _form.id="${screen.form.id}" target='@message'/>
+		<a class='danger' g:action="Delete" _form.id="${screen.form.id}" target='@hide'/>
+
 		<hr/>
-		<a class="tertiary" target="_hide">
+		<a class="tertiary" target="@hide">
 			Retornar<g:icon type="return"/>
 		</a>
 	</g-coolbar>
 
-	<g-tab-control>
-		<a g:screen="Auth" _form.user.id="${screen.form.id}"/>
+	<g-tab-control type='fetch'>
+		<a g:screen='Auth' _form.user.id='${screen.form.id}'/>
 		<a g:screen="UserScreen$Func" _user.id="${screen.form.id}"/>
 	</g-tab-control>
-</main>
+</section>

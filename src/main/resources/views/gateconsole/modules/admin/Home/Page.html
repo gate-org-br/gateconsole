@@ -1,0 +1,45 @@
+<table class="c1 c2" g:condition='${not empty screen.page}'
+       g:otherwise="Nenhum registro encontrado">
+	<caption>
+		REGISTROS ENCONTRADOS: ${screen.page.size()}
+	</caption>
+
+	<thead>
+		<tr>
+			<th style='width: 64px'>
+				Tipo
+			</th>
+			<th style='width: 256px'>
+				Login/Sigla
+			</th>
+			<th>
+				Nome
+			</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<g:iterator source="${screen.page}" index="indx" target="item">
+			<g:choose>
+				<g:when condition="${item.class.name eq 'gate.entity.User'}">
+					<tr data-target='@dialog' g:screen='User' g:action='Select' _form.id='${item.id}' tabindex='3'>
+						<td>
+							<g:icon type="${item}"/>
+						</td>
+						<td g:print="${item.username}"/>
+						<td g:print="${item.name}"/>
+					</tr>
+				</g:when>
+				<g:when condition="${item.class.name eq 'gate.entity.Role'}">
+					<tr data-target='@dialog' g:screen='Role' g:action='Select' _form.id='${item.id}' tabindex='3'>
+						<td>
+							<g:icon type="${item}"/>
+						</td>
+						<td g:print="${item.rolename}"/>
+						<td g:print="${item.name}"/>
+					</tr>
+				</g:when>
+			</g:choose>
+		</g:iterator>
+	</tbody>
+</table>

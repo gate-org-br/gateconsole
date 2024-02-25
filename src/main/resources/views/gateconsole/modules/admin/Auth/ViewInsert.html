@@ -1,0 +1,13 @@
+<tr>
+	<td title="Acesso" g:print='${screen.form.access}'/>
+	<td title="Escopo" g:print='${screen.form.scope}'/>
+	<td title="Module" g:print="${screen.form.module}" g:empty="*"/>
+	<td title="Screen" g:print="${screen.form.screen}" g:empty="*"/>
+	<td title="Action" g:print="${screen.form.action}" g:empty="*"/>
+	<td title="Remover">
+		<a g:action="Delete" _form.id='${screen.form.id}'
+		   target='@remove(this.parent(1))'>
+			<i g:icon="delete"/>
+		</a>
+	</td>
+</tr>

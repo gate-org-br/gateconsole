@@ -1,5 +1,6 @@
-<main g:template="/views/FULL.html">
-	<form method='POST' action='#'>
+<section>
+	<form method='POST' g:action='Insert'
+	      target="@outer-html(this.parent(section))">
 		<fieldset>
 			<legend>
 				<g-path/>
@@ -13,12 +14,13 @@
 			<label data-size="8">
 				Perfil Pai:
 				<span>
-					<input type='hidden' g:property="form.role.id" id='form.role.id' required=''/>
-					<input type='text' g:property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
-					<a g:action="Search"
-					   data-get='form.role.id, form.role.name'
-					   tabindex='1' title='Selecionar Perfil'>
-						<i g:icon="search"/>
+					<input type='hidden' g:property="form.role.id" not:required/>
+					<input type='text' g:property='form.role.name' readonly='readonly' not:required/>
+					<a tabindex='1'
+					   g:action="Search"
+					   title='Selecionar Perfil'
+					   target='@pick(this.parent()[0], this.parent()[1])'>
+						<g:icon type="search"/>
 					</a>
 				</span>
 			</label>
@@ -53,7 +55,7 @@
 						g:options="${screen.users}"
 						g:labels="${e -> e.name}"
 						g:values="${e -> e.id}"
-						tabindex='1'  required=''/>
+						tabindex='1'  not:required/>
 				</span>
 			</label>
 			<label>
@@ -69,9 +71,9 @@
 				Concluir cadastro<i g:icon="commit"/>
 			</button>
 			<hr/>
-			<a class="tertiary" href='#' target="_hide" tabindex='2'>
+			<a href='#' class="tertiary" target="@hide" tabindex='2'>
 				Desistir<i g:icon="cancel"/>
 			</a>
 		</g-coolbar>
 	</form>
-</main>
+</section>

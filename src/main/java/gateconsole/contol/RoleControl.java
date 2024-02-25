@@ -133,12 +133,15 @@ public class RoleControl extends Control
 			}
 		}
 
-		public void insert(Role role, Func func) throws AppException
+		public Role insert(Role role, Func func) throws AppException
 		{
 			try (Link link = linksource.getLink();
-				RoleDao.FuncDao dao = new RoleDao.FuncDao(link))
+				RoleDao roleDao = new RoleDao(link);
+				RoleDao.FuncDao funcDao = new RoleDao.FuncDao(link))
 			{
-				dao.insert(role, func);
+				role = roleDao.select(role.getId());
+				funcDao.insert(role, func);
+				return role;
 			}
 
 		}

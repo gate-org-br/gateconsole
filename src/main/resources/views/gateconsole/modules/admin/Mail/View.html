@@ -1,10 +1,10 @@
-<main g:template="/views/FULL.html">
+<section>
 	<g-tab-control>
 		<a href='#'>
 			Configurações<i g:icon='2020'/>
 		</a>
 		<div>
-			<form method="post" g:action="Update">
+			<form method="post" g:action="Update" target="@message(1000)">
 				<fieldset>
 					<label data-size='4'>
 						SMTP:
@@ -59,7 +59,7 @@
 			EMail de Teste<i g:icon='2034'/>
 		</a>
 		<div>
-			<form method="post" g:action="Post">
+			<form method="post" g:action="Post" target="@after-begin(this.parent(section).search(tbody))">
 				<fieldset>
 					<label>
 						Destino:
@@ -76,19 +76,10 @@
 		</div>
 	</g-tab-control>
 
-	<table class="c1 c2 c3"
-	       g:condition='${not empty screen.page}'
-	       g:otherwise='Não há nenhuma mensagem pendente de envio'>
-		<col style='width: 80px'/>
-		<col style='width: 120px'/>
-		<col style='width: 120px'/>
-
-		<caption>MENSAGENS PENDENTES DE ENVIO: ${screen.page.size()}</caption>
+	<table is='g-table' class="c1 c2 c3" data-empty='Nenhuma mensagem pendente e envio'>
+		<caption>MENSAGENS PENDENTES DE ENVIO: <span data-table-size></span></caption>
 		<thead>
 			<tr>
-				<th>
-					<g:icon type="gateconsole.modules.admin.MailScreen"/>
-				</th>
 				<th>Postagem</th>
 				<th>Tentativas</th>
 				<th>Remetente</th>
@@ -96,8 +87,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr g:iterate='${screen.page}'>
-				<td g:print='${indx+1}'/>
+			<tr th:each='target: ${screen.page}'>
 				<td g:print="${target.date}"/>
 				<td g:print="${target.attempts}"/>
 				<td g:print="${target.sender}"/>
@@ -105,4 +95,4 @@
 			</tr>
 		</tbody>
 	</table>
-</main>
+</section>

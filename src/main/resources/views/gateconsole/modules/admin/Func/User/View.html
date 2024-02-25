@@ -1,16 +1,20 @@
-<main g:template="/views/PAGE.html">
-	<form method='post' g:action='Insert'>
+<section>
+	<form method='post' g:action='Insert'
+	      target="@reset(@after-begin(this.parent(section).search(tbody)))">
 		<fieldset>
 			<label>
 				<span>
 					<input type="text"
 					       g:property='user.name'
-					       g:options="${users}"
-					       g:labels="${e -> e.name}"
-					       g:values="${e -> e.id}"
+					       data-action='/service/users'
+					       data-target='@search(criteria)'
 					       tabindex='1'
+					       title="Entre com o nome"
 					       placeholder="Incluir"/>
-					<input type="hidden" g:property='user.id' id="user.id"/>
+					<input type="hidden" g:property='user.id'/>
+					<a href="/service/users" target='@search(criteria)'>
+						<g:icon type='search'/>
+					</a>
 				</span>
 			</label>
 			<input type="hidden" g:property="func.id"/>
@@ -21,9 +25,8 @@
 		</g-coolbar>
 	</form>
 
-	<table class="c3"
-	       g:condition="${not empty screen.page}"
-	       g:otherwise="Nenhum registro encontrado">
+	<table is='g-table' class="c3"
+	       data-empty='Nenhum registro encontrado'>
 		<colgroup>
 			<col/>
 			<col/>
@@ -31,7 +34,7 @@
 		</colgroup>
 
 		<caption>
-			USUÁRIOS ENCONTRADOS: ${screen.page.paginator.dataSize}
+			USUÁRIOS ENCONTRADOS: <span data-table-size></span>
 		</caption>
 		<thead>
 			<tr>
@@ -44,11 +47,6 @@
 				<th g:icon="delete"/>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<td g:paginator colspan='3'/>
-			</tr>
-		</tfoot>
 		<tbody>
 			<tr th:each="target: ${screen.page}">
 				<td g:print="${target.name}"/>
@@ -56,11 +54,12 @@
 				<td>
 					<a g:action="Delete"
 					   _func.id='${screen.func.id}'
-					   _user.id='${target.id}'>
-						<i g:icon="delete"/>
+					   _user.id='${target.id}'
+					   target='@remove(this.parent(1))'>
+						<g:icon type="delete"/>
 					</a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-</main>
+</section>

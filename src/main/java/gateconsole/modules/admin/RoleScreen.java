@@ -34,21 +34,15 @@ public class RoleScreen extends gate.base.Screen
 
 	private Collection<Role> page;
 
-	public String call()
+	public String call() throws AppException
 	{
-		try
-		{
-			page = control.search();
-		} catch (AppException ex)
-		{
-			setMessages(ex.getMessages());
-		}
+		page = control.search();
 		return "/views/gateconsole/modules/admin/Role/View.html";
 	}
 
 	@Name("Sub Perfis")
 	@CopyIcon(Role.class)
-	public String callImport()
+	public String callImport() throws AppException
 	{
 		page = control.search(getForm().getRole());
 		return "/views/gateconsole/modules/admin/Role/ViewImport.html";
@@ -56,15 +50,9 @@ public class RoleScreen extends gate.base.Screen
 
 	@Icon("search")
 	@Name("Pesquisar")
-	public String callSearch()
+	public String callSearch() throws AppException
 	{
-		try
-		{
-			page = control.search();
-		} catch (AppException ex)
-		{
-			setMessages(ex.getMessages());
-		}
+		page = control.search();
 		return "/views/gateconsole/modules/admin/Role/ViewSearch.html";
 	}
 
@@ -84,23 +72,17 @@ public class RoleScreen extends gate.base.Screen
 
 	@Icon("insert")
 	@Name("Novo perfil")
-	public Object callInsert()
+	public Object callInsert() throws AppException
 	{
-		if (isPOST() && getMessages().isEmpty())
+		if (isPOST())
 		{
-			try
-			{
-				control.insert(getForm());
-				return Command
-					.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.action("Select")
-					.parameter("form.id", getForm().getId());
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
+			control.insert(getForm());
+			return Command
+				.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.action("Select")
+				.parameter("form.id", getForm().getId());
 		}
 
 		return "/views/gateconsole/modules/admin/Role/ViewInsert.html";
@@ -108,53 +90,28 @@ public class RoleScreen extends gate.base.Screen
 
 	@Icon("update")
 	@Name("Alterar perfil")
-	public Object callUpdate()
+	public Object callUpdate() throws AppException
 	{
-		if (isGET())
+		if (isPOST())
 		{
-			try
-			{
-				form = control.select(getForm().getId());
-			} catch (AppException ex)
-			{
-				return Command.hide(ex.getMessages());
-			}
-		} else if (getMessages().isEmpty())
-		{
-			try
-			{
-				control.update(getForm());
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.action("Select")
-					.parameter("form.id", getForm().getId());
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
-		}
-
-		return "/views/gateconsole/modules/admin/Role/ViewUpdate.html";
-	}
-
-	@Icon("delete")
-	@Name("Remover perfil")
-	public Object callDelete()
-	{
-		try
-		{
-			control.delete(getForm());
-			return Command.hide("O perfil foi removido com sucesso.");
-		} catch (AppException ex)
-		{
+			control.update(getForm());
 			return Command.redirect()
 				.module(getModule())
 				.screen(getScreen())
 				.action("Select")
-				.messages(ex.getMessages())
 				.parameter("form.id", getForm().getId());
 		}
+
+		form = control.select(getForm().getId());
+		return "/views/gateconsole/modules/admin/Role/ViewUpdate.html";
+
+	}
+
+	@Icon("delete")
+	@Name("Remover perfil")
+	public void callDelete() throws AppException
+	{
+		control.delete(getForm());
 	}
 
 	public List<User> getUsers()
@@ -196,34 +153,17 @@ public class RoleScreen extends gate.base.Screen
 
 		@Icon("insert")
 		@Name("Adcionar função")
-		public String callInsert()
+		public String callInsert() throws AppException
 		{
-
-			try
-			{
-				control.insert(func, role);
-				func = null;
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
-			return call();
+			func = control.insert(func, role);
+			return "/views/gateconsole/modules/admin/Role/Func/ViewInsert.html";
 		}
 
 		@Icon("delete")
 		@Name("Remover função")
-		public String callDelete()
+		public void callDelete() throws AppException
 		{
-
-			try
-			{
-				control.delete(func, role);
-				func = null;
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
-			return call();
+			control.delete(func, role);
 		}
 
 		public Role getRole()

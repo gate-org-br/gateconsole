@@ -1,4 +1,4 @@
-<main g:template="/views/FULL.html">
+<section>
 	<article>
 		<section>
 			<form id="form" method='POST' action='#' enctype='multipart/form-data'>
@@ -22,18 +22,18 @@
 					<label data-size="8">
 						Logo:
 						<span>
-							<input type='file' g:property="form.icon" tabindex='1' required=''/>
+							<input type='file' g:property="form.icon" tabindex='1' not:required/>
 						</span>
 					</label>
-					<label style="height: calc(50% - 80px)">
+					<label>
 						Descrição:
-						<span>
+						<span style='flex-basis: 80px'>
 							<textarea g:property='form.description' tabindex='1'/>
 						</span>
 					</label>
-					<label style="height: calc(50% - 80px)">
+					<label>
 						Autenticadores:
-						<span>
+						<span style='flex-basis: 80px'>
 							<textarea g:property='form.authenticators' tabindex='1'/>
 						</span>
 					</label>
@@ -91,14 +91,17 @@
 		</section>
 		<footer>
 			<g-coolbar>
-				<button class='primary' g:action="Commit" form="form" tabindex='2'>
+				<button class='primary' g:action="Commit" form="form"
+					formtarget='@outer-html(this.parent(section))'
+					tabindex='2'>
 					Concluir alteração<i g:icon='commit'/>
 				</button>
 				<hr/>
-				<a class='tertiary' g:screen="#" tabindex='2'>
+				<a class='tertiary' g:screen="#" tabindex='2'
+				   target='@outer-html(this.parent(section))'>
 					Desistir<i g:icon='cancel'/>
 				</a>
 			</g-coolbar>
 		</footer>
 	</article>
-</main>
+</section>

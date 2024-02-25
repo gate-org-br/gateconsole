@@ -1,58 +1,42 @@
-<main g:template="/views/PAGE.html">
-	<form method='POST' g:action="Insert">
-		<fieldset>
-			<label>
-				<span>
-					<select data-method='post'
-						g:property='func.id'
-						g:options="${funcs}"
-						g:labels="${e -> e.name}"
-						g:values="${e -> e.id}"/>
-				</span>
-			</label>
+<fieldset>
+	<label>
+		<span>
+			<select g:property='func.id'
+				g:options="${funcs}"
+				g:labels="${e -> e.name}"
+				g:values="${e -> e.id}"
+				g:action="Insert"
+				_role.id='${screen.role.id}'
+				_func.id='@{this}'
+				data-on:resolve="() => this.value = ''"
+				data-target="@after-begin(this.parent(fieldset).next()[tbody])"/>
+		</span>
+	</label>
+</fieldset>
 
-			<input type="hidden" g:property="role.id"/>
-		</fieldset>
-
-
-		<g-coolbar>
-			<button class="primary" g:action='Insert'/>
-		</g-coolbar>
-	</form>
-
-	<table class='c2'
-	       g:condition="${not empty screen.page}"
-	       g:otherwise="Este perfil não possui função">
-		<colgroup>
-			<col/>
-			<col style="width: 48px"/>
-		</colgroup>
-
-		<caption>
-			FUNÇÕES ENCONTRADAS: ${screen.page.paginator.dataSize}
-		</caption>
-		<thead>
-			<tr>
-				<th>
-					Nome
-				</th>
-				<th g:icon="delete"/>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td g:paginator colspan='2'/>
-			</tr>
-		</tfoot>
-		<tbody>
-			<tr th:each="target: ${screen.page}">
-				<td g:print="${target.name}"/>
-				<td>
-					<a g:action="Delete" _role.id="${screen.role.id}" _func.id="${target.id}">
-						<i g:icon="delete"/>
-					</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</main>
+<table is='g-table' class="c2" data-empty='Nenhum registro encontrado'>
+	<caption>
+		FUNÇÕES ENCONTRADAS: <span data-table-size></span>
+	</caption>
+	<thead>
+		<tr>
+			<th data-sortable>
+				Nome
+			</th>
+			<th style="width: 48px">
+				<g:icon type="delete"/>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each='target: ${screen.page}'>
+			<td g:print="${target.name}"/>
+			<td>
+				<g:shortcut action="Delete"
+					    _func.id="${target.id}"
+					    _role.id="${screen.role.id}"
+					    target="@remove(this.parent(tr))"/>
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,7 @@
+<tr>
+	<td g:print="${screen.role.name}"/>
+	<td>
+		<g:shortcut action="Delete" _func.id="${screen.func.id}" _role.id="${screen.role.id}"
+			    target='@remove(this.parent(tr))'/>
+	</td>
+</tr>

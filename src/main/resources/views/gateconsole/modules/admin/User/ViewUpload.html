@@ -1,4 +1,4 @@
-<main g:template="/views/FULL.html">
+<section>
 	<form method='POST' action='#'
 	      enctype='multipart/form-data'>
 		<fieldset>
@@ -8,11 +8,11 @@
 			<label data-size='8'>
 				Perfil
 				<span>
-					<g:hidden id='form.role.id' property="form.role.id" required=''/>
-					<g:text id='form.role.name' property='form.role.name' readonly='readonly' required=''
+					<g:hidden id='form.role.id' property="form.role.id" not:required/>
+					<g:text id='form.role.name' property='form.role.name' readonly='readonly' not:required
 						style='width: calc(100% - 32px)'/>
 					<g:link module="#" screen="Role" action="Search"
-						data-get='form.role.id, form.role.name'
+						target='@pick(form.role.id, form.role.name)'
 						tabindex='1' style='width: 32px' title='Selecionar Perfil'>
 						<g:icon type="search"/>
 					</g:link>
@@ -26,11 +26,11 @@
 			</label>
 		</fieldset>
 		<g-coolbar>
-			<g:link class="primary" method='post' module="#" screen="#" action="Commit" tabindex='2'>
+			<button class="primary" g:action="Commit" target='@outer-html(this.parent(section))' tabindex='2'>
 				Concluir<g:icon type="upload"/>
-			</g:link>
+			</button>
 			<hr/>
-			<a target="_hide" href="#" tabindex='3'>
+			<a target="@hide" href="#" tabindex='3'>
 				Desistir<g:icon type='cancel'/>
 			</a>
 		</g-coolbar>
@@ -45,4 +45,4 @@
 		</p>
 		<g:properties source="${screen.properties}"/>
 	</div>
-</main>
+</section>

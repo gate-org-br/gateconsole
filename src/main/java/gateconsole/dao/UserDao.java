@@ -7,6 +7,7 @@ import gate.entity.User;
 import gate.error.AppException;
 import gate.error.ConstraintViolationException;
 import gate.error.NotFoundException;
+import gate.lang.json.JsonArray;
 import gate.sql.Link;
 import gate.sql.condition.Condition;
 import gate.sql.delete.Delete;
@@ -55,6 +56,20 @@ public class UserDao extends Dao
 			.build()
 			.connect(getLink())
 			.fetchEntityList(User.class);
+	}
+
+	public JsonArray search(String criteria)
+	{
+		return Select.of(getClass().getResource("UserDao/search(String).sql"))
+			.where(Condition.FALSE
+				.or("Uzer.username").eq(criteria)
+				.or("Uzer.email").eq(criteria)
+				.or("Role.rolename").eq(criteria)
+				.or("Uzer.name").lk(criteria)
+				.or("Role.name").lk(criteria))
+			.build()
+			.connect(getLink())
+			.fetchJsonArray();
 	}
 
 	public List<User> search(Role role)

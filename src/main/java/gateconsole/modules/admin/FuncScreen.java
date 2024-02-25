@@ -15,11 +15,12 @@ import gate.util.Page;
 import gateconsole.contol.FuncControl;
 import gateconsole.contol.RoleControl;
 import gateconsole.contol.UserControl;
+import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
-@RequestScoped
+@Dependent
 @Name("Funções")
 @CopyIcon(Func.class)
 public class FuncScreen extends gate.base.Screen
@@ -39,90 +40,48 @@ public class FuncScreen extends gate.base.Screen
 
 	@Icon("select")
 	@Name("Detalhe")
-	public Object callSelect()
+	public Object callSelect() throws AppException
 	{
-		try
-		{
-			form = control.select(getForm().getId());
-			return "/views/gateconsole/modules/admin/Func/ViewSelect.html";
-		} catch (AppException ex)
-		{
-			return Command.hide(ex.getMessages());
-		}
+		form = control.select(getForm().getId());
+		return "/views/gateconsole/modules/admin/Func/ViewSelect.html";
 	}
 
 	@Icon("insert")
 	@Name("Nova função")
-	public Object callInsert()
+	public Object callInsert() throws AppException
 	{
-		if (isPOST() && getMessages().isEmpty())
+		if (isPOST())
 		{
-			try
-			{
-				control.insert(getForm());
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.action("Select")
-					.parameter("form.id", getForm().getId());
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
-		}
-
-		return "/views/gateconsole/modules/admin/Func/ViewInsert.html";
+			control.insert(getForm());
+			return Command.redirect()
+				.module(getModule())
+				.screen(getScreen())
+				.action("Select")
+				.parameter("form.id", getForm().getId());
+		} else
+			return "/views/gateconsole/modules/admin/Func/ViewInsert.html";
 	}
 
 	@Icon("update")
 	@Name("Alterar função")
-	public Object callUpdate()
+	public Object callUpdate() throws AppException
 	{
-		if (isGET())
+		if (isPOST())
 		{
-			try
-			{
-				form = control.select(getForm().getId());
-			} catch (AppException ex)
-			{
-				return Command.hide(ex.getMessages());
-			}
-		} else if (getMessages().isEmpty())
-		{
-			try
-			{
-				control.update(getForm());
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.action("Select")
-					.parameter("form.id", getForm().getId());
-			} catch (AppException ex)
-			{
-				setMessages(ex.getMessages());
-			}
-		}
+			control.update(getForm());
+			return callSelect();
+		} else
+			form = control.select(getForm().getId());
+
 		return "/views/gateconsole/modules/admin/Func/ViewUpdate.html";
 	}
 
 	@Icon("delete")
 	@Name("Remover função")
 	@Confirm("Tem certeza de que deseja remover este registro?")
-	public Object callDelete()
+	public void callDelete() throws AppException
 	{
-		try
-		{
-			control.delete(getForm());
-			return Command.hide();
-		} catch (AppException ex)
-		{
-			return Command.redirect()
-				.module(getModule())
-				.screen(getScreen())
-				.action("Select")
-				.messages(ex.getMessages())
-				.parameter("form.id", getForm().getId());
-		}
+		control.delete(getForm());
 	}
 
 	public Func getForm()
@@ -137,7 +96,7 @@ public class FuncScreen extends gate.base.Screen
 		return page;
 	}
 
-	@RequestScoped
+	@Dependent
 	@Name("Usuários")
 	@CopyIcon(User.class)
 	public static class UserScreen extends Screen
@@ -145,7 +104,7 @@ public class FuncScreen extends gate.base.Screen
 
 		private Func func;
 		private User user;
-		private Page<User> page;
+		private List<User> page;
 
 		@Inject
 		UserControl.FuncControl control;
@@ -153,52 +112,24 @@ public class FuncScreen extends gate.base.Screen
 		public String call()
 		{
 
-			page = paginate(ordenate(control.search(func)));
+			page = control.search(func);
 			return "/views/gateconsole/modules/admin/Func/User/View.html";
 		}
 
 		@Icon("insert")
 		@Name("Adcionar usuário")
-		public Command callInsert()
+		public String callInsert() throws AppException
 		{
-
-			try
-			{
-				control.insert(user, func);
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.parameter("func.id", getFunc().getId());
-			} catch (AppException ex)
-			{
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.messages(ex.getMessages())
-					.parameter("func.id", getFunc().getId());
-			}
+			user = control.insert(user, func);
+			return "/views/gateconsole/modules/admin/Func/User/ViewInsert.html";
 		}
 
 		@Icon("delete")
 		@Name("Remover")
 		@Color("#660000")
-		public Command callDelete()
+		public void callDelete() throws AppException
 		{
-			try
-			{
-				control.delete(user, func);
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.parameter("func.id", getFunc().getId());
-			} catch (AppException ex)
-			{
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.messages(ex.getMessages())
-					.parameter("func.id", getFunc().getId());
-			}
+			control.delete(user, func);
 		}
 
 		@Override
@@ -216,13 +147,15 @@ public class FuncScreen extends gate.base.Screen
 			return func;
 		}
 
-		public Page<User> getPage()
+		public List<User> getPage()
 		{
+			if (page == null)
+				page = new ArrayList<>();
 			return page;
 		}
 	}
 
-	@RequestScoped
+	@Dependent
 	@Name("Perfis")
 	@CopyIcon(Role.class)
 	public static class RoleScreen extends Screen
@@ -244,46 +177,19 @@ public class FuncScreen extends gate.base.Screen
 
 		@Icon("insert")
 		@Name("Adcionar perfil")
-		public Command callInsert()
+		public String callInsert() throws AppException
 		{
 
-			try
-			{
-				control.insert(role, func);
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.parameter("func.id", getFunc().getId());
-			} catch (AppException ex)
-			{
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.messages(ex.getMessages())
-					.parameter("func.id", getFunc().getId());
-			}
+			role = control.insert(role, func);
+			return "/views/gateconsole/modules/admin/Func/Role/ViewInsert.html";
 		}
 
 		@Icon("delete")
 		@Name("Remover")
-		public Command callDelete()
+		public void callDelete() throws AppException
 		{
 
-			try
-			{
-				control.delete(role, func);
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.parameter("func.id", getFunc().getId());
-			} catch (AppException ex)
-			{
-				return Command.redirect()
-					.module(getModule())
-					.screen(getScreen())
-					.messages(ex.getMessages())
-					.parameter("func.id", getFunc().getId());
-			}
+			control.delete(role, func);
 		}
 
 		public Role getRole()

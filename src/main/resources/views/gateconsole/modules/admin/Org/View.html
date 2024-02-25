@@ -1,4 +1,4 @@
-<main g:template="/views/FULL.html">
+<section>
 	<article>
 		<section>
 			<fieldset>
@@ -17,13 +17,13 @@
 						<label g:property='form.name'/>
 					</span>
 				</label>
-				<label style="height: calc(50% - 80px)">
+				<label>
 					Descrição:
-					<span style='flex-grow: 1'>
+					<span style='flex-basis: 80px'>
 						<label g:property='form.description'/>
 					</span>
 				</label>
-				<label style="height: calc(50% - 80px)">
+				<label>
 					Autenticadores:
 					<span style='flex-basis: 80px'>
 						<label g:property='form.authenticators'/>
@@ -84,8 +84,8 @@
 
 		<footer>
 			<g-coolbar>
-				<a class='primary' g:action="Update"/>
+				<a class='primary' g:action="Update" target="@outer-html(this.parent(section))"/>
 			</g-coolbar>
 		</footer>
 	</article>
-</main>
+</section>

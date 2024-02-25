@@ -1,24 +1,19 @@
-<main g:template="/views/PAGE.html">
-	<table g:condition="${not empty screen.page}"
-	       g:otherwise="Nenhum registro encontrado">
-		<caption>
-			PERFIS
-		</caption>
-		<thead>
-			<tr>
-				<th>
-					Nome
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr g:iterate="${screen.page}"
-			    g:action='Select' _form.id='${target.id}'
-			    data-target='_parent' >
-				<td>
-					${target.name}
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</main>
+<table is='g-table' data-empty='Nenhum registro encontrado'>
+	<caption>
+		PERFIS: <span data-table-size></span>
+	</caption>
+	<thead>
+		<tr>
+			<th>
+				Nome
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="target: ${screen.page}" g:action='Select' _form.id='${target.id}' data-target='@dialog' >
+			<td>
+				${target.name}
+			</td>
+		</tr>
+	</tbody>
+</table>

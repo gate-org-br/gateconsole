@@ -1,4 +1,4 @@
-<main g:template="/views/FULL.html">
+<section>
 	<fieldset>
 		<legend>
 			<g-path/>
@@ -58,18 +58,20 @@
 	</fieldset>
 
 	<g-coolbar>
-		<a class='primary' g:action='Update' _form.id="${screen.form.id}"/>
-		<a class='danger' g:action='Delete' _form.id="${screen.form.id}"/>
+		<a class='primary' g:action='Update' _form.id="${screen.form.id}"
+		   target='@outer-html(this.parent(section))'/>
+		<a class='danger' g:action='Delete'
+		   _form.id="${screen.form.id}" target="@hide"/>
 		<hr/>
-		<a class='tertiary' href="#" target="_hide">
-			Retornar<i g:icon="cancel"/>
+		<a class='tertiary' href="#" target="@hide">
+			Fechar<g:icon type="return"/>
 		</a>
 	</g-coolbar>
 
-	<g-tab-control>
+	<g-tab-control type='fetch'>
 		<a g:screen="Auth" _form.role.id="${screen.form.id}" data-selected='${param.tab eq "Auth"}'/>
 		<a g:screen="RoleScreen$Func" _role.id="${screen.form.id}" data-selected='${param.tab eq "Func"}'/>
 		<a g:screen="User" g:action="Import" _form.role.id="${screen.form.id}" data-selected='${param.tab eq "User"}'/>
 		<a g:screen="Role" g:action="Import" _form.role.id="${screen.form.id}" data-selected='${param.tab eq "Role"}'/>
 	</g-tab-control>
-</main>
+</section>

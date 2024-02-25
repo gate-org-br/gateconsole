@@ -1,28 +1,27 @@
-<main g:template="/views/PAGE.html">
-	<form method='POST' action='Gate?MODULE=${MODULE}&SCREEN=${SCREEN}&ACTION=Insert'>
-		<fieldset>
-			<label>
-				<span>
-					<select data-method='post'
-						g:property='func.id'
-						g:options="${funcs}"
-						g:labels="${e -> e.name}"
-						g:values="${e -> e.id}"/>
-				</span>
-			</label>
-			<input type="hidden" g:property="user.id"/>
-		</fieldset>
-	</form>
+<section>
+	<fieldset>
+		<label>
+			<span>
+				<select g:property='func.id'
+					g:options="${funcs}"
+					g:labels="${e -> e.name}"
+					g:values="${e -> e.id}"
+					g:action="Insert"
+					_user.id='${screen.user.id}'
+					_func.id='@{this}'
+					data-on:resolve="() => this.value = ''"
+					data-target="@after-begin(this.parent(section).search(tbody))"/>
+			</span>
+		</label>
+	</fieldset>
 
-	<table class="c2"
-	       g:condition='${not empty screen.page}'
-	       g:otherwise='Este usuário não possui função'>
+	<table is='g-table' class="c2" data-empty="Nenhum registro encontrado">
 		<caption>
-			FUNÇÕES ENCONTRADAS: ${screen.page.size()}
+			FUNÇÕES ENCONTRADAS: <span data-table-size></span>
 		</caption>
 		<thead>
 			<tr>
-				<th>
+				<th data-sortable>
 					Nome
 				</th>
 				<th style="width: 48px">
@@ -35,9 +34,11 @@
 				<td g:print="${target.name}"/>
 				<td>
 					<g:shortcut action="Delete"
-						    _user.id="${screen.user.id}" _func.id="${target.id}"/>
+						    _func.id="${target.id}"
+						    _user.id="${screen.user.id}"
+						    target="@remove(this.parent(1))"/>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-</main>
+</section>

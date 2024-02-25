@@ -1,5 +1,5 @@
-<main g:template="/views/FULL.html">
-	<form method='POST' action='#'>
+<section>
+	<form method='POST' g:action="#" target="@inner-html(this.parent(section))">
 		<fieldset>
 			<legend>
 				<g:path/>
@@ -10,6 +10,7 @@
 					<g:text property='form.name' tabindex='1'/>
 				</span>
 			</label>
+			<g:hidden property='form.id'/>
 		</fieldset>
 
 		<g-coolbar>
@@ -17,12 +18,9 @@
 				Concluir alteração<g:icon type="commit"/>
 			</button>
 			<hr/>
-			<a href='#' class="tertiary" g:action="Select"
-			   _form.id="${screen.form.id}" tabindex='2'>
+			<a class="tertiary" g:action="Select" _form.id="${screen.form.id}" target='@inner-html(this.parent(section))' tabindex='2'>
 				Desistir<g:icon type='cancel'/>
 			</a>
 		</g-coolbar>
-
-		<g:hidden property='form.id'/>
 	</form>
-</main>
+</section>

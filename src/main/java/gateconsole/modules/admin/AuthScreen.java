@@ -24,7 +24,7 @@ public class AuthScreen extends gate.base.Screen
 	AuthControl control;
 
 	@Name("Acessos")
-	@Icon("gate.entity.Auth")
+	@CopyIcon(Auth.class)
 	public String call() throws AppException
 	{
 		setPage(control.search(getForm()));
@@ -32,31 +32,18 @@ public class AuthScreen extends gate.base.Screen
 	}
 
 	@Icon("1002")
-	@Name("Adicionar acesso")
+	@Name("Incluir acesso")
 	public String callInsert() throws AppException
 	{
-		try
-		{
-			control.insert(getForm());
-		} catch (AppException e)
-		{
-			setMessages(e.getMessages());
-		}
-		return call();
+		control.insert(getForm());
+		return "/views/gateconsole/modules/admin/Auth/ViewInsert.html";
 	}
 
 	@Icon("2026")
-	@Name("Remover")
-	public String callDelete() throws AppException
+	@Name("Excluir acesso")
+	public void callDelete() throws AppException
 	{
-		try
-		{
-			control.delete(getForm());
-		} catch (AppException e)
-		{
-			setMessages(e.getMessages());
-		}
-		return call();
+		control.delete(getForm());
 	}
 
 	public Auth getForm()

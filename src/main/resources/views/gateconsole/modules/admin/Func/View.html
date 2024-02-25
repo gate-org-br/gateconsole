@@ -1,4 +1,4 @@
-<main g:template="/views/FULL.html">
+<section>
 	<article>
 		<section>
 			<fieldset>
@@ -6,9 +6,10 @@
 					<g-path/>
 				</legend>
 
-				<table g:condition="${not empty screen.page}"
-				       g:otherwise="Nenhum registro encontrado">
-					<caption g:print="FUNÇÕES: ${screen.page.size()}"/>
+				<table is='g-table' data-empty="Nenhum registro encontrado">
+					<caption>
+						FUNÇÕES: <span data-table-size></span>
+					</caption>
 					<thead>
 						<tr>
 							<td>
@@ -23,7 +24,8 @@
 					</thead>
 					<tbody>
 						<tr th:each="target: ${screen.page}"
-						    data-target='_stack' g:action="Select" _form.id="${target.id}" data-on-hide="reload">
+						    g:action="Select" _form.id="${target.id}"
+						    data-target='@dialog > @trigger(#Func)'>
 							<td  g:print="${target.name}"/>
 						</tr>
 					</tbody>
@@ -33,8 +35,11 @@
 
 		<footer>
 			<g-coolbar>
-				<a class="primary" g:action='Insert' target='_stack' data-on-hide="reload" tabindex='3'/>
+				<a class="primary"
+				   g:action='Insert'
+				   target='@dialog > @trigger(#Func)'
+				   tabindex='3'/>
 			</g-coolbar>
 		</footer>
 	</article>
-</main>
+</section>

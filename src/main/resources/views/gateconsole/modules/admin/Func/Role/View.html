@@ -1,5 +1,7 @@
-<main g:template="/views/PAGE.html">
-	<form id='form' method='POST' g:action='Insert'>
+<section>
+	<form method='post'
+	      g:action='Insert'
+	      target="@reset(@after-begin(this.parent(section).search(tbody)))">
 		<fieldset>
 			<label>
 				<span>
@@ -15,47 +17,32 @@
 			</label>
 			<g:hidden property="func.id"/>
 		</fieldset>
-
-		<g-coolbar>
-			<button class="primary" g:action="Insert"/>
-		</g-coolbar>
 	</form>
 
-	<table class="c2"
-	       g:condition="${not empty screen.page}"
-	       g:otherwise='Esta função não possui perfil associado'>
-		<colgroup>
-			<col/>
-			<col style="width: 48px"/>
-		</colgroup>
-
+	<table is='g-table' class="c2" data-empty='Nenhum registro encontrado'>
 		<caption>
-			PERFIS ENCONTRADOS: ${screen.page.paginator.dataSize}
+			PERFIS ENCONTRADOS: <span data-table-size></span>
 		</caption>
 		<thead>
 			<tr>
 				<th>
 					Nome
 				</th>
-				<th>
+				<th style="width: 48px">
 					<g:icon type="delete"/>
 				</th>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<td colspan='2'>
-					<g:paginator/>
-				</td>
-			</tr>
-		</tfoot>
 		<tbody>
 			<tr th:each='target: ${screen.page}'>
 				<td g:print="${target.name}"/>
 				<td>
-					<g:shortcut action="Delete" _func.id="${screen.func.id}" _role.id="${target.id}"/>
+					<g:shortcut action="Delete"
+						    _func.id="${screen.func.id}"
+						    _role.id="${target.id}"
+						    target='@remove(this.parent(tr))'/>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-</main>
+</section>

@@ -1,0 +1,43 @@
+<table is='g-table'
+       class="c1 c5"
+       data-collapse="Phone"
+       data-empty='Nenhum registro encontrado'>
+
+	<caption g:print="USUÁRIOS: ${screen.page.paginator.dataSize}"/>
+
+	<thead>
+		<tr>
+			<th g:ordenate="active" style="width: 60px">
+				Ativo
+			</th>
+			<th g:ordenate="name">
+				Nome
+			</th>
+			<th g:ordenate="username">
+				Login
+			</th>
+			<th g:ordenate="role.name">
+				Perfil
+			</th>
+			<th ordenate="registration" style="width: 120px">
+				Cadastro
+			</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="5" g:paginator/>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr th:each="target: ${screen.page}"
+		    g:action='Select' _form.id='${target.id}'
+		    data-target='@dialog > @trigger(this.parent(form))'>
+			<td title="Ativo" g:print="${target.active}"/>
+			<td title="Nome" g:print="${target.name}"/>
+			<td title="Login" g:print="${target.username}"/>
+			<td title="Perfil" g:print="${target.role.name}"/>
+			<td title="Cadastro" g:print="${target.registration}"/>
+		</tr>
+	</tbody>
+</table>

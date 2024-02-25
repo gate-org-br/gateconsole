@@ -1,5 +1,5 @@
-<main g:template="/views/FULL.html">
-	<form method='POST' action='#'>
+<section>
+	<form method='POST' g:action='#'>
 		<fieldset>
 			<legend>
 				<g:path/>
@@ -7,73 +7,21 @@
 			<label>
 				Pesquisar:
 				<span>
-					<g:text property='form'  tabindex='1' placeholder="Pesquisar usuários (nome, email ou login) ou perfis (nome, email ou sigla)"/>
+					<g:text property='form'  tabindex='1'
+						placeholder="Pesquisar usuários (nome, email ou login) ou perfis (nome, email ou sigla)"/>
 				</span>
 			</label>
 		</fieldset>
 
 		<g-coolbar>
-			<button class='primary' tabindex='2'>
+			<button class='primary' tabindex='2'
+				formtarget='@outer-html(this.parent(form).next()) > @trigger(this.parent(section).search(tbody > tr:only-child))'>
 				Pesquisar<g:icon type="search"/>
 			</button>
 		</g-coolbar>
 	</form>
 
-	<table class="c1 c2" g:condition='${not empty screen.page}'
-	       g:otherwise='${screen.GET
-			      ? "Entre com o nome a ser pesquisado"
-			      : "Nenhum registro encontrado" }'>
-		<caption>
-			REGISTROS ENCONTRADOS: ${screen.page.size()}
-		</caption>
-
-		<thead>
-			<tr>
-				<th style='width: 64px'>
-					Tipo
-				</th>
-				<th style='width: 256px'>
-					Login/Sigla
-				</th>
-				<th>
-					Nome
-				</th>
-			</tr>
-		</thead>
-
-		<tbody>
-			<g:iterator source="${screen.page}" index="indx" target="item">
-				<g:choose>
-					<g:when condition="${item.class.name eq 'gate.entity.User'}">
-						<tr data-auto-click-when-unique
-						    data-target='_stack' data-action='Gate?MODULE=${MODULE}&SCREEN=User&ACTION=Select&form.id=${item.id}' tabindex='3'>
-							<td>
-								<g:icon type="${item}"/>
-							</td>
-							<td>
-								<g:print value="${item.username}"/>
-							</td>
-							<td>
-								<g:print value="${item.name}"/>
-							</td>
-						</tr>
-					</g:when>
-					<g:when condition="${item.class.name eq 'gate.entity.Role'}">
-						<tr data-auto-click-when-unique
-						    data-target='_stack' data-action='Gate?MODULE=${MODULE}&SCREEN=Role&ACTION=Select&form.id=${item.id}' tabindex='3'>
-							<td>
-								<g:icon type="${item}"/>
-							</td>
-							<td>
-								<g:print value="${item.rolename}"/>
-							</td>
-							<td>
-								<g:print value="${item.name}"/>
-							</td>
-						</tr>
-					</g:when>
-				</g:choose>
-			</g:iterator>
-		</tbody>
-	</table>
-</main>
+	<g-callout>
+		Entre com o nome a ser pesquisado
+	</g-callout>
+</section>

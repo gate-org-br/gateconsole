@@ -1,5 +1,5 @@
-<main g:template="/views/FULL.html">
-	<form method='POST' action='#' enctype='multipart/form-data'>
+<section>
+	<form method='POST' g:action='#' target='@outer-html(this.parent(section))' enctype='multipart/form-data'>
 		<fieldset>
 			<legend>
 				<g-path/>
@@ -25,11 +25,10 @@
 			<label data-size='8'>
 				Perfil
 				<span>
-					<input type="text" g:property='form.role.name' id='form.role.name' readonly='readonly' required=''/>
-					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
-					<a g:screen="Role" g:action="Search"
-					   data-get='form.role.id, form.role.name' tabindex='1' >
-						<i g:icon="search"/>
+					<input type="text" g:property='form.role.name' readonly='readonly' not:required/>
+					<input type="hidden" g:property="form.role.id" not:required/>
+					<a g:screen="Role" g:action="Search" target='@pick(this.prev(0), this.prev(1))' tabindex='1' >
+						<g:icon type="search"/>
 					</a>
 				</span>
 			</label>
@@ -95,9 +94,9 @@
 				Concluir cadastro<i g:icon="commit"/>
 			</button>
 			<hr/>
-			<a class="tertiary" target='_hide' tabindex='2'>
+			<a href='#' class="tertiary" target='@hide' tabindex='2'>
 				Desistir<i g:icon="cancel"/>
 			</a>
 		</g-coolbar>
 	</form>
-</main>
+</section>

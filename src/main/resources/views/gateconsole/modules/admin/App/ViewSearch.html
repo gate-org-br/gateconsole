@@ -1,82 +1,67 @@
-<main g:template="/views/DIAG.html">
-	<table class='TREEVIEW c1 c3 c4 c5'>
-		<col style="width: 50px"/>
-		<col/>
-		<col style="width: 200px"/>
-		<col style="width: 200px"/>
-		<col style="width: 200px"/>
+<table is='g-tree-grid' class='c6'>
+	<col/>
+	<col/>
+	<col style="width: 200px"/>
+	<col style="width: 200px"/>
+	<col style="width: 200px"/>
+	<col style="width: 50px"/>
 
-		<thead>
-			<tr>
-				<th>
-				</th>
-				<th>
-					Nome
-				</th>
-				<th>
-					MODULE
-				</th>
-				<th>
-					SCREEN
-				</th>
-				<th>
-					ACTION
-				</th>
+	<thead>
+		<tr>
+			<th>
+				Nome
+			</th>
+			<th>
+				MODULE
+			</th>
+			<th>
+				SCREEN
+			</th>
+			<th>
+				ACTION
+			</th>
+			<th>
+				#
+			</th>
+		</tr>
+	</thead>
+	<g:iterator source="${screen.page}" target="_app">
+		<tr data-depth="0">
+			<td g:print="${_app.id}" g:empty="${_app.id}"/>
+			<td style="color: #888888">N/A</td>
+			<td style="color: #888888">N/A</td>
+			<td style="color: #888888">N/A</td>
+			<td><g:icon type="gate.entity.App"/></td>
+		</tr>
+		<g:iterator source="${_app.modules}" target="_module">
+			<tr data-depth="1" data-target='@return(${_module.id},,)'>
+				<td g:print="${_module.name}" g:empty="${_module.id}"/>
+				<td style="font-weight: bold">${_module.id}</td>
+				<td style="color: #888888">*</td>
+				<td style="color: #888888">*</td>
+				<td><g:icon type="${not empty _module.icon ? _module.icon : 'gate.entity.App$Module'}"/></td>
 			</tr>
-		</thead>
-		<g:iterator source="${screen.page}" target="_app">
-			<tr data-depth="0">
-				<td></td>
-				<td>
-					<g:icon type="gate.entity.App"/>
-					<g:print value="${_app.id}" empty="${_app.id}"/>
-				</td>
-				<td style="color: #888888">N/A</td>
-				<td style="color: #888888">N/A</td>
-				<td style="color: #888888">N/A</td>
-			</tr>
-			<g:iterator source="${_app.modules}" target="_module">
-				<tr data-depth="1" data-ret='${_module.id},,'>
-					<td></td>
-					<td style="text-indent: 80px">
-						<g:icon type="${not empty _module.icon ? _module.icon : 'gate.entity.App$Module'}"/>
-						<g:print value="${_module.name}" empty="${_module.id}"/>
-					</td>
+			<g:iterator source="${_module.screens}" target="_screen">
+				<tr data-depth="2" data-target='@return(${_module.id}, ${_screen.id},)'>
+					<td g:print="${_screen.name}" g:empty="${_screen.id}"/>
 					<td style="font-weight: bold">${_module.id}</td>
+					<td style="font-weight: bold">${_screen.id}</td>
 					<td style="color: #888888">*</td>
-					<td style="color: #888888">*</td>
+					<td><g:icon type="${not empty _screen.icon ? _screen.icon : 'gate.entity.App$Module$Screen'}"/></td>
 				</tr>
-				<g:iterator source="${_module.screens}" target="_screen">
-					<tr data-depth="2" data-ret='${_module.id}, ${_screen.id},'>
-						<td></td>
-						<td style="text-indent: 160px">
-							<g:icon type="${not empty _screen.icon ? _screen.icon : 'gate.entity.App$Module$Screen'}"/>
-							<g:print value="${_screen.name}" empty="${_screen.id}"/>
+				<g:iterator source="${_screen.actions}" target="_action">
+					<tr data-depth="3" data-target='@return(${_module.id}, ${_screen.id}, ${_action.id})'>
+						<td>
+
+							<g:print value="${_action.name}" empty="${_action.id}"/>
 						</td>
 						<td style="font-weight: bold">${_module.id}</td>
 						<td style="font-weight: bold">${_screen.id}</td>
-						<td style="color: #888888">*</td>
+						<td style="font-weight: bold">${_action.id}</td>
+						<td><g:icon type="${not empty _action.icon ? _action.icon : 'gate.entity.App$Module$Screen$Action'}"/></td>
 					</tr>
-					<g:iterator source="${_screen.actions}" target="_action">
-						<tr data-depth="3" data-ret='${_module.id}, ${_screen.id}, ${_action.id}'>
-							<td></td>
-							<td style="text-indent: 240px">
-								<g:icon type="${not empty _action.icon ? _action.icon : 'gate.entity.App$Module$Screen$Action'}"/>
-								<g:print value="${_action.name}" empty="${_action.id}"/>
-							</td>
-							<td style="font-weight: bold">${_module.id}</td>
-							<td style="font-weight: bold">${_screen.id}</td>
-							<td style="font-weight: bold">${_action.id}</td>
-						</tr>
-					</g:iterator>
 				</g:iterator>
 			</g:iterator>
 		</g:iterator>
-	</table>
-
-	<g-coolbar>
-		<a href="#" target="_hide">
-			Fechar<g:icon type="cancel"/>
-		</a>
-	</g-coolbar>
-</g:template>
+	</g:iterator>
+</table>

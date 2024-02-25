@@ -38,47 +38,29 @@ public class MailScreen extends gate.base.Screen
 
 	private Server form;
 
-	public String call()
+	public String call() throws MessageException
 	{
-		try
-		{
-			page = messenger.search();
-			form = control.select(Server.Type.SMTP);
-		} catch (MessageException ex)
-		{
-			setMessages(ex.getMessages());
-		}
+		page = messenger.search();
+		form = control.select(Server.Type.SMTP);
 		return "/views/gateconsole/modules/admin/Mail/View.html";
 	}
 
 	@Icon("commit")
 	@Name("Aplicar")
-	public String callUpdate()
+	public String callUpdate() throws AppException
 	{
-		try
-		{
-			getForm().setType(Server.Type.SMTP);
-			control.update(form);
-		} catch (AppException ex)
-		{
-			setMessages(ex.getMessages());
-		}
-		return call();
+		getForm().setType(Server.Type.SMTP);
+		control.update(form);
+		return "Configurações aplicadas com sucesso";
 	}
 
 	@Icon("2034")
 	@Name("Postar")
-	public String callPost()
+	public String callPost() throws MessageException
 	{
-		try
-		{
-			messenger.post(destination, MimeMail.of("EMail de teste", "Favor desconsiderar"));
-			destination = null;
-		} catch (MessageException ex)
-		{
-			setMessages(ex.getMessages());
-		}
-		return call();
+		messenger.post(destination, MimeMail.of("EMail de teste", "Favor desconsiderar"));
+		destination = null;
+		return "/views/gateconsole/modules/admin/Mail/ViewInsert.html";
 	}
 
 	public String getDestination()

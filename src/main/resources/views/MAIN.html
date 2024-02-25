@@ -9,12 +9,9 @@
 
 		<link rel='stylesheet' type='text/css' href='gate/Gate.css?version=${version}'/>
 		<script type='module' src='gate/Gate.js?version=${version}' charset="utf-8"></script>
-
-		<link rel='stylesheet' type='text/css' href='prism.css?version=${version}'/>
-		<script src='prism.js?version=${version}' charset=\"utf-8\"></script>
 	</head>
-	<body>
+	<body data-loading onload="document.body.removeAttribute('data-loading')">
 		<g:insert/>
-	<g-event-source></g-event-source>
-</body>
+
+	</body>
 </html>

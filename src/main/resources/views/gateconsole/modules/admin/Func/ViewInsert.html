@@ -1,5 +1,5 @@
-<main g:template="/views/FULL.html">
-	<form method='POST' action='#'>
+<section>
+	<form method='POST' g:action='#' target="@outer-html(this.parent(section))">
 		<fieldset>
 			<legend>
 				<g:path/>
@@ -14,13 +14,13 @@
 		</fieldset>
 
 		<g-coolbar>
-			<button class="primary" method="post" tabindex='2'>
+			<button class="primary" tabindex='2'>
 				Concluir cadastro<g:icon type="commit"/>
 			</button>
 			<hr/>
-			<a href='#' target='_hide' class="tertiary" tabindex='2'>
+			<a href='#' target='@hide' class="tertiary" tabindex='2'>
 				Cancelar<g:icon type="cancel"/>
 			</a>
 		</g-coolbar>
 	</form>
-</main>
+</section>

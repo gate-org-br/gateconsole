@@ -1,5 +1,5 @@
-<main g:template="/views/FULL.html">
-	<form id='form' method='POST' action='#'>
+<section>
+	<form id='form' method='POST' g:screen='#' target="@outer-html(this[-1])" action='#'>
 		<fieldset>
 			<legend>
 				<g-path/>
@@ -7,25 +7,25 @@
 			<label data-size='2'>
 				Login:
 				<span>
-					<input type="text" g:property='form.username' tabindex='1' required=''/>
+					<input type="text" g:property='form.username' tabindex='1' not:required/>
 				</span>
 			</label>
 			<label data-size='2'>
 				Ativo:
 				<span>
-					<select g:property="form.active" tabindex='1' required=''/>
+					<select g:property="form.active" tabindex='1' not:required/>
 				</span>
 			</label>
 			<label data-size='4'>
 				Nome:
 				<span>
-					<input type="text" g:property='form.name' tabindex='1' required=''/>
+					<input type="text" g:property='form.name' tabindex='1' not:required/>
 				</span>
 			</label>
 			<label data-size='4'>
 				CPF:
 				<span>
-					<input type="text" g:property='form.CPF' tabindex='1' required=''/>
+					<input type="text" g:property='form.CPF' tabindex='1' not:required/>
 				</span>
 			</label>
 			<label data-size='4'>
@@ -38,71 +38,26 @@
 			<label>
 				Perfil
 				<span>
-					<input type="text" g:property='form.role.name' id='form.role.name' required='' data-getter="getter"/>
-					<input type="hidden" g:property="form.role.id" id='form.role.id' required=''/>
-					<a id="getter"
-					   g:screen="Role" g:action="Search" _form.name="@{form.role.name}"
-					   data-get='form.role.id, form.role.name' tabindex='1'>
-						<i g:icon="search"/>
+					<input type="text" g:property='form.role.name' readlonly not:required/>
+					<input type="hidden" g:property="form.role.id" not:required/>
+					<a g:screen="Role" g:action="Search" target='@pick(this.prev(0), this.prev(1))' tabindex='1'>
+						<g:icon type="search"/>
 					</a>
 				</span>
 			</label>
 		</fieldset>
 
 		<g-coolbar>
-			<button class="primary" tabindex='2'>
+			<button class="primary" tabindex='2' formtarget='@outer-html(this.parent().next())'>
 				Pesquisar<i g:icon="search"/>
 			</button>
-			<a class='alternative' g:action='Insert' target='_stack' data-on-hide="submit(form)" tabindex='2'/>
-			<button g:action="Report" formtarget="_report" tabindex='2'/>
-			<a g:action='Upload' target='_stack' data-on-hide="submit(form)" tabindex='2'/>
+			<a class='alternative' g:action='Insert' target='@dialog > @trigger(this.parent(form))' tabindex='2'/>
+			<button g:action="Report" formtarget="@report" tabindex='2'/>
+			<a g:action='Upload' target='@dialog > @trigger(this.parent(form))' tabindex='2'/>
 		</g-coolbar>
 
-		<table class="c1 c5"
-		       data-collapse="Phone"
-		       g:condition="${not empty screen.page}"
-		       g:otherwise="${screen.POST ? 'Nenhum registro encontrado'
-				      : 'Entre com os critérios de busca e clique em pesquisar'}">
-
-			<caption g:print="USUÁRIOS: ${screen.page.paginator.dataSize}"/>
-
-			<thead>
-				<tr>
-					<th g:ordenate="active" style="width: 60px">
-						Ativo
-					</th>
-					<th g:ordenate="name">
-						Nome
-					</th>
-					<th g:ordenate="username">
-						Login
-					</th>
-					<th g:ordenate="role.name">
-						Perfil
-					</th>
-					<th ordenate="registration" style="width: 120px">
-						Cadastro
-					</th>
-				</tr>
-			</thead>
-			<tfoot>
-				<tr>
-					<td colspan="5" g:paginator/>
-				</tr>
-			</tfoot>
-			<tbody>
-				<tr th:each="target: ${screen.page}"
-				    g:action='Select' _form.id='${target.id}'
-				    data-target='_stack'
-				    data-on-hide="submit(form)">
-					<td title="Ativo" g:print="${target.active}"/>
-					<td title="Nome" g:print="${target.name}"/>
-					<td title="Login" g:print="${target.username}"/>
-					<td title="Perfil" g:print="${target.role.name}"/>
-					<td title="Cadastro" g:print="${target.registration}"/>
-				</tr>
-			</tbody>
-		</table>
+		<g-callout>
+			Entre com os critérios de busca e clique em pesquisar
+		</g-callout>
 	</form>
-</main>
-
+</section>

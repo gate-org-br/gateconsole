@@ -1,10 +1,10 @@
 package gateconsole.modules.admin;
 
+import gate.annotation.CopyIcon;
 import gate.annotation.Description;
 import gate.annotation.Icon;
 import gate.annotation.Name;
 import gate.annotation.Public;
-import gate.command.Command;
 import gate.entity.App;
 import gate.error.NotFoundException;
 import gateconsole.contol.AppControl;
@@ -14,9 +14,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 @Public
-@Icon("2044")
 @RequestScoped
 @Name("Aplicações")
+@CopyIcon(App.class)
 public class AppScreen extends gate.base.Screen
 {
 
@@ -45,16 +45,10 @@ public class AppScreen extends gate.base.Screen
 
 	@Icon("2199")
 	@Name("Detalhes")
-	public Object callSelect()
+	public Object callSelect() throws NotFoundException
 	{
-		try
-		{
-			form = control.select(id);
-			return "/views/gateconsole/modules/admin/App/ViewSelect.html";
-		} catch (NotFoundException ex)
-		{
-			return Command.hide(ex.getMessage());
-		}
+		form = control.select(id);
+		return "/views/gateconsole/modules/admin/App/ViewSelect.html";
 	}
 
 	public String getId()

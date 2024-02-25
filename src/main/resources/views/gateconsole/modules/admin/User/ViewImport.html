@@ -1,51 +1,36 @@
-<main g:template="/views/PAGE.html">
-	<g:choose>
-		<g:when condition="${empty screen.page}">
-			<div class='TEXT'>
-				<h1>
-					Nenhum registro encontrado
-				</h1>
-			</div>
-		</g:when>
-		<g:otherwise>
-			<div style="overflow-x:auto;">
-				<table class="c2 c3 c4" style="min-width: 820px">
-					<col/>
-					<col style="width: 250px"/>
-					<col style="width: 125px"/>
-					<col style="width: 125px"/>
+<g-table-scroll>
+	<table is='g-table' class="c2 c3 c4" style="min-width: 820px" data-empty='Nenhum registro encontrado'>
+		<col/>
+		<col style="width: 250px"/>
+		<col style="width: 125px"/>
+		<col style="width: 125px"/>
 
-					<caption>
-						USUÁRIOS
-					</caption>
-					<thead>
-						<tr>
-							<th data-sortable>
-								Nome
-							</th>
-							<th data-sortable>
-								Login
-							</th>
-							<th data-sortable>
-								Cadastro
-							</th>
-							<th data-sortable>
-								Ativo
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<g:iterator source="${screen.page}" target="target">
-							<tr data-target='_parent' data-action='Gate?MODULE=${MODULE}&SCREEN=${SCREEN}&ACTION=Select&form.id=${target.id}'>
-								<td><g:print value="${target.name}"/></td>
-								<td><g:print value="${target.username}"/></td>
-								<td data-value="${g:number(target.registration)}"><g:print value="${target.registration}"/></td>
-								<td><g:print value="${target.active}"/></td>
-							</tr>
-						</g:iterator>
-					</tbody>
-				</table>
-			</div>
-		</g:otherwise>
-	</g:choose>
-</main>
+		<caption>
+			USUÁRIOS: <span data-table-size></span>
+		</caption>
+		<thead>
+			<tr>
+				<th data-sortable>
+					Nome
+				</th>
+				<th data-sortable>
+					Login
+				</th>
+				<th data-sortable>
+					Cadastro
+				</th>
+				<th data-sortable>
+					Ativo
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each='target: ${screen.page}' data-target='@dialog' g:action='Select' _form.id='${target.id}'>
+				<td g:print="${target.name}"/>
+				<td g:print="${target.username}"/>
+				<td data-value="${g:number(target.registration)}" g:print="${target.registration}"/>
+				<td g:print="${target.active}"/>
+			</tr>
+		</tbody>
+	</table>
+</g-table-scroll>

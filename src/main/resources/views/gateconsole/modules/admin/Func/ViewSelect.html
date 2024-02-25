@@ -1,4 +1,4 @@
-<main g:template="/views/FULL.html">
+<section>
 	<fieldset>
 		<legend>
 			<g:path/>
@@ -12,17 +12,17 @@
 	</fieldset>
 
 	<g-coolbar>
-		<a href='#' class='primary' g:action='Update' _form.id="${screen.form.id}" tabindex="2"/>
-		<a href='#' class='danger' g:action="Delete" _form.id="${screen.form.id}" tabindex="2"/>
+		<a class='primary' g:action='Update' _form.id="${screen.form.id}" target='@outer-html(this.parent(section))' tabindex="2"/>
+		<a class='danger' g:action="Delete" _form.id="${screen.form.id}" target='@hide' tabindex="2"/>
 		<hr/>
-		<a href='#' class='tertiary' target='_hide' tabindex="2">
+		<a class='tertiary' href='#' target='@hide' tabindex="2">
 			Retornar<g:icon type="return"/>
 		</a>
 	</g-coolbar>
 
-	<g-tab-control>
-		<a href='#' g:screen="Auth" _form.func.id="${screen.form.id}"/>
-		<a href='#' g:screen="FuncScreen$User" _func.id="${screen.form.id}"/>
-		<a href='#' g:screen="FuncScreen$Role" _func.id="${screen.form.id}"/>
+	<g-tab-control type='fetch'>
+		<a g:screen="Auth" _form.func.id="${screen.form.id}"/>
+		<a g:screen="FuncScreen$User" _func.id="${screen.form.id}"/>
+		<a g:screen="FuncScreen$Role" _func.id="${screen.form.id}"/>
 	</g-tab-control>
-</main>
+</section>
